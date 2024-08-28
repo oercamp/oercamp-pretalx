@@ -2,21 +2,26 @@
 
 This repository contains a docker-compose setup for a [pretalx](https://github.com/pretalx/pretalx) installation based on docker.
 
-This repository was inspired by [pretalx-docker](https://github.com/pretalx/pretalx-docker) but contains the source code for
-pretalx.
+This repository was inspired by [pretalx-docker](https://github.com/pretalx/pretalx-docker) but is heavily modified and
+contains the source-code for pretalx so we can develop on it.
 
 ## Installation with docker-compose
 
-### For testing
+### For local developing
 
+* Copy ``src/pretalx.example.cfg`` to ``conf/`` and rename it to ``pretalx.cfg``, so that you have a ``conf/pretalx.cfg`` (Hint: This will later be put to ``/etc/pretalx/pretalx.cfg`` on the server).
 * Run ``docker-compose up -d``. After a few minutes the setup should be accessible at http://localhost/orga
-* Set up a user and an organizer by running ~~``docker exec -ti pretalx pretalx init``~~ -> ``./bin/pretalx init``
+* Set up a user and an organizer by running ~~``docker exec -ti pretalx pretalx init``~~ -> ``./bin/pretalx init``. You will need to create a super-user too, see next section for it.
 
 #### How to create a superuser
 
 You can create a super-user interactively inside the docker container:
 * connect to your docker container: ``docker exec -it pretalx /bin/bash``
 * create one with ``python /pretalx/src/manage.py createsuperuser``
+
+#### Tips
+
+* Exception log: ``(.docker/volumes)/data/logs/pretalx.log``
 
 ### For production
 
