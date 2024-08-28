@@ -102,3 +102,5 @@ src/tests/**/*.yml
 screens/
 
 volumes/
+src/data
+src/pretalx/static/CACHE

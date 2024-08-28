@@ -1,16 +1,22 @@
-# pretalx-docker
+# (nova) pretalx-docker
 
-This repository contains a docker-compose setup as well as an [ansible](https://docs.ansible.com) role for a
-[pretalx](https://github.com/pretalx/pretalx) installation based on docker.
+This repository contains a docker-compose setup for a [pretalx](https://github.com/pretalx/pretalx) installation based on docker.
 
-**Please note that this repository is provided by the pretalx community, and not supported by the pretalx team.**
+This repository was inspired by [pretalx-docker](https://github.com/pretalx/pretalx-docker) but contains the source code for
+pretalx.
 
 ## Installation with docker-compose
 
 ### For testing
 
 * Run ``docker-compose up -d``. After a few minutes the setup should be accessible at http://localhost/orga
-* Set up a user and an organizer by running ``docker exec -ti pretalx pretalx init``.
+* Set up a user and an organizer by running ~~``docker exec -ti pretalx pretalx init``~~ -> ``./bin/pretalx init``
+
+#### How to create a superuser
+
+You can create a super-user interactively inside the docker container:
+* connect to your docker container: ``docker exec -it pretalx /bin/bash``
+* create one with ``python /pretalx/src/manage.py createsuperuser``
 
 ### For production
 
@@ -32,9 +38,9 @@ This repository contains a docker-compose setup as well as an [ansible](https://
   * To adjust the number of [Gunicorn workers](https://docs.gunicorn.org/en/stable/settings.html#workers), provide
   the container with `GUNICORN_WORKERS` environment variable.
   * `GUNICORN_MAX_REQUESTS` and `GUNICORN_MAX_REQUESTS_JITTER` to configure the requests a worker instance will process before restarting.
-  * `GUNICORN_FORWARDED_ALLOW_IPS` lets you specify which IPs to trust (i.e. which reverse proxies' `X-Forwarded-*` headers can be used to infer connection security). 
+  * `GUNICORN_FORWARDED_ALLOW_IPS` lets you specify which IPs to trust (i.e. which reverse proxies' `X-Forwarded-*` headers can be used to infer connection security).
   * `GUNICORN_BIND_ADDR` can be used to change the interface and port that Gunicorn will listen on. Default: `0.0.0.0:80`
-  
+
   Here's how to set an environment variable [in
   `docker-compose.yml`](https://docs.docker.com/compose/environment-variables/set-environment-variables/)
   or when using [`docker run` command](https://docs.docker.com/engine/reference/run/#env-environment-variables).
@@ -42,24 +48,3 @@ This repository contains a docker-compose setup as well as an [ansible](https://
 * Set up a user and an organizer by running ``docker exec -ti pretalx pretalx init``.
 * Set up a cronjob for periodic tasks like this ``15,45 * * * * docker exec pretalx-app pretalx runperiodic``
 
-
-## Installation with ansible
-
-(Please note that we also provide a second ansible role for use without docker
-[here](https://github.com/pretalx/ansible-pretalx/)).
-
-### For testing
-
-* Add the role at ``ansible-role`` to your ansible setup.
-* Roll out the role
-* You should be able to reach pretalx at ``http://localhost/orga``
-* Set up a user and an organizer by running ``docker exec -ti pretalx pretalx init``.
-
-### For production
-
-* Add the role at ``ansible-role`` to your ansible setup.
-* Fill in the variables listed in the ``vars/main.yml`` file. **Make sure to set testing to false!**
-* Set up a reverse proxy to handle TLS. traefik is recommended. The containers that get rolled out are already tagged
-  for traefik. An example role for traefik is included at ``reverse-proxy-examples/ansible/traefik``.
-* Roll out the role. After a few minutes pretalx should be reachable at the configured domain.
-* Set up a user and an organizer by running ``docker exec -ti pretalx pretalx init`` .

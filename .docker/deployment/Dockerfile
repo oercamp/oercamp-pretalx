@@ -14,20 +14,23 @@ RUN apt-get update && \
     mkdir /etc/pretalx && \
     mkdir /data && \
     mkdir /public && \
-    groupadd -g 999 pretalxuser && \
-    useradd -r -u 999 -g pretalxuser -d /pretalx -ms /bin/bash pretalxuser && \
+    groupadd -g 1000 pretalxuser && \
+    useradd -r -u 1000 -g pretalxuser -d /pretalx -ms /bin/bash pretalxuser && \
     echo 'pretalxuser ALL=(ALL) NOPASSWD: /usr/bin/supervisord' >> /etc/sudoers
+
+RUN usermod --non-unique --uid 1000 pretalxuser
 
 ENV LC_ALL=C.UTF-8
 
 
-COPY pretalx/pyproject.toml /pretalx
-COPY pretalx/src /pretalx/src
-COPY deployment/docker/pretalx.bash /usr/local/bin/pretalx
-COPY deployment/docker/supervisord.conf /etc/supervisord.conf
+COPY pyproject.toml /pretalx
+#COPY pretalx/src /pretalx/src
+COPY pretalx.bash /usr/local/bin/pretalx
+COPY supervisord.conf /etc/supervisord.conf
 
 RUN pip3 install -U pip setuptools wheel typing && \
-    pip3 install -e /pretalx/[mysql,postgres,redis] && \
+    #pip3 install -e pretalx[mysql,postgres,redis] && \
+    pip3 install --upgrade-strategy eager -U "pretalx[mysql,postgres,redis]" && \
     pip3 install pylibmc && \
     pip3 install gunicorn
 
@@ -41,11 +44,11 @@ RUN apt-get update && \
     rm -rf /var/lib/apt/lists/* && \
     python3 -m pretalx rebuild
 
-RUN chmod +x /usr/local/bin/pretalx && \
-    cd /pretalx/src && \
-    rm -f pretalx.cfg && \
-    chown -R pretalxuser:pretalxuser /pretalx /data /public && \
-    rm -f /pretalx/src/data/.secret
+RUN chmod +x /usr/local/bin/pretalx
+    #cd /pretalx/src && \
+    #rm -f pretalx.cfg
+RUN chown -R pretalxuser:pretalxuser /pretalx /data /public
+#RUN rm -f /pretalx/src/data/.secret
 
 USER pretalxuser
 VOLUME ["/etc/pretalx", "/data", "/public"]
