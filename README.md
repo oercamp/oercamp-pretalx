@@ -11,13 +11,14 @@ contains the source-code for pretalx so we can develop on it.
 
 * Copy ``src/pretalx.example.cfg`` to ``conf/`` and rename it to ``pretalx.cfg``, so that you have a ``conf/pretalx.cfg`` (Hint: This will later be put to ``/etc/pretalx/pretalx.cfg`` on the server).
 * Run ``docker-compose up -d``. After a few minutes the setup should be accessible at http://localhost/orga
+* Run ``sudo ./bin/build`` to build the project and the database.
 * Set up a user and an organizer by running ~~``docker exec -ti pretalx pretalx init``~~ -> ``./bin/pretalx init``. You will need to create a super-user too, see next section for it.
 
 #### How to create a superuser
 
 You can create a super-user interactively inside the docker container:
 * connect to your docker container: ``docker exec -it pretalx /bin/bash``
-* create one with ``python /pretalx/src/manage.py createsuperuser``
+* create one with ``python3 /pretalx/src/manage.py createsuperuser``
 
 #### Tips
 

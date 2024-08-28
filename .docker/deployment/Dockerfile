@@ -18,7 +18,7 @@ RUN apt-get update && \
     useradd -r -u 1000 -g pretalxuser -d /pretalx -ms /bin/bash pretalxuser && \
     echo 'pretalxuser ALL=(ALL) NOPASSWD: /usr/bin/supervisord' >> /etc/sudoers
 
-RUN usermod --non-unique --uid 1000 pretalxuser
+RUN usermod -a -G 1000 pretalxuser
 
 ENV LC_ALL=C.UTF-8
 
@@ -34,15 +34,10 @@ RUN pip3 install -U pip setuptools wheel typing && \
     pip3 install pylibmc && \
     pip3 install gunicorn
 
-
-RUN python3 -m pretalx makemigrations
-RUN python3 -m pretalx migrate
-
 RUN apt-get update && \
     apt-get install -y nodejs npm && \
     apt-get clean && \
-    rm -rf /var/lib/apt/lists/* && \
-    python3 -m pretalx rebuild
+    rm -rf /var/lib/apt/lists/*
 
 RUN chmod +x /usr/local/bin/pretalx
     #cd /pretalx/src && \
