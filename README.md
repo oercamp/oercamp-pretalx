@@ -7,9 +7,9 @@ contains the source-code for pretalx so we can develop on it.
 
 ## Installation with docker-compose
 
-### For local developing
+### For local development
 
-* Copy ``src/pretalx.example.cfg`` to ``conf/`` and rename it to ``pretalx.cfg``, so that you have a ``conf/pretalx.cfg`` (Hint: This will later be put to ``/etc/pretalx/pretalx.cfg`` on the server).
+* Create ``src/pretalx.cfg``from ``src/pretalx.cfg.example`` and edit it.
 * Run ``docker-compose up -d``. After a few minutes the setup should be accessible at http://localhost/orga
 * Run ``sudo ./bin/build`` to build the project and the database.
 * Set up a user and an organizer by running ~~``docker exec -ti pretalx pretalx init``~~ -> ``./bin/pretalx init``. You will need to create a super-user too, see next section for it.
@@ -26,13 +26,13 @@ You can create a super-user interactively inside the docker container:
 
 ### For production
 
-* Edit ``conf/pretalx.cfg`` and fill in your own values (→ [configuration
+* Edit ``src/pretalx.cfg`` and fill in your own values (→ [configuration
   documentation](https://docs.pretalx.org/en/latest/administrator/configure.html))
 * Edit ``docker-compose.yml`` and remove the complete section with ``ports: - "80:80"`` from the file (if you go with
   traefic as reverse proxy) or change the line to ``ports: - "127.0.0.1:8355:80"`` (if you use nginx). **Change the
   database password.**
 * If you don't want to use docker volumes, create directories for the persistent data and make them read-writeable for
-  the userid 999 and the groupid 999. Change ``pretalx-redis``, ``pretalx-db``, ``pretalx-data`` and ``pretalx-public`` to the corresponding
+  the userid 1000 and the groupid 1000. Change ``pretalx-redis``, ``pretalx-db``, ``pretalx-data`` and ``pretalx-public`` to the corresponding
   directories you've chosen.
 * Configure a reverse-proxy for better security and to handle TLS. Pretalx listens on port 80 in the ``pretalxdocker``
   network. I recommend to go with traefik for its ease of setup, docker integration and [LetsEncrypt
@@ -53,4 +53,8 @@ You can create a super-user interactively inside the docker container:
 * Run ``docker-compose up -d ``. After a few minutes the setup should be accessible under http://yourdomain.com/orga
 * Set up a user and an organizer by running ``docker exec -ti pretalx pretalx init``.
 * Set up a cronjob for periodic tasks like this ``15,45 * * * * docker exec pretalx-app pretalx runperiodic``
+
+## Setup Info
+
+*
 

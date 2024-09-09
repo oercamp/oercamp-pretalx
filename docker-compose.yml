@@ -1,24 +1,26 @@
 version: '3'
 services:
   pretalx:
-    image: pretalx/standalone:latest
     build:
-      context: .docker/deployment
+      context: .
     container_name: pretalx
     restart: always
     depends_on:
       - redis
       - db
     environment:
-      # Hint: Make sure you serve all requests for the `/static/` and `/media/` paths when debug is False. See [installation](https://docs.pretalx.org/administrator/installation/#step-7-ssl) for more information
-      PRETALX_FILESYSTEM_MEDIA: /public/media
-      PRETALX_FILESYSTEM_STATIC: /public/static
+      # Hint: Make sure you serve all requests for the `/static/` and `/media/` paths when debug is False.
+      # See [installation](https://docs.pretalx.org/administrator/installation/#step-7-ssl) for more information
+      PRETALX_FILESYSTEM_MEDIA: /pretalx/public/media
+      PRETALX_FILESYSTEM_STATIC: /pretalx/public/static #/pretalx/src/static.dist
+      PRETALX_FILESYSTEM_LOGS: /pretalx/data/logs
     ports:
       - "80:80"
     volumes:
-      - ./conf/pretalx.cfg:/etc/pretalx/pretalx.cfg:ro
-      - ./.docker/volumes/data:/data
-      - ./.docker/volumes/public:/public
+      - ./pyproject.toml:/pretalx/pyproject.toml:ro
+      - ./src/pretalx.cfg:/etc/pretalx/pretalx.cfg:ro
+      - ./.docker/volumes/data:/pretalx/data
+      - ./.docker/volumes/public:/pretalx/public
       - ./src:/pretalx/src:delegated
     labels:
        traefik.docker.network: "pretalxdocker"
@@ -29,7 +31,7 @@ services:
     container_name: pretalx-db
     restart: always
     volumes:
-      - pretalx-db:/var/lib/mysql
+      - ./.docker/volumes/db:/var/lib/mysql:delegated
     environment:
       MYSQL_DATABASE: pretalx
       MYSQL_USER: pretalx
@@ -41,10 +43,4 @@ services:
     image: redis:latest
     container_name: pretalx-redis
     restart: always
-    volumes:
-      - pretalx-redis:/data
-
-volumes:
-  pretalx-db:
-  pretalx-redis:
 

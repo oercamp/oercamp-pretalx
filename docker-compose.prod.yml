@@ -1,0 +1,13 @@
+services:
+  pretalx:
+    ports:
+      - "127.0.0.1:8355:80"
+  db:
+    image: mysql:latest
+    container_name: pretalx-db
+    restart: always
+    environment:
+      MYSQL_DATABASE: pretalx
+      MYSQL_USER: pretalx
+      MYSQL_PASSWORD: veryunsecureplschange
+      MYSQL_RANDOM_ROOT_PASSWORD: "1"
