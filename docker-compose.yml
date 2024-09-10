@@ -17,8 +17,8 @@ services:
     volumes:
       - ./pyproject.toml:/pretalx/pyproject.toml:ro
       - ./src/pretalx.cfg:/etc/pretalx/pretalx.cfg:ro
-      - ./.docker/volumes/data:/pretalx/data
-      - ./.docker/volumes/public:/pretalx/public
+      #- ./.docker/volumes/data:/pretalx/data -> TODO not working on live due to user errors (root instead of 1000)
+      #- ./.docker/volumes/public:/pretalx/public
       - ./src:/pretalx/src:delegated
     labels:
        traefik.docker.network: "pretalxdocker"
