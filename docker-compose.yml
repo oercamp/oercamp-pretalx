@@ -16,8 +16,6 @@ services:
     volumes:
       - ./pyproject.toml:/pretalx/pyproject.toml:ro
       - ./src/pretalx.cfg:/etc/pretalx/pretalx.cfg:ro
-      - ./.docker/volumes/data:/pretalx/data
-      - ./.docker/volumes/public:/pretalx/public
       - ./src:/pretalx/src:delegated
     labels:
        traefik.docker.network: "pretalxdocker"

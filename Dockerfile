@@ -27,10 +27,9 @@ ENV LC_ALL=C.UTF-8
 COPY .docker/deployment/pretalx.bash /usr/local/bin/pretalx
 COPY .docker/deployment/supervisord.conf /etc/supervisord.conf
 
-WORKDIR /pretalx
-
 # We have no volumes yet, so we will copy project files to build all dependencies, because
 # dependencies are not installed locally in a vendor-like folder, but globally, so they are gone everytime the container goes down
+WORKDIR /pretalx
 COPY pyproject.toml /pretalx
 COPY ./src /pretalx/src
 RUN pip3 install --upgrade-strategy eager -Ue ".[dev]"
@@ -45,14 +44,10 @@ RUN apt-get update && \
     rm -rf /var/lib/apt/lists/*
 
 RUN chmod +x /usr/local/bin/pretalx
-    #cd /pretalx/src && \
-    #rm -f pretalx.cfg
-RUN chown -R pretalxuser:pretalxuser /pretalx
-    #/data /public
-#RUN rm -f /pretalx/src/data/.secret
+RUN chown -R pretalxuser:pretalxuser /pretalx/data /pretalx/public
 
 USER pretalxuser
-VOLUME ["/etc/pretalx", "/pretalx/data", "/pretalx/public"]
+#VOLUME ["/etc/pretalx", "/pretalx/data", "/pretalx/public"]
 EXPOSE 80
 ENTRYPOINT ["pretalx"]
 CMD ["all"]

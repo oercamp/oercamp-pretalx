@@ -21,15 +21,13 @@ You can create a super-user interactively inside the docker container:
 * connect to your docker container: ``docker exec -it pretalx /bin/bash``
 * create one with ``python3 /pretalx/src/manage.py createsuperuser``
 
-#### Tips
-
-* Exception log: ``(.docker/volumes)/data/logs/pretalx.log``
-* Dependencies are not installed locally or on a volume. This means, if you change dependencies, then you should rebuild the docker image with ``docker compose build --no-cache [--progress=plain]``
-
 ### For production
 
+#### Same as local development instructions, but with following changes:
+
 * Edit ``src/pretalx.cfg`` and ``.env`` for production (see above).
-* Include the ``docker-composer.prod.yml`` when running docker compose. Example: ``docker compose -f docker-compose.yml -f docker-compose.prod.yml up -d``
+* Include the ``docker-composer.prod.yml`` when running docker compose.
+  Example: ``docker compose -f docker-compose.yml -f docker-compose.prod.yml up -d``
 
 
 * Configure a reverse-proxy for better security and to handle TLS. Pretalx listens on port 80 in the ``pretalxdocker``
@@ -51,3 +49,7 @@ You can create a super-user interactively inside the docker container:
 * Set up a user and an organizer (see local develop instructions above)
 * Set up a cronjob for periodic tasks like this ``15,45 * * * * docker exec pretalx-app pretalx runperiodic``
 
+#### Tips & Troubleshooting
+
+* Exception log: ``(.docker/volumes)/data/logs/pretalx.log``
+* Dependencies are not installed locally or on a volume. This means, if you change dependencies, then you should rebuild the docker image with ``docker compose build --no-cache [--progress=plain]``
