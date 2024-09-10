@@ -33,10 +33,10 @@ services:
     volumes:
       - ./.docker/volumes/db:/var/lib/mysql:delegated
     environment:
-      MYSQL_DATABASE: pretalx
-      MYSQL_USER: pretalx
-      MYSQL_PASSWORD: veryunsecureplschange
-      MYSQL_RANDOM_ROOT_PASSWORD: "1"
+      - MYSQL_DATABASE=${DB_DATABASE}
+      - MYSQL_USER=${DB_USERNAME}
+      - MYSQL_PASSWORD=${DB_PASSWORD}
+      - MYSQL_ROOT_PASSWORD=root
     command: ['mysqld', '--character-set-server=utf8mb4', '--collation-server=utf8mb4_unicode_ci']
 
   redis:
