@@ -13,8 +13,6 @@ services:
       PRETALX_FILESYSTEM_MEDIA: /pretalx/public/media
       PRETALX_FILESYSTEM_STATIC: /pretalx/public/static #/pretalx/src/static.dist
       PRETALX_FILESYSTEM_LOGS: /pretalx/data/logs
-    ports:
-      - "80:80"
     volumes:
       - ./pyproject.toml:/pretalx/pyproject.toml:ro
       - ./src/pretalx.cfg:/etc/pretalx/pretalx.cfg:ro
@@ -35,7 +33,7 @@ services:
       - MYSQL_DATABASE=${DB_DATABASE}
       - MYSQL_USER=${DB_USERNAME}
       - MYSQL_PASSWORD=${DB_PASSWORD}
-      - MYSQL_ROOT_PASSWORD=root
+      - MYSQL_ROOT_PASSWORD=${DB_ROOT_PASSWORD}
     command: ['mysqld', '--character-set-server=utf8mb4', '--collation-server=utf8mb4_unicode_ci']
 
   redis:

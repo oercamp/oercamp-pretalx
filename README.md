@@ -11,7 +11,7 @@ contains the source-code for pretalx so we can develop on it.
 
 * Create ``src/pretalx.cfg``from ``src/pretalx.cfg.example`` and edit it.
 * Create ``.env``from ``.env.example`` and edit it.
-* Run ``docker-compose up -d``. After a few minutes the setup should be accessible at http://localhost/orga
+* Run ``docker-compose -f docker-compose.yml -f docker-compose.dev.yml up -d``. After a few minutes the setup should be accessible at http://localhost/orga
 * Run ``sudo ./bin/build`` to build the project and the database.
 * Set up a user and an organizer by running ~~``docker exec -ti pretalx pretalx init``~~ -> ``./bin/pretalx init``. You will need to create a super-user too, see next section for it.
 
