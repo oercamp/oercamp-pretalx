@@ -37,16 +37,7 @@ RUN pip3 install --upgrade-strategy eager -Ue ".[dev]"
 RUN rm -f /pretalx/pyproject.toml
 RUN rm -rf /pretalx/src
 
-
-RUN pip3 install pylibmc gunicorn
-
-RUN pip3 install -U pip mysqlclient setuptools wheel typing && \
-    #pip3 install -e pretalx[mysql,postgres,redis] && \
-    #TODO is this needed? this will install the standalone pretalx version
-    #pip3 install --upgrade-strategy eager -U "pretalx[mysql,postgres,redis]" && \
-    #pip3 install --upgrade-strategy eager -Ue ".[dev]" && \ -> move to bin/build script
-    pip3 install pylibmc && \
-    pip3 install gunicorn
+RUN pip3 install -U pip mysqlclient redis setuptools wheel typing pylibmc gunicorn
 
 RUN apt-get update && \
     apt-get install -y nodejs npm && \
