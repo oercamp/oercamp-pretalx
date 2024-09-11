@@ -80,7 +80,7 @@
     url(static("fonts/mulish-v12-latin-ext-700italic.woff")) format("woff");
 }
 body {
-  font-family: "Muli", "Open Sans", "OpenSans", "Helvetica Neue", Helvetica,
+  font-family: "Open Sans", "OpenSans", "Helvetica Neue", Helvetica,
     Arial, sans-serif;
   font-size: 16px;
   h1,
@@ -90,7 +90,7 @@ body {
   legend,
   .btn,
   button {
-    font-family: "Titillium Web", "Open Sans", "OpenSans", "Helvetica Neue",
+    font-family: "Unbounded", "Open Sans", "OpenSans", "Helvetica Neue",
       Helvetica, Arial, sans-serif;
   }
   h2 {
@@ -102,4 +102,82 @@ body {
   legend {
     font-size: 22px;
   }
+}
+
+/**
+ * Fonts from style guide
+ */
+
+/* open-sans-regular - latin */
+@font-face {
+    font-display: swap; /* Check https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face/font-display for other options. */
+    font-family: 'Open Sans';
+    font-style: normal;
+    font-weight: 400;
+    src: url(static('fonts/open-sans-v40-latin-regular.woff2')) format('woff2'); /* Chrome 36+, Opera 23+, Firefox 39+, Safari 12+, iOS 10+ */
+}
+/* open-sans-italic - latin */
+@font-face {
+    font-display: swap; /* Check https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face/font-display for other options. */
+    font-family: 'Open Sans';
+    font-style: italic;
+    font-weight: 400;
+    src: url(static('fonts/open-sans-v40-latin-italic.woff2')) format('woff2'); /* Chrome 36+, Opera 23+, Firefox 39+, Safari 12+, iOS 10+ */
+}
+/* open-sans-600 - latin */
+@font-face {
+    font-display: swap; /* Check https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face/font-display for other options. */
+    font-family: 'Open Sans';
+    font-style: normal;
+    font-weight: 600;
+    src: url(static('fonts/open-sans-v40-latin-600.woff2')) format('woff2'); /* Chrome 36+, Opera 23+, Firefox 39+, Safari 12+, iOS 10+ */
+}
+/* open-sans-600italic - latin */
+@font-face {
+    font-display: swap; /* Check https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face/font-display for other options. */
+    font-family: 'Open Sans';
+    font-style: italic;
+    font-weight: 600;
+    src: url(static('fonts/open-sans-v40-latin-600italic.woff2')) format('woff2'); /* Chrome 36+, Opera 23+, Firefox 39+, Safari 12+, iOS 10+ */
+}
+/* open-sans-700 - latin */
+@font-face {
+    font-display: swap; /* Check https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face/font-display for other options. */
+    font-family: 'Open Sans';
+    font-style: normal;
+    font-weight: 700;
+    src: url(static('fonts/open-sans-v40-latin-700.woff2')) format('woff2'); /* Chrome 36+, Opera 23+, Firefox 39+, Safari 12+, iOS 10+ */
+}
+/* open-sans-700italic - latin */
+@font-face {
+    font-display: swap; /* Check https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face/font-display for other options. */
+    font-family: 'Open Sans';
+    font-style: italic;
+    font-weight: 700;
+    src: url(static('fonts/open-sans-v40-latin-700italic.woff2')) format('woff2'); /* Chrome 36+, Opera 23+, Firefox 39+, Safari 12+, iOS 10+ */
+}
+
+/* unbounded-regular - latin */
+@font-face {
+    font-display: swap; /* Check https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face/font-display for other options. */
+    font-family: 'Unbounded';
+    font-style: normal;
+    font-weight: 400;
+    src: url(static('fonts/unbounded-v7-latin-regular.woff2')) format('woff2'); /* Chrome 36+, Opera 23+, Firefox 39+, Safari 12+, iOS 10+ */
+}
+/* unbounded-600 - latin */
+@font-face {
+    font-display: swap; /* Check https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face/font-display for other options. */
+    font-family: 'Unbounded';
+    font-style: normal;
+    font-weight: 600;
+    src: url(static('fonts/unbounded-v7-latin-600.woff2')) format('woff2'); /* Chrome 36+, Opera 23+, Firefox 39+, Safari 12+, iOS 10+ */
+}
+/* unbounded-700 - latin */
+@font-face {
+    font-display: swap; /* Check https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face/font-display for other options. */
+    font-family: 'Unbounded';
+    font-style: normal;
+    font-weight: 700;
+    src: url(static('fonts/unbounded-v7-latin-700.woff2')) format('woff2'); /* Chrome 36+, Opera 23+, Firefox 39+, Safari 12+, iOS 10+ */
 }

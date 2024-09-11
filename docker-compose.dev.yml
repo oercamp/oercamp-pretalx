@@ -2,3 +2,5 @@ services:
   pretalx:
     ports:
       - "80:80"
+    volumes:
+      - ./.docker/volumes/data:/pretalx/data

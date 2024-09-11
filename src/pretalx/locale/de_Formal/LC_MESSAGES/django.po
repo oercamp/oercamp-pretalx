@@ -741,8 +741,8 @@ msgstr ""
 #: pretalx/cfp/templates/cfp/event/user_submission_edit.html:53
 msgid "Speaker"
 msgid_plural "Speakers"
-msgstr[0] "Vortragende"
-msgstr[1] "Vortragende"
+msgstr[0] "Mitwirkende"
+msgstr[1] "Mitwirkende"
 
 #: pretalx/cfp/templates/cfp/event/user_submission_edit.html:55
 msgid "Submitter"
@@ -1441,7 +1441,7 @@ msgstr "Antwort auf die Frage"
 
 #: pretalx/common/log_display.py:166 pretalx/orga/templates/orga/base.html:219
 msgid "Call for Proposals"
-msgstr "CfP"
+msgstr "Einreichungen"
 
 #: pretalx/common/log_display.py:169
 msgid "Mail template"
@@ -6463,8 +6463,8 @@ msgstr "Einreichungsfeed"
 #: pretalx/orga/views/dashboard.py:293
 msgid "session"
 msgid_plural "sessions"
-msgstr[0] "Vortrag"
-msgstr[1] "Vorträge"
+msgstr[0] "Programmpunkt"
+msgstr[1] "Programmpunkte"
 
 #: pretalx/orga/templates/orga/submission/list.html:49
 msgid "Add new session or proposal"
@@ -6842,8 +6842,8 @@ msgstr "nicht bestätigt"
 #: pretalx/orga/views/dashboard.py:332
 msgid "speaker"
 msgid_plural "speakers"
-msgstr[0] "Vortragende"
-msgstr[1] "Vortragende"
+msgstr[0] "Mitwirkende"
+msgstr[1] "Mitwirkende"
 
 #: pretalx/orga/views/dashboard.py:336
 #: pretalx/submission/models/submission.py:52
@@ -7729,14 +7729,14 @@ msgstr "Programm"
 #. formats. Plural, used in headings.
 #: pretalx/schedule/phrases.py:13
 msgid "Sessions"
-msgstr "Vorträge"
+msgstr "Programmpunkte"
 
 #. Translators: Ideally a term that is as broad as possible, to refer to anybody who
 #. presents/owns a session. This word is also used to differentiate accepted „speakers“
 #. from not-yet-accepted „submitters“. Plural, used in headings.
 #: pretalx/schedule/phrases.py:18
 msgid "Speakers"
-msgstr "Vortragende"
+msgstr "Mitwirkende"
 
 #: pretalx/schedule/phrases.py:20
 msgid "We released our first schedule!"
