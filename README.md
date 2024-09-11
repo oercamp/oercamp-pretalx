@@ -21,6 +21,11 @@ You can create a super-user interactively inside the docker container:
 * connect to your docker container: ``docker exec -it pretalx /bin/bash``
 * create one with ``python3 /pretalx/src/manage.py createsuperuser``
 
+#### Tips when developing
+
+* Use ``./bin/pretalx`` to check all commands and also to check what environment python is using
+* Use ``./bin/pretalx rebuild`` to re-generate static files and translations etc. after changing them.
+
 ### For production
 
 #### Same as local development instructions, but with following changes:

@@ -391,7 +391,7 @@ export default {
 	margin-left: 24px
 	font-family: inherit
 	h1, h2, h3, h4, h5, h6, legend, button, .btn
-		font-family: "Titillium Web", "Open Sans", "OpenSans", "Helvetica Neue", Helvetica, Arial, sans-serif
+		font-family: "Open Sans", "OpenSans", "Helvetica Neue", Helvetica, Arial, sans-serif
 	&.is-dragging
 		user-select: none
 		cursor: grabbing
