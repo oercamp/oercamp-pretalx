@@ -54,6 +54,10 @@ You can create a super-user interactively inside the docker container:
 * Set up a user and an organizer (see local develop instructions above)
 * Set up a cronjob for periodic tasks like this ``15,45 * * * * docker exec pretalx-app pretalx runperiodic``
 
+#### Current Live deployment procedure
+
+* SSH to the live server, change to workdir ``cd /sites/oercamp/oercamp-pretalx/`` and run ``./bin/deploy-prod``
+
 #### Tips & Troubleshooting
 
 * Exception log: ``(.docker/volumes)/data/logs/pretalx.log``
