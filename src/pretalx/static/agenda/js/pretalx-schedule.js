@@ -12981,12 +12981,12 @@ var addStylesShadow = __webpack_require__("35d6");
 // EXTERNAL MODULE: ./node_modules/vue-loader/lib/runtime/componentNormalizer.js
 var componentNormalizer = __webpack_require__("2877");
 
-// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"cd50843c-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/pug-plain-loader!./node_modules/cache-loader/dist/cjs.js??ref--1-0!./node_modules/vue-loader/lib??vue-loader-options!./src/App.vue?vue&type=template&id=27d81720&lang=pug&shadow
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"cd50843c-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/pug-plain-loader!./node_modules/cache-loader/dist/cjs.js??ref--1-0!./node_modules/vue-loader/lib??vue-loader-options!./src/App.vue?vue&type=template&id=4484bd16&lang=pug&shadow
 var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{staticClass:"pretalx-schedule",class:_vm.showGrid ? ['grid-schedule'] : ['list-schedule'],style:({'--scrollparent-width': _vm.scrollParentWidth + 'px', '--schedule-max-width': _vm.scheduleMaxWidth + 'px', '--pretalx-sticky-date-offset': _vm.days && _vm.days.length > 1 ? '48px' : '0px'})},[(_vm.scheduleError)?[_vm._m(0)]:(_vm.schedule && (_vm.sessions.length || (_vm.filteredTracks && _vm.filteredTracks.length && _vm.filteredTags && _vm.filteredTags.length)))?[(_vm.showFilterModal)?_c('div',{staticClass:"modal-overlay",on:{"click":function($event){$event.stopPropagation();_vm.showFilterModal = false}}},[_c('div',{staticClass:"modal-box",on:{"click":function($event){$event.stopPropagation();}}},[_c('h3',[_vm._v("Tracks")]),_vm._l((_vm.allTracks),function(track){return _c('div',{key:track.value,staticClass:"checkbox-line",style:({'--track-color': track.color})},[_c('bunt-checkbox',{attrs:{"type":"checkbox","label":track.label,"name":track.value + track.label,"value":track.value},on:{"input":function($event){_vm.onlyFavs = false}},model:{value:(track.selected),callback:function ($$v) {_vm.$set(track, "selected", $$v)},expression:"track.selected"}}),(_vm.getLocalizedString(track.description).length)?_c('div',{staticClass:"track-description"},[_vm._v(_vm._s(_vm.getLocalizedString(track.description)))]):_vm._e()],1)}),_c('h3',[_vm._v("Tags")]),_vm._l((_vm.allTags),function(tag){return _c('div',{key:tag.value,staticClass:"checkbox-line",style:({'--track-color': tag.color})},[_c('bunt-checkbox',{attrs:{"type":"checkbox","label":tag.label,"name":tag.value + tag.label,"value":tag.value},on:{"input":function($event){_vm.onlyFavs = false}},model:{value:(tag.selected),callback:function ($$v) {_vm.$set(tag, "selected", $$v)},expression:"tag.selected"}})],1)})],2)]):_vm._e(),_c('div',{staticClass:"settings"},[(this.schedule.tracks.length || this.schedule.tags.length)?_c('bunt-button',{staticClass:"filter-tracks",on:{"click":function($event){_vm.showFilterModal=true}}},[_c('svg',{attrs:{"id":"filter","viewBox":"0 0 752 752"}},[_c('path',{attrs:{"d":"m401.57 264.71h-174.75c-6.6289 0-11.84 5.2109-11.84 11.84 0 6.6289 5.2109 11.84 11.84 11.84h174.75c5.2109 17.523 21.312 30.309 40.727 30.309 18.941 0 35.52-12.785 40.254-30.309h43.098c6.6289 0 11.84-5.2109 11.84-11.84 0-6.6289-5.2109-11.84-11.84-11.84h-43.098c-5.2109-17.523-21.312-30.309-40.254-30.309-19.414 0-35.516 12.785-40.727 30.309zm58.723 11.84c0 10.418-8.5234 18.469-18.469 18.469s-18.469-8.0508-18.469-18.469 8.5234-18.469 18.469-18.469c9.4727-0.003906 18.469 8.0469 18.469 18.469z"}}),_c('path',{attrs:{"d":"m259.5 359.43h-32.676c-6.6289 0-11.84 5.2109-11.84 11.84s5.2109 11.84 11.84 11.84h32.676c5.2109 17.523 21.312 30.309 40.727 30.309 18.941 0 35.52-12.785 40.254-30.309h185.17c6.6289 0 11.84-5.2109 11.84-11.84s-5.2109-11.84-11.84-11.84h-185.17c-5.2109-17.523-21.312-30.309-40.254-30.309-19.418 0-35.52 12.785-40.73 30.309zm58.723 11.84c0 10.418-8.5234 18.469-18.469 18.469-9.9453 0-18.469-8.0508-18.469-18.469s8.5234-18.469 18.469-18.469c9.9453 0 18.469 8.0508 18.469 18.469z"}}),_c('path',{attrs:{"d":"m344.75 463.61h-117.92c-6.6289 0-11.84 5.2109-11.84 11.84s5.2109 11.84 11.84 11.84h117.92c5.2109 17.523 21.312 30.309 40.727 30.309 18.941 0 35.52-12.785 40.254-30.309h99.926c6.6289 0 11.84-5.2109 11.84-11.84s-5.2109-11.84-11.84-11.84h-99.926c-5.2109-17.523-21.312-30.309-40.254-30.309-19.418 0-35.52 12.785-40.727 30.309zm58.723 11.84c0 10.418-8.5234 18.469-18.469 18.469s-18.469-8.0508-18.469-18.469 8.5234-18.469 18.469-18.469 18.469 8.0508 18.469 18.469z"}})]),[_vm._v("Filter")],(_vm.filteredTracks.length || _vm.filteredTags.length)?[_vm._v("("+_vm._s(_vm.filteredTracks.length + _vm.filteredTags.length)+")")]:_vm._e()],2):_vm._e(),(_vm.favs.length)?_c('bunt-button',{staticClass:"fav-toggle",class:_vm.onlyFavs ? ['active'] : [],on:{"click":function($event){_vm.onlyFavs = !_vm.onlyFavs; if (_vm.onlyFavs) { _vm.resetFilteredTracksAndTags() }}}},[_c('svg',{attrs:{"id":"star","viewBox":"0 0 24 24"}},[_c('polygon',{style:({fill: '#FFA000', stroke: '#FFA000'}),attrs:{"points":"14.43,10 12,2 9.57,10 2,10 8.18,14.41 5.83,22 12,17.31 18.18,22 15.83,14.41 22,10"}})]),[_vm._v(_vm._s(_vm.favs.length))]],2):_vm._e(),(!_vm.inEventTimezone)?[_c('bunt-select',{staticClass:"timezone-item",attrs:{"name":"timezone","options":[{id: _vm.schedule.timezone, label: _vm.schedule.timezone}, {id: _vm.userTimezone, label: _vm.userTimezone}]},on:{"blur":_vm.saveTimezone},model:{value:(_vm.currentTimezone),callback:function ($$v) {_vm.currentTimezone=$$v},expression:"currentTimezone"}})]:[_c('div',{staticClass:"timezone-label timezone-item bunt-tab-header-item"},[_vm._v(_vm._s(_vm.schedule.timezone))])]],2),(_vm.days && _vm.days.length > 1)?_c('bunt-tabs',{ref:"tabs",staticClass:"days",class:_vm.showGrid? ['grid-tabs'] : ['list-tabs'],attrs:{"active-tab":_vm.currentDay && _vm.currentDay.format()}},_vm._l((_vm.days),function(day){return _c('bunt-tab',{attrs:{"id":day.format(),"header":day.format(_vm.dateFormat)},on:{"selected":function($event){return _vm.changeDay(day)}}})}),1):_vm._e(),(_vm.showGrid)?_c('grid-schedule',{attrs:{"sessions":_vm.sessions,"rooms":_vm.rooms,"currentDay":_vm.currentDay,"now":_vm.now,"scrollParent":_vm.scrollParent,"favs":_vm.favs},on:{"changeDay":function($event){_vm.currentDay = $event},"fav":function($event){return _vm.fav($event)},"unfav":function($event){return _vm.unfav($event)}}}):_c('linear-schedule',{attrs:{"sessions":_vm.sessions,"rooms":_vm.rooms,"currentDay":_vm.currentDay,"now":_vm.now,"scrollParent":_vm.scrollParent,"favs":_vm.favs},on:{"changeDay":function($event){_vm.currentDay = $event},"fav":function($event){return _vm.fav($event)},"unfav":function($event){return _vm.unfav($event)}}})]:_c('bunt-progress-circular',{attrs:{"size":"huge","page":true}}),(_vm.errorMessages.length)?_c('div',{staticClass:"error-messages"},_vm._l((_vm.errorMessages),function(message){return _c('div',{key:message,staticClass:"error-message"},[_c('div',{staticClass:"btn btn-danger",on:{"click":function($event){_vm.errorMessages = _vm.errorMessages.filter(function (m) { return m !== message; })}}},[_vm._v("x")]),_c('div',{staticClass:"message"},[_vm._v(_vm._s(message))])])}),0):_vm._e()],2)}
 var staticRenderFns = [function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{staticClass:"schedule-error"},[_c('div',{staticClass:"error-message"},[_vm._v("An error occurred while loading the schedule. Please try again later.")])])}]
 
 
-// CONCATENATED MODULE: ./src/App.vue?vue&type=template&id=27d81720&lang=pug&shadow
+// CONCATENATED MODULE: ./src/App.vue?vue&type=template&id=4484bd16&lang=pug&shadow
 
 // EXTERNAL MODULE: ./node_modules/resize-observer-polyfill/dist/ResizeObserver.es.js
 var ResizeObserver_es = __webpack_require__("6dd8");
@@ -16001,12 +16001,12 @@ var LinearSchedule_component = Object(componentNormalizer["a" /* default */])(
 )
 
 /* harmony default export */ var LinearSchedule = (LinearSchedule_component.exports);
-// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"cd50843c-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/pug-plain-loader!./node_modules/cache-loader/dist/cjs.js??ref--1-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/GridSchedule.vue?vue&type=template&id=743f6c23&lang=pug&
-var GridSchedulevue_type_template_id_743f6c23_lang_pug_render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{staticClass:"c-grid-schedule"},[_c('div',{staticClass:"grid",style:(_vm.gridStyle)},[_vm._l((_vm.visibleTimeslices),function(slice){return [_c('div',{ref:slice.name,refInFor:true,staticClass:"timeslice",class:_vm.getSliceClasses(slice),style:(_vm.getSliceStyle(slice)),attrs:{"data-slice":slice.date.format()}},[_vm._v(_vm._s(_vm.getSliceLabel(slice)))]),_c('div',{staticClass:"timeline",class:_vm.getSliceClasses(slice),style:(_vm.getSliceStyle(slice))})]}),(_vm.nowSlice)?_c('div',{ref:"now",staticClass:"now",class:{'on-daybreak': _vm.nowSlice.onDaybreak},style:({'grid-area': ((_vm.nowSlice.slice.name) + " / 1 / auto / auto"), '--offset': _vm.nowSlice.offset})},[_c('svg',{attrs:{"viewBox":"0 0 10 10"}},[_c('path',{attrs:{"d":"M 0 0 L 10 5 L 0 10 z"}})])]):_vm._e(),_c('div',{staticClass:"room",style:({'grid-area': "1 / 1 / auto / auto"})}),_vm._l((_vm.rooms),function(room,index){return _c('div',{staticClass:"room",style:({'grid-area': ("1 / " + (index + 2) + " / auto / auto")})},[_vm._v(_vm._s(_vm.getLocalizedString(room.name))),(_vm.getLocalizedString(room.description))?_c('bunt-button',{staticClass:"room-description",attrs:{"tooltip":_vm.getLocalizedString(room.description),"tooltip-placement":"bottom-end"}},[_vm._v("?")]):_vm._e()],1)}),(_vm.hasSessionsWithoutRoom)?_c('div',{staticClass:"room",style:({'grid-area': ("1 / " + (_vm.rooms.length + 2) + " / auto / -1")})},[_vm._v("no location")]):_vm._e(),_vm._l((_vm.sessions),function(session){return [(_vm.isProperSession(session))?_c('session',{style:(_vm.getSessionStyle(session)),attrs:{"session":session,"showAbstract":false,"showRoom":false,"faved":_vm.favs.includes(session.id),"hasAmPm":_vm.hasAmPm},on:{"fav":function($event){return _vm.$emit('fav', session.id)},"unfav":function($event){return _vm.$emit('unfav', session.id)}}}):_c('div',{staticClass:"break",style:(_vm.getSessionStyle(session))},[_c('div',{staticClass:"time-box"},[(_vm.hasAmPm)?_c('div',{staticClass:"start has-ampm"},[_c('div',{staticClass:"time"},[_vm._v(_vm._s(session.start.format('h:mm')))]),_c('div',{staticClass:"ampm"},[_vm._v(_vm._s(session.start.format('A')))])]):_c('div',{staticClass:"start"},[_c('div',{staticClass:"time"},[_vm._v(_vm._s(session.start.format('LT')))])]),_c('div',{staticClass:"duration"},[_vm._v(_vm._s(_vm.getPrettyDuration(session.start, session.end)))]),_c('div',{staticClass:"buffer"})]),_c('div',{staticClass:"info"},[_c('div',{staticClass:"title"},[_vm._v(_vm._s(_vm.getLocalizedString(session.title)))])])])]})],2)])}
-var GridSchedulevue_type_template_id_743f6c23_lang_pug_staticRenderFns = []
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"cd50843c-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/pug-plain-loader!./node_modules/cache-loader/dist/cjs.js??ref--1-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/GridSchedule.vue?vue&type=template&id=cc4c9dba&lang=pug&
+var GridSchedulevue_type_template_id_cc4c9dba_lang_pug_render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{staticClass:"c-grid-schedule"},[_c('div',{staticClass:"grid",style:(_vm.gridStyle)},[_vm._l((_vm.visibleTimeslices),function(slice){return [_c('div',{ref:slice.name,refInFor:true,staticClass:"timeslice",class:_vm.getSliceClasses(slice),style:(_vm.getSliceStyle(slice)),attrs:{"data-slice":slice.date.format()}},[_vm._v(_vm._s(_vm.getSliceLabel(slice)))]),_c('div',{staticClass:"timeline",class:_vm.getSliceClasses(slice),style:(_vm.getSliceStyle(slice))})]}),(_vm.nowSlice)?_c('div',{ref:"now",staticClass:"now",class:{'on-daybreak': _vm.nowSlice.onDaybreak},style:({'grid-area': ((_vm.nowSlice.slice.name) + " / 1 / auto / auto"), '--offset': _vm.nowSlice.offset})},[_c('svg',{attrs:{"viewBox":"0 0 10 10"}},[_c('path',{attrs:{"d":"M 0 0 L 10 5 L 0 10 z"}})])]):_vm._e(),_c('div',{staticClass:"room",style:({'grid-area': "1 / 1 / auto / auto"})}),_vm._l((_vm.rooms),function(room,index){return _c('div',{staticClass:"room",style:({'grid-area': ("1 / " + (index + 2) + " / auto / auto")})},[_vm._v(_vm._s(_vm.getLocalizedString(room.name))),(_vm.getLocalizedString(room.description))?_c('bunt-button',{staticClass:"room-description",attrs:{"tooltip":_vm.getLocalizedString(room.description),"tooltip-placement":"bottom-end"}},[_vm._v("?")]):_vm._e()],1)}),(_vm.hasSessionsWithoutRoom)?_c('div',{staticClass:"room",style:({'grid-area': ("1 / " + (_vm.rooms.length + 2) + " / auto / -1")})},[_vm._v("no location")]):_vm._e(),_vm._l((_vm.sessions),function(session){return [(_vm.isProperSession(session))?_c('session',{style:(_vm.getSessionStyle(session)),attrs:{"session":session,"showAbstract":false,"showRoom":false,"faved":_vm.favs.includes(session.id),"hasAmPm":_vm.hasAmPm},on:{"fav":function($event){return _vm.$emit('fav', session.id)},"unfav":function($event){return _vm.$emit('unfav', session.id)}}}):_c('div',{staticClass:"break",style:(_vm.getSessionStyle(session))},[_c('div',{staticClass:"time-box"},[(_vm.hasAmPm)?_c('div',{staticClass:"start has-ampm"},[_c('div',{staticClass:"time"},[_vm._v(_vm._s(session.start.format('h:mm')))]),_c('div',{staticClass:"ampm"},[_vm._v(_vm._s(session.start.format('A')))])]):_c('div',{staticClass:"start"},[_c('div',{staticClass:"time"},[_vm._v(_vm._s(session.start.format('LT')))])]),_c('div',{staticClass:"duration"},[_vm._v(_vm._s(_vm.getPrettyDuration(session.start, session.end)))]),_c('div',{staticClass:"buffer"})]),_c('div',{staticClass:"info"},[_c('div',{staticClass:"title"},[_vm._v(_vm._s(_vm.getLocalizedString(session.title)))])])])]})],2)])}
+var GridSchedulevue_type_template_id_cc4c9dba_lang_pug_staticRenderFns = []
 
 
-// CONCATENATED MODULE: ./src/components/GridSchedule.vue?vue&type=template&id=743f6c23&lang=pug&
+// CONCATENATED MODULE: ./src/components/GridSchedule.vue?vue&type=template&id=cc4c9dba&lang=pug&
 
 // CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js??ref--13-0!./node_modules/thread-loader/dist/cjs.js!./node_modules/babel-loader/lib!./node_modules/cache-loader/dist/cjs.js??ref--1-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/GridSchedule.vue?vue&type=script&lang=js&
 //
@@ -16225,9 +16225,8 @@ const getSliceName = function (date) {
         if (sliceShouldDisplay(prevSlice, index - 1) && !prevSlice.datebreak) {
           prevSlice.gap = true;
         }
-      }
+      } // Only count slice as gap if it is longer than 30 minutes
 
-      console.log(compactedSlices); // Only count slice as gap if it is longer than 30 minutes
 
       compactedSlices.forEach((slice, index) => {
         if (slice.gap && index < compactedSlices.length - 1) {
@@ -16426,8 +16425,8 @@ if (style0.__inject__) style0.__inject__(context)
 
 var GridSchedule_component = Object(componentNormalizer["a" /* default */])(
   components_GridSchedulevue_type_script_lang_js_,
-  GridSchedulevue_type_template_id_743f6c23_lang_pug_render,
-  GridSchedulevue_type_template_id_743f6c23_lang_pug_staticRenderFns,
+  GridSchedulevue_type_template_id_cc4c9dba_lang_pug_render,
+  GridSchedulevue_type_template_id_cc4c9dba_lang_pug_staticRenderFns,
   false,
   GridSchedule_injectStyles,
   null,
@@ -16612,21 +16611,13 @@ vue_runtime_esm["a" /* default */].use(buntpapier_src);
         var _session$speakers, _session$tags;
 
         if (this.onlyFavs && !this.favs.includes(session.code)) continue;
-        if (this.filteredTracks && this.filteredTracks.length && !this.filteredTracks.find(t => t.id === session.track)) continue;
-        let isTagFiltered = true;
+        const isTrackFilterOn = this.filteredTracks && this.filteredTracks.length;
+        const isTagsFilterOn = this.filteredTags && this.filteredTags.length;
 
-        if (this.filteredTags && this.filteredTags.length) {
-          isTagFiltered = false;
-
-          for (const sessionTag of session.tags) {
-            if (this.filteredTags.find(t => t.tag === sessionTag)) {
-              isTagFiltered = true;
-              break;
-            }
-          }
+        if (isTrackFilterOn || isTagsFilterOn) {
+          if ((!isTrackFilterOn || !this.filteredTracks.find(t => t.id === session.track)) && (!isTagsFilterOn || !session.tags.some(sessionTag => this.filteredTags.find(t => t.tag === sessionTag)))) continue;
         }
 
-        if (isTagFiltered === false) continue;
         sessions.push({
           id: session.code,
           title: session.title,
@@ -16736,8 +16727,7 @@ vue_runtime_esm["a" /* default */].use(buntpapier_src);
       t.value = t.id;
       t.label = getLocalizedString(t.tag);
       this.allTags.push(t);
-    });
-    console.log(this.schedule); // set API URL before loading favs
+    }); // set API URL before loading favs
 
     this.apiUrl = window.location.origin + '/api/events/' + this.eventSlug + '/';
     this.favs = this.pruneFavs(await this.loadFavs(), this.schedule);
