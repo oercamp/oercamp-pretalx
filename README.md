@@ -15,6 +15,12 @@ contains the source-code for pretalx so we can develop on it.
 * Run ``sudo ./bin/build`` to build the project and the database.
 * Set up a user and an organizer by running ~~``docker exec -ti pretalx pretalx init``~~ -> ``./bin/pretalx init``. You will need to create a super-user too, see next section for it.
 
+### Installing Pretalx-Schedule
+
+Pretalx contains a Schedule Module. You will need it, because thats the whole "Scheduler"-Frontend in Pretalx.
+It has its own repo called [oercamp-pretalx-schedule](https://github.com/novagmbh/oercamp-pretalx-schedule).
+Please clone the repo and follow the installation instructions.
+
 #### How to create a superuser
 
 You can create a super-user interactively inside the docker container:

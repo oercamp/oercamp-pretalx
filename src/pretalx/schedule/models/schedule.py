@@ -631,13 +631,15 @@ class Schedule(PretalxModel):
             "submission__track",
             "submission__event",
             "submission__submission_type",
-        ).prefetch_related("submission__speakers")
+        ).prefetch_related("submission__speakers", "submission__tags")
         talks = talks.order_by("start")
         rooms = set() if not all_rooms else set(self.event.rooms.all())
         tracks = set()
         speakers = set()
+        tags = set()
         result = {
             "talks": [],
+            "tags": [],
             "version": self.version,
             "timezone": self.event.timezone,
             "event_start": self.event.date_from.isoformat(),
@@ -648,6 +650,7 @@ class Schedule(PretalxModel):
             if talk.submission:
                 tracks.add(talk.submission.track)
                 speakers |= set(talk.submission.speakers.all())
+                tags |= set(talk.submission.tags.all())
                 result["talks"].append(
                     {
                         "code": talk.submission.code if talk.submission else None,
@@ -662,6 +665,11 @@ class Schedule(PretalxModel):
                         ),
                         "speakers": (
                             [speaker.code for speaker in talk.submission.speakers.all()]
+                            if talk.submission
+                            else None
+                        ),
+                        "tags": (
+                            [tag.tag for tag in talk.submission.tags.all()]
                             if talk.submission
                             else None
                         ),
@@ -712,6 +720,14 @@ class Schedule(PretalxModel):
                 "avatar": user.get_avatar_url(event=self.event),
             }
             for user in speakers
+        ]
+        result["tags"] = [
+            {
+                "tag": atag.tag,
+                "public": atag.public,
+                "color": atag.color,
+            }
+            for atag in tags
         ]
         return result
 
