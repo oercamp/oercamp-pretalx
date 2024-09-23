@@ -1,0 +1,6 @@
+.btn-outline-success {
+    @include button-outline-variant($brand-primary, $brand-primary, $brand-success, $brand-success);
+    border-color: $brand-success !important;
+}
+
+
