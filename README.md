@@ -17,9 +17,16 @@ contains the source-code for pretalx so we can develop on it.
 
 ### Installing Pretalx-Schedule
 
-Pretalx contains a Schedule Module. You will need it, because thats the whole "Scheduler"-Frontend in Pretalx.
-It has its own repo called [oercamp-pretalx-schedule](https://github.com/novagmbh/oercamp-pretalx-schedule).
+Pretalx contains a Pretalx-Schedule Module. You will need it, because that's the whole "Scheduler"-Frontend in Pretalx.
+It has its own repository at [oercamp-pretalx-schedule](https://github.com/novagmbh/oercamp-pretalx-schedule).
 Please clone the repo and follow the installation instructions.
+Basically, pretalx uses a built & compressed version of this editor at ``src/pretalx/static/agenda/js/pretalx-schedule.js`` . So to make changes
+you should dit the pretalx-schedule repository, and then there is a command that builds and copies the code over to pretalx.
+
+### Running Pretalx-Schedule-Editor
+
+There is a module called "predalx-schedule-editor". It seems to need a running vite-server to function properly. So to use the schedule-editor, you will need to run ``src/pretalx/frontend/schedule-editor$ npm run build`` and then start the server with ``src/pretalx/frontend/schedule-editor$ npm start``
+
 
 #### How to create a superuser
 
