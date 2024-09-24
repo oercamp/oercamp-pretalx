@@ -33,6 +33,7 @@ WORKDIR /pretalx
 COPY pyproject.toml /pretalx
 COPY ./src /pretalx/src
 RUN pip3 install --upgrade-strategy eager -Ue ".[dev]"
+RUN pip3 install -e /pretalx/src/pretalx/plugins/pretalx-youtube
 RUN rm -f /pretalx/pyproject.toml
 RUN rm -rf /pretalx/src
 
