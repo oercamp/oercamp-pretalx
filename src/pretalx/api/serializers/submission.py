@@ -47,6 +47,7 @@ class BreakSerializer(SlotSerializer):
 class SubmissionSerializer(I18nAwareModelSerializer):
     submission_type = SlugRelatedField(slug_field="name", read_only=True)
     track = SlugRelatedField(slug_field="name", read_only=True)
+    custom_speaker_title = SerializerMethodField()
     slot = SlotSerializer(
         TalkSlot.objects.none().filter(is_visible=True), read_only=True
     )
@@ -121,6 +122,7 @@ class SubmissionSerializer(I18nAwareModelSerializer):
             "submission_type_id",
             "track",
             "track_id",
+            "custom_speaker_title",
             "state",
             "abstract",
             "description",
@@ -173,6 +175,7 @@ class SubmissionOrgaSerializer(SubmissionSerializer):
             "notes",
             "internal_notes",
             "tags",
+            "custom_speaker_title",
             "tag_ids",
             "favourite_count",
         ]

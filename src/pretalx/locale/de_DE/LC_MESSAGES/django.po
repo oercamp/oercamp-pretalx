@@ -8281,6 +8281,14 @@ msgstr "Entwurf"
 msgid "Proposal title"
 msgstr "Titel"
 
+#: pretalx/submission/models/submission.py:132
+msgid "Custom speaker title"
+msgstr "Benutzerdefinierter Vorträgername"
+
+#: src/pretalx/submission/models/submission.py:134
+msgid "This text will replace the speakers names in submissions."
+msgstr "Dieser Eintrag ersetzt den Namen des oder der Vortragenden."
+
 #: pretalx/submission/models/submission.py:163
 msgid "Pending proposal state"
 msgstr "Vorgemerkter Status"

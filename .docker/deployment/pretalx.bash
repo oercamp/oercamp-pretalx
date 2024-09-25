@@ -1,7 +1,7 @@
 #!/bin/bash
 cd /pretalx/src || exit 1
 export PRETALX_DATA_DIR="${PRETALX_DATA_DIR:-/data}"
-export HOME=/pretalx
+export HOME=/pretalx/src
 
 PRETALX_FILESYSTEM_LOGS="${PRETALX_FILESYSTEM_LOGS:-/data/logs}"
 PRETALX_FILESYSTEM_MEDIA="${PRETALX_FILESYSTEM_MEDIA:-/data/media}"

@@ -196,6 +196,7 @@ class SubmissionForm(ReadOnlyFlag, RequestRequire, forms.ModelForm):
             "submission_type",
             "track",
             "tags",
+            "custom_speaker_title",
             "abstract",
             "description",
             "notes",

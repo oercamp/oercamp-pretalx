@@ -66,6 +66,7 @@ class ScheduleExportForm(ExportForm):
             "track",
             "created",
             "tags",
+            "custom_speaker_title",
             "abstract",
             "description",
             "notes",

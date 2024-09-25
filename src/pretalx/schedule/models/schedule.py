@@ -668,6 +668,9 @@ class Schedule(PretalxModel):
                             if talk.submission
                             else None
                         ),
+                        "custom_speaker_title": (
+                            talk.submission.custom_speaker_title if talk.submission else None
+                        ),
                         "tags": (
                             [tag.tag for tag in talk.submission.tags.all()]
                             if talk.submission

@@ -125,6 +125,16 @@ class Submission(GenerateCode, PretalxModel):
     speakers = models.ManyToManyField(
         to="person.User", related_name="submissions", blank=True
     )
+
+    custom_speaker_title = models.CharField(
+        max_length=255,
+        default='',
+        verbose_name=_("Custom speaker title"),
+        help_text=_(
+            "This text will replace the speakers names in submissions."
+        ),
+    )
+
     event = models.ForeignKey(
         to="event.Event", on_delete=models.PROTECT, related_name="submissions"
     )

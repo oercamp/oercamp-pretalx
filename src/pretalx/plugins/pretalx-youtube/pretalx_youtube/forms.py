@@ -57,21 +57,21 @@ class YouTubeUrlForm(forms.Form):
                     #convert to /watch?v= url
                     url = 'https://youtube.com/watch?v=' + last_part
                 except Exception:
-                    self.add_error(key, _("00 Failed to parse the URL!"))
+                    self.add_error(key, _("Failed to parse the URL!"))
             elif "youtube.com" in value:
                 try:
                     url = urlparse(value)
                     qs = parse_qs(url.query)
                     result[key] = qs["v"][0]
                 except Exception:
-                    self.add_error(key, _("0 Failed to parse the URL!"))
+                    self.add_error(key, _("Failed to parse the URL!"))
             elif "youtu.be" in value:
                 try:
                     result[key] = value.split("/")[-1]
                 except Exception:
-                    self.add_error(key, _("1 Failed to parse the URL!"))
+                    self.add_error(key, _("Failed to parse the URL!"))
             else:
-                self.add_error(key, _("2 Please provide a YouTube URL!"))
+                self.add_error(key, _("Please provide a YouTube URL!"))
         return result
 
     def save(self):
