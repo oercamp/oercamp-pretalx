@@ -34,6 +34,11 @@ You can create a super-user interactively inside the docker container:
 * connect to your docker container: ``docker exec -it pretalx /bin/bash``
 * create one with ``python3 /pretalx/src/manage.py createsuperuser``
 
+#### Start MailPit
+
+Mailpit is configured for local development. Access it at http://localhost:8025/
+
+
 #### Tips when developing
 
 * Use ``./bin/pretalx`` to check all commands and also to check what environment python is using

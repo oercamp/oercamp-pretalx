@@ -4,3 +4,18 @@ services:
       - "80:80"
     volumes:
       - ./.docker/volumes/data:/pretalx/data
+    depends_on:
+      - mailpit
+  mailpit:
+    container_name: mailpit
+    image: axllent/mailpit
+    volumes:
+      - ./.docker/volumes/data/mailpit:/data
+    ports:
+      - 8025:8025
+      - 1025:1025
+    environment:
+      MP_MAX_MESSAGES: 5000
+      MP_DATABASE: /data/mailpit.db
+      MP_SMTP_AUTH_ACCEPT_ANY: 1
+      MP_SMTP_AUTH_ALLOW_INSECURE: 1

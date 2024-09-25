@@ -1,0 +1,50 @@
+{% extends "orga/base.html" %}
+{% load bootstrap4 %}
+{% load compress %}
+{% load i18n %}
+{% load static %}
+
+{% block content %}
+    {% compress js %}
+        <script defer src="{% static "vendored/moment-with-locales.js" %}"></script>
+        <script defer src="{% static "vendored/moment-timezone-with-data-10-year-range.js" %}"></script>
+        <script defer src="{% static "vendored/datetimepicker/bootstrap-datetimepicker.js" %}"></script>
+        <script defer src="{% static "orga/js/datetimepicker.js" %}"></script>
+    {% endcompress %}
+
+    <h2 class="d-flex">
+        {% trans "Set up public voting" %}
+        <div class="ml-auto">
+            <a class="btn btn-outline-info" href="{{ export_url }}">
+                {% translate "Download results CSV" %}
+            </a>
+            <a class="btn btn-info" href="{% if request.event.custom_domain %}{{ request.event.custom_domain }}{% endif %}{% url "plugins:pretalx_public_voting:signup" event=request.event.slug %}">
+                {% translate "Go to public voting" %}
+            </a>
+        </div>
+    </h2>
+    <p>
+        {% blocktrans trimmed %}
+            Public voting will show your submissions publicly, and will allow anybody who
+            provides a valid email address to vote. The email addresses are not saved,
+            so the process is anonymous.
+        {% endblocktrans %}
+    </p><p> </p>
+    <form method="post">
+        {% csrf_token %}
+        {% bootstrap_form form layout='event' %}
+        <div class="submit-group panel">
+            <span></span>
+            <span class="d-flex flex-row-reverse">
+                <button
+                    type="submit" class="btn btn-success btn-lg"
+                    name="action" value="save"
+                >
+                    <i class="fa fa-check"></i>
+                    {% trans "Save" %}
+                </button>
+            </span>
+        </div>
+    </form>
+
+{% endblock %}

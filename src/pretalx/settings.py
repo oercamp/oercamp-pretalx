@@ -285,11 +285,11 @@ if ADMINS:
 
 ## EMAIL SETTINGS
 MAIL_FROM = SERVER_EMAIL = DEFAULT_FROM_EMAIL = config.get("mail", "from")
+EMAIL_HOST = config.get("mail", "host")
+EMAIL_PORT = config.get("mail", "port")
 if DEBUG:
-    EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
+    EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
 else:
-    EMAIL_HOST = config.get("mail", "host")
-    EMAIL_PORT = config.get("mail", "port")
     EMAIL_HOST_USER = config.get("mail", "user")
     EMAIL_HOST_PASSWORD = config.get("mail", "password")
     EMAIL_USE_TLS = config.getboolean("mail", "tls")
