@@ -7,5 +7,6 @@ class YouTubeProvider(BaseRecordingProvider):
         if youtube:
             return {
                 "iframe": youtube.iframe,
-                "csp_header": "https://www.youtube-nocookie.com/",
+                # NOVA: THIS is a hacky change so that etherpad iframes work. Not the optimal solution, but less complex
+                "csp_header": "*" # "https://www.youtube-nocookie.com/",
             }

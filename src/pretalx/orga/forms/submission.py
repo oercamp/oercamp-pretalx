@@ -154,6 +154,14 @@ class SubmissionForm(ReadOnlyFlag, RequestRequire, forms.ModelForm):
             ),
         )
 
+        if "etherpad_url" in self.fields: self.fields["etherpad_url"] = forms.CharField(
+                    required=False,
+                    label=_("Etherpad URL"),
+                    help_text=_(
+                        "This will add an editable Etherpad to the public submission page."
+                    ),
+                )
+
     def clean(self):
         data = super().clean()
         start = data.get("start")
@@ -205,6 +213,7 @@ class SubmissionForm(ReadOnlyFlag, RequestRequire, forms.ModelForm):
             "track",
             "tags",
             "custom_speaker_title",
+            "etherpad_url",
             "abstract",
             "description",
             "notes",

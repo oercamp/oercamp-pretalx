@@ -83,6 +83,11 @@
                 {% if recording_iframe %}
                     {{ recording_iframe|safe }}
                 {% endif %}
+              {% if submission.etherpad_url %}
+                <div class="embed-responsive embed-responsive-16by9">
+                  <iframe src="{{ submission.etherpad_url }}" allowfullscreen></iframe>
+                </div>
+              {% endif %}
                 {% if submission.image %}
                     <div class="talk-image">
                         <a href="{{ submission.image.url }}" data-lightbox="{{ submission.image.url }}">

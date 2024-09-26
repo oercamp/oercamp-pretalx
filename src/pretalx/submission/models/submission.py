@@ -131,9 +131,18 @@ class Submission(GenerateCode, PretalxModel):
         default='',
         verbose_name=_("Custom speaker title"),
         help_text=_(
-            "This text will replace the speakers names in submissions."
+            "This will add an editable Etherpad to the public submission page."
         ),
     )
+
+    etherpad_url = models.CharField(
+            max_length=255,
+            default='',
+            verbose_name=_("Etherpad URL"),
+            help_text=_(
+                "This text will replace the speakers names in submissions."
+            ),
+        )
 
     event = models.ForeignKey(
         to="event.Event", on_delete=models.PROTECT, related_name="submissions"

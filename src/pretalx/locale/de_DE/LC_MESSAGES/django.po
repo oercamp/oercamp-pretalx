@@ -3887,6 +3887,16 @@ msgid "Leave empty to use the default duration for the session type."
 msgstr ""
 "Leer lassen, um die Standard-Dauer für diesen Einreichungstypen zu nehmen."
 
+#: src/pretalx/orga/forms/submission.py:159
+#: src/pretalx/submission/models/submission.py:141
+msgid "Etherpad URL"
+msgstr "Etherpad URL"
+
+#: src/pretalx/orga/forms/submission.py:161
+#: src/pretalx/submission/models/submission.py:134
+msgid "This will add an editable Etherpad to the public submission page."
+msgstr "Der eingegebene Etherpad-Link wird auf der Seite des Vortrags eingebunden."
+
 #: pretalx/orga/forms/submission.py:157
 msgid "The end time has to be after the start time."
 msgstr "Der Endzeitpunkt muss nach dem Beginn liegen."
