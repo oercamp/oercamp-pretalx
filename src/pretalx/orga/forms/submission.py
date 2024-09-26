@@ -146,6 +146,14 @@ class SubmissionForm(ReadOnlyFlag, RequestRequire, forms.ModelForm):
                 _("Leave empty to use the default duration for the session type.")
             )
 
+        if "custom_speaker_title" in self.fields: self.fields["custom_speaker_title"] = forms.CharField(
+            required=False,
+            label=_("Custom speaker title"),
+            help_text=_(
+                "This text will replace the speakers names in submissions."
+            ),
+        )
+
     def clean(self):
         data = super().clean()
         start = data.get("start")
