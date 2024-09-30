@@ -238,21 +238,5 @@ class ShowPageView(TemplateView):
         ctx = super().get_context_data()
         page = self.get_page()
         ctx["page_title"] = page.title
-
-        attributes = dict(ALLOWED_ATTRIBUTES)
-        attributes["a"] = ["href", "title", "target", "class"]
-        attributes["p"] = ["class"]
-        attributes["li"] = ["class"]
-        attributes["img"] = ["src", "title", "alt", "class"]
-
-        ctx["content"] = bleach.clean(
-            md.reset().convert(str(page.text)),
-            tags=ALLOWED_TAGS
-            | {"img", "p", "br", "s", "sup", "sub", "u", "h3", "h4", "h5", "h6"},
-            attributes=attributes,
-            protocols=ALLOWED_PROTOCOLS
-            | {
-                "data",
-            },
-        )
+        ctx["content"] = str(page.text)
         return ctx

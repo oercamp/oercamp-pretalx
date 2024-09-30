@@ -356,6 +356,7 @@ class Event(PretalxModel):
         ical = "{export}schedule.ics"
         schedule_widget_data = "{schedule}widgets/schedule.json"
         schedule_widget_script = "{base}widgets/schedule.js"
+        page_sponsors = "{base}pages/sponsors"
 
     class orga_urls(EventUrls):
         create = "/orga/event/new"

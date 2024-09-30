@@ -6,6 +6,9 @@
 {% block extra_title %}{% trans "Page" %} :: {% endblock %}
 
 {% block content %}
+    <script src="{% static "pretalx_pages/vendored/tinymce/tinymce.min.js" %}"></script>
+    <script defer src="{% static "pretalx_pages/js/init-wysiwyg-editor.js" %}"></script>
+
     <h1>{% trans "Page" %}</h1>
     <form action="" method="post" class="form-horizontal" data-id="{{ page.id }}">
         {% csrf_token %}
@@ -18,6 +21,10 @@
                     {% bootstrap_field form.slug layout="event" %}
                     {% bootstrap_field form.link_in_footer layout="event" %}
                 </fieldset>
+                <p>
+                  Bitte geben Sie im Feld <strong>"URL to static page"</strong> den Text <strong>"sponsors"</strong> ein,
+                  wenn die Seite als Sponsorenseite erkannt und angezeigt werden soll.
+                </p>
                 <fieldset id="content">
                     <legend>{% trans "Page content" %}</legend>
                     {% bootstrap_field form.text layout="event" %}
@@ -36,4 +43,16 @@
             {% endif %}
         </div>
     </form>
+
+<style>
+  .pell-content {
+    height: 400px;
+  }
+  .pell-editor {
+    margin-bottom: 1rem;
+    border: 1px solid #ced4da;
+    border-radius: 4px;
+  }
+</style>
+
 {% endblock %}

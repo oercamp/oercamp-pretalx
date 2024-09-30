@@ -29,7 +29,7 @@ class Page(LogMixin, models.Model):
     position = models.IntegerField(default=0)
     title = I18nCharField(verbose_name=_("Page title"))
     text = I18nTextField(
-        verbose_name=_("Page content"), help_text=phrases.base.use_markdown
+        verbose_name=_("Page content")
     )
     link_in_footer = models.BooleanField(
         default=False, verbose_name=_("Show link in the event footer")

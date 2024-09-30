@@ -1,0 +1,11 @@
+.pretalx-page-content {
+    margin-top: 3rem;
+}
+.sponsor-card {
+    display: flex;
+    flex-direction: row;
+    gap: 1rem;
+    #border: 1px solid rgba(0, 0, 0, 0.125);
+    #border-radius: 0.25rem;
+    margin: 1rem 1rem 3rem;
+}
