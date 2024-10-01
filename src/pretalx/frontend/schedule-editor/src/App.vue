@@ -14,6 +14,20 @@
 							i.fa.fa-sort-amount-desc(v-if="unassignedSort === method.name && unassignedSortDirection === -1")
 				session.new-break(:session="{title: '+ ' + $t('New break')}", :isDragged="false", @startDragging="startNewBreak", @click="showNewBreakHint", v-tooltip.fixed="{text: newBreakTooltip, show: newBreakTooltip}", @pointerleave="removeNewBreakHint")
 				session(v-for="un in unscheduled", :session="un", @startDragging="startDragging", :isDragged="draggedSession && un.id === draggedSession.id")
+				.zoom-buttons
+								span.text Zoom:
+								bunt-icon-button.btn-fav-container(@click.prevent.stop="zoomDecrease")
+									svg.star(viewBox="0 0 24 24", ref="minus")
+										path(d="M19,13H5V11H19V13Z"
+									)
+								bunt-icon-button.btn-fav-container(@click.prevent.stop="zoomIncrease")
+									svg.star(viewBox="0 0 24 24", ref="plus")
+										path(d="M19,13H13V19H11V13H5V11H11V5H13V11H19V13Z"
+									)
+								bunt-icon-button.btn-fav-container(@click.prevent.stop="zoomReset")
+									svg.star(viewBox="0 0 24 24", ref="refresh")
+										path(d="M17.65,6.35C16.2,4.9 14.21,4 12,4A8,8 0 0,0 4,12A8,8 0 0,0 12,20C15.73,20 18.84,17.45 19.73,14H17.65C16.83,16.33 14.61,18 12,18A6,6 0 0,1 6,12A6,6 0 0,1 12,6C13.66,6 15.14,6.69 16.22,7.78L13,11H20V4L17.65,6.35Z"
+									)
 			#schedule-wrapper(v-scrollbar.x.y="")
 				bunt-tabs.days(v-if="days", :modelValue="currentDay.format()", ref="tabs" :class="['grid-tabs']")
 					bunt-tab(v-for="day of days", :id="day.format()", :header="day.format(dateFormat)", @selected="changeDay(day)")
@@ -373,6 +387,44 @@ export default {
 				this.since = schedule.now
 				window.setTimeout(this.pollUpdates, 10 * 1000)
 			})
+		},
+		zoomIncrease () {
+			this.zoomChange(0.25)
+		},
+		zoomDecrease () {
+			this.zoomChange(-0.25)
+		},
+		zoomReset () {
+			this.zoomChange('reset')
+		},
+		/**
+		 * @param changeValue - can be a number or 'reset'
+		 */
+		zoomChange (changeValue) {
+			['c-grid-schedule', 'c-linear-schedule'].forEach((className) => {
+				const scheduleElArr = document.querySelectorAll(`.${className}`)
+				if (scheduleElArr.length > 0) {
+					const scheduleEl = scheduleElArr[0]
+					if (changeValue === 'reset') {
+						this.zoomSet(scheduleEl, 1)
+						return
+					}
+					const scheduleZoomValue = parseFloat(
+						window.getComputedStyle(scheduleEl).getPropertyValue('zoom')
+					)
+					if (!isNaN(scheduleZoomValue)) {
+						const newValue = scheduleZoomValue + changeValue
+						if (newValue > 2 || newValue < 0) {
+							this.zoomSet(scheduleEl, 1)
+						} else {
+							this.zoomSet(scheduleEl, newValue)
+						}
+					}
+				}
+			})
+		},
+		zoomSet (element, value) {
+			element.style.zoom = value
 		}
 	}
 }
@@ -466,6 +518,12 @@ export default {
 				&:hover, &.active
 					opacity: 0.8
 					background-color: $clr-dividers-light
+		> .zoom-buttons
+			display: flex
+			align-items: center
+			margin: 0 1rem
+			.text
+				font-size: 18px
 		.new-break.c-linear-schedule-session
 			min-height: 48px
 		#unassigned-sort-menu
