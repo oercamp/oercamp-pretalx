@@ -79,6 +79,14 @@ class PublicVotingSettings(models.Model):
         to="submission.Track", verbose_name=_("Limit to tracks"), blank=True
     )
 
+    hide_score = models.BooleanField(
+        verbose_name=_("Hide score"),
+        help_text=_(
+            "If activated, voting will not be possible"
+        ),
+        default=False,
+    )
+
     @cached_property
     def allowed_email_list(self):
         allowed = (self.allowed_emails or "").strip().lower()
@@ -88,7 +96,17 @@ class PublicVotingSettings(models.Model):
 
 
 class PublicVote(models.Model):
-    score = models.IntegerField(verbose_name=_("Score"))
+    score = models.IntegerField(
+        default=None,
+        verbose_name=_("Score"),
+        null=True,
+        blank=True,
+    )
+    comment = models.TextField(
+        null=True,
+        blank=True,
+        verbose_name=_("Comment"),
+    )
     submission = models.ForeignKey(
         to="submission.Submission",
         related_name="public_votes",

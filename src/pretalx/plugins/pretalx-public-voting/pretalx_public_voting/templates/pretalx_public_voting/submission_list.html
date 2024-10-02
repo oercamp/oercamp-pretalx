@@ -32,11 +32,18 @@
                             {% endif %}
                         </div>
                     </div>
-                    <div class="card-header card-footer">
+                    <div class="card-header card-footer"{% if request.event.public_vote_settings.hide_score %} style="visibility:hidden;height: 0px;"{% endif %}>
                         <strong>{% trans "Score" %}:</strong>
                         <div class="form ml-auto">
                             {% bootstrap_field submission.vote_form.score layout="inline" %}
                         </div>
+                    </div>
+                    <div class="card-header card-footer card-columns align-items-start">
+                      <strong class="px-2">{% trans "Comment" %}:</strong>
+                      <div class="form">
+                        {% bootstrap_field submission.vote_form.comment layout="inline" %}
+                      </div>
+                      <div class="btn-save-comment btn btn-info ml-auto mt-auto">{% trans "Save!" %}</div>
                     </div>
                 </div>
             {% empty %}

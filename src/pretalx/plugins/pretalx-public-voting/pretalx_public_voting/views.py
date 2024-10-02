@@ -75,6 +75,10 @@ class SubmissionListView(PublicVotingRequired, ListView):
             email_hash=self.hashed_email, submission_id=OuterRef("pk")
         ).values("score")
 
+        comments = PublicVote.objects.filter(
+            email_hash=self.hashed_email, submission_id=OuterRef("pk")
+        ).values("comment")
+
         # Idea is from https://stackoverflow.com/questions/4916851/django-get-a-queryset-from-array-of-ids-in-specific-order/37648265#37648265
         base_qs = self.request.event.submissions.all().filter(
             state=SubmissionStates.SUBMITTED
@@ -90,7 +94,10 @@ class SubmissionListView(PublicVotingRequired, ListView):
         )
 
         return (
-            base_qs.annotate(score=Subquery(votes))
+            base_qs.annotate(
+                score=Subquery(votes),
+                comment=Subquery(comments)
+            )
             .prefetch_related("speakers")
             .order_by(user_order)
         )
@@ -101,13 +108,13 @@ class SubmissionListView(PublicVotingRequired, ListView):
                 data=self.request.POST,
                 submission=submission,
                 hashed_email=self.hashed_email,
-                require_score=True,
-                initial={"score": submission.score},
+                require_score=False, #was True originally
+                initial={"score": submission.score, "comment": submission.comment},
                 event=self.request.event,
                 prefix=submission.code,
             )
         return VoteForm(
-            initial={"score": submission.score},
+            initial={"score": submission.score, "comment": submission.comment},
             event=self.request.event,
             prefix=submission.code,
         )
@@ -123,7 +130,7 @@ class SubmissionListView(PublicVotingRequired, ListView):
             submission.code: submission for submission in self.get_queryset()
         }
         for key in self.request.POST.keys():
-            if "score" not in key:
+            if "score" not in key and "comment" not in key:
                 continue
             prefix, __ = key.split("-", maxsplit=1)
             submission = submissions.get(prefix)
@@ -132,8 +139,8 @@ class SubmissionListView(PublicVotingRequired, ListView):
             form = self.get_form_for_submission(submission)
             if form.is_valid():
                 # Only save the form if the score has changed
-                if form.initial["score"] != form.cleaned_data["score"]:
-                    form.save()
+                # if form.initial["score"] != form.cleaned_data["score"]:
+                form.save()
         if request.POST.get("action") == "manual":
             messages.success(self.request, _("Thank you for your vote!"))
             return redirect(self.request.path)

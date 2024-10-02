@@ -187,6 +187,14 @@ msgstr ""
 msgid "Limit to tracks"
 msgstr ""
 
+#: local/pretalx-public-voting/pretalx_public_voting/models.py:83
+msgid "Hide score"
+msgstr "Bewertungen verstecken"
+
+#: local/pretalx-public-voting/pretalx_public_voting/models.py:83
+msgid "If activated, voting will not be possible"
+msgstr "Wenn aktiviert, können Nutzer keine Bewertung für Einreichungen abgeben."
+
 #: local/pretalx-public-voting/pretalx_public_voting/models.py:91
 #: local/pretalx-public-voting/pretalx_public_voting/templates/pretalx_public_voting/submission_list.html:36
 msgid "Score"

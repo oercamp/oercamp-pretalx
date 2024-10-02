@@ -89,8 +89,21 @@ class VoteForm(forms.Form):
         )
         self.fields["score"].widget.attrs["autocomplete"] = "off"
 
+        self.fields["comment"] = forms.CharField(
+            label=_("Comment"),
+            required=False,
+            widget=forms.Textarea(attrs={
+              'rows': 3,
+              'class': 'w-100 mx-2'
+            }),
+        )
+
     def clean_score(self):
-        score = int(self.cleaned_data.get("score"))
+        scoreData = self.cleaned_data.get("score")
+        if scoreData in [None, '']:
+            return None  # Convert empty string to None
+
+        score = int(scoreData)
         if not self.min_value <= score <= self.max_value:
             raise forms.ValidationError(
                 _(
@@ -103,7 +116,7 @@ class VoteForm(forms.Form):
         return PublicVote.objects.update_or_create(
             submission=self.submission,
             email_hash=self.hashed_email,
-            defaults={"score": self.cleaned_data["score"]},
+            defaults={"score": self.cleaned_data["score"], "comment": self.cleaned_data["comment"]},
         )
 
 
@@ -154,6 +167,7 @@ class PublicVotingSettingsForm(I18nModelForm):
             "anonymize_speakers",
             "show_session_image",
             "show_session_description",
+            "hide_score",
             "limit_tracks",
             "allowed_emails",
             "min_score",

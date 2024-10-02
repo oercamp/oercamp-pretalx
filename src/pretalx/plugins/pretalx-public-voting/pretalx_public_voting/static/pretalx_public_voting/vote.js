@@ -5,21 +5,31 @@ document.addEventListener('DOMContentLoaded', () => {
   const savingSpinner = document.querySelector(".fa-spin")
   const form = document.querySelector("form")
 
-  document.querySelectorAll('input[type="radio"]').forEach((input) => {
-    input.addEventListener('change', (event) => {
+  function saveForm() {
       savingSpinner.classList.remove("d-none")
       saved.classList.add("d-none")
       saving.classList.remove("d-none")
       window.setTimeout(() => {
           fetch(form.action, {
-            method: 'POST',
-            body: new FormData(form),
+              method: 'POST',
+              body: new FormData(form),
           }).then((res) => {
-            savingSpinner.classList.add("d-none")
-            saved.classList.remove("d-none")
-            saving.classList.add("d-none")
+              savingSpinner.classList.add("d-none")
+              saved.classList.remove("d-none")
+              saving.classList.add("d-none")
           })
       }, 5)
+  }
+
+  document.querySelectorAll('input[type="radio"]').forEach((input) => {
+    input.addEventListener('change', (event) => {
+      saveForm();
     })
   })
+
+    document.querySelectorAll('.btn-save-comment').forEach((input) => {
+        input.addEventListener('click', (event) => {
+            saveForm();
+        })
+    })
 })

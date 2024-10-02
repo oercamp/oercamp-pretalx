@@ -102,6 +102,12 @@ table td.numeric-left {
   color: $white;
   margin-left: 4px;
 }
+
+.badge-success {
+    color: $black !important;
+    background-color: $brand-success;
+}
+
 .export-qrcode-image,
 .qrcode-image {
   display: none;
