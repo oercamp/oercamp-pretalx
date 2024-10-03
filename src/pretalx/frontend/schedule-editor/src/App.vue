@@ -4,7 +4,7 @@
 		#main-wrapper
 			#unassigned.no-print(v-scrollbar.y="", @pointerenter="isUnassigning = true", @pointerleave="isUnassigning = false")
 				.title
-					bunt-input#filter-input(v-model="unassignedFilterString", :placeholder="$t('Filter sessions')", icon="search")
+					bunt-input#filter-input(v-model="unassignedFilterString", :placeholder="$t('Filter sessions')", icon="search", name="filter-session-input")
 					#unassigned-sort(@click="showUnassignedSortMenu = !showUnassignedSortMenu", :class="{'active': showUnassignedSortMenu}")
 						i.fa.fa-sort
 					#unassigned-sort-menu(v-if="showUnassignedSortMenu")
@@ -12,8 +12,6 @@
 							span {{ method.label }}
 							i.fa.fa-sort-amount-asc(v-if="unassignedSort === method.name && unassignedSortDirection === 1")
 							i.fa.fa-sort-amount-desc(v-if="unassignedSort === method.name && unassignedSortDirection === -1")
-				session.new-break(:session="{title: '+ ' + $t('New break')}", :isDragged="false", @startDragging="startNewBreak", @click="showNewBreakHint", v-tooltip.fixed="{text: newBreakTooltip, show: newBreakTooltip}", @pointerleave="removeNewBreakHint")
-				session(v-for="un in unscheduled", :session="un", @startDragging="startDragging", :isDragged="draggedSession && un.id === draggedSession.id")
 				.zoom-buttons
 								span.text Zoom:
 								bunt-icon-button.btn-fav-container(@click.prevent.stop="zoomDecrease")
@@ -28,6 +26,8 @@
 									svg.star(viewBox="0 0 24 24", ref="refresh")
 										path(d="M17.65,6.35C16.2,4.9 14.21,4 12,4A8,8 0 0,0 4,12A8,8 0 0,0 12,20C15.73,20 18.84,17.45 19.73,14H17.65C16.83,16.33 14.61,18 12,18A6,6 0 0,1 6,12A6,6 0 0,1 12,6C13.66,6 15.14,6.69 16.22,7.78L13,11H20V4L17.65,6.35Z"
 									)
+				session.new-break(:session="{title: '+ ' + $t('New break')}", :isDragged="false", @startDragging="startNewBreak", @click="showNewBreakHint", v-tooltip.fixed="{text: newBreakTooltip, show: newBreakTooltip}", @pointerleave="removeNewBreakHint")
+				session(v-for="un in unscheduled", :session="un", @startDragging="startDragging", :isDragged="draggedSession && un.id === draggedSession.id", @click="editorStart(un)")
 			#schedule-wrapper(v-scrollbar.x.y="")
 				bunt-tabs.days(v-if="days", :modelValue="currentDay.format()", ref="tabs" :class="['grid-tabs']")
 					bunt-tab(v-for="day of days", :id="day.format()", :header="day.format(dateFormat)", @selected="changeDay(day)")
@@ -64,9 +64,16 @@
 						.data-row(v-if="editorSession.track")
 							.data-label {{ $t('Track') }}
 							.data-value {{ getLocalizedString(editorSession.track.name) }}
-						.data-row(v-if="editorSession.room")
+						.data-row
 							.data-label {{ $t('Room') }}
-							.data-value {{ getLocalizedString(editorSession.room.name) }}
+							.data-value.select
+								select(v-model="editorSessionRoomInputId", :required="true")
+									template(v-for="room of roomsLookup")
+										option(:value="room.id", :selected="editorSessionRoomInputId === room.id") {{ getLocalizedString(room.name) }}
+						.data-row
+							.data-label {{ $t('Start') }}
+							.data-value.datetime-local
+								input(v-model="editorSessionStartInput", type="datetime-local", :min="editorSessionStartInputMin", :max="editorSessionStartInputMax", step="2", :required="true")
 						.data-row
 							.data-label {{ $t('Duration') }}
 							.data-value.number
@@ -84,7 +91,7 @@
 					.button-row
 						input(type="submit")
 						bunt-button#btn-delete(v-if="!editorSession.code", @click="editorDelete", :loading="editorSessionWaiting") {{ $t('Delete') }}
-						bunt-button#btn-save(@click="editorSave", :loading="editorSessionWaiting") {{ $t('Save') }}
+						bunt-button#btn-save(@click="editorSave", :loading="editorSessionWaiting", :disabled="!isEditorSessionInDayRange") {{ $t('Save') }}
 	bunt-progress-circular(v-else, size="huge", :page="true")
 </template>
 <script>
@@ -94,6 +101,7 @@ import GridSchedule from '~/components/GridSchedule'
 import Session from '~/components/Session'
 import api from '~/api'
 import { getLocalizedString } from '~/utils'
+import {toRaw} from "vue";
 
 export default {
 	name: 'PretalxSchedule',
@@ -125,6 +133,8 @@ export default {
 			showUnassignedSortMenu: false,
 			newBreakTooltip: '',
 			getLocalizedString,
+			editorSessionStartInput: '',
+			editorSessionRoomInputId: null
 		}
 	},
 	computed: {
@@ -231,7 +241,48 @@ export default {
 			if (this.days && this.days.length <= 5) return 'dddd DD. MMMM'
 			if (this.days && this.days.length <= 7) return 'dddd DD. MMM'
 			return 'ddd DD. MMM'
+		},
+		editorSessionStartInputMin () {
+			return this.days[0].format('YYYY-MM-DDTHH:mm')
+		},
+		editorSessionStartInputMax () {
+			return this.days.at(-1).clone().endOf('day').format('YYYY-MM-DDTHH:mm');
+		},
+		isEditorSessionInDayRange () {
+			if (
+				this.editorSession === null ||
+				this.editorSessionStartInput === ''
+			) {
+				return false
+			}
+
+			const newStart = moment(this.editorSessionStartInput)
+			const newEnd = moment(this.editorSessionStartInput).clone().add(this.editorSession.duration, 'm')
+			return (
+				this.isInDayRange(newStart) ||
+				this.isInDayRange(newEnd)
+			)
 		}
+	},
+	watch: {
+		editorSession(newValue) {
+			if (newValue !== null) {
+				/**
+				 * undefined is the case for unassigned sessions.
+				 */
+				if (this.editorSession.start === undefined) {
+					this.editorSessionStartInput = this.editorSessionStartInputMin;
+				} else {
+					this.editorSessionStartInput = this.editorSession.start.format('YYYY-MM-DDTHH:mm')
+				}
+
+				if (this.editorSession.room === undefined) {
+					this.editorSessionRoomInputId = null
+				} else {
+					this.editorSessionRoomInputId = this.editorSession.room.id
+				}
+			}
+		},
 	},
 	async created () {
 		const version = ''
@@ -294,11 +345,45 @@ export default {
 		},
 		editorSave () {
 			this.editorSessionWaiting = true
-			this.editorSession.end = moment(this.editorSession.start).clone().add(this.editorSession.duration, 'm')
+			const newStart = moment(this.editorSessionStartInput)
+			const newEnd = moment(this.editorSessionStartInput).clone().add(this.editorSession.duration, 'm')
+			const newRoom = this.lookupRoomById(this.editorSessionRoomInputId)
+
+			//TODO translations at some point
+			if (!newRoom) {
+				this.editorSessionWaiting = false
+				return alert(`Der angegebene Raum existiert nicht (Raum-Id: ${this.editorSessionRoomInputId})`)
+			}
+			if (
+				!this.isInDayRange(newStart) ||
+				!this.isInDayRange(newEnd)
+			) {
+				this.editorSessionWaiting = false
+				return alert('Start oder Ende der Veranstaltung liegen ausserhalb der Zeitgrenzen')
+			}
+
+			if (
+				this.isOverlappingWithAnotherSession(
+					this.editorSession.id,
+					newRoom.id,
+					newStart,
+					newEnd,
+				)
+			) {
+				this.editorSessionWaiting = false
+				return alert('Nicht möglich: Veranstaltung überkreuzt sich mit einer anderen Veranstaltung.')
+			}
+
+			this.editorSession.start = newStart
+			this.editorSession.end = newEnd
+			this.editorSession.room = newRoom.id
+
 			this.saveTalk(this.editorSession)
 
 			const session = this.schedule.talks.find(s => s.id === this.editorSession.id)
+			session.start = this.editorSession.start
 			session.end = this.editorSession.end
+			session.room = this.editorSession.room
 			if (!session.submission) {
 				session.title = this.editorSession.title
 			}
@@ -425,6 +510,40 @@ export default {
 		},
 		zoomSet (element, value) {
 			element.style.zoom = value
+		},
+		isInDayRange(start) {
+			return (
+				start.isSameOrAfter(this.days[0]) &&
+				start.isSameOrBefore(this.days.at(-1).clone().endOf('day'))
+			);
+		},
+		lookupRoomById(id) {
+			return Object.entries(this.roomsLookup).find((room) => room.id = id);
+		},
+		/**
+		 * See also GridSchedule.vue:76 (hoverSliceLegal)
+		 */
+		isOverlappingWithAnotherSession(
+			sessionId,
+			roomId,
+			start,
+			end,
+		) {
+			return this.sessions.filter(s => s.start).some((session) => {
+				return (
+					session.room.id === roomId &&
+					session.id !== sessionId &&
+					(
+						session.start.isSame(start) ||
+						session.end.isSame(end) ||
+						session.start.isBetween(start, end) ||
+						session.end.isBetween(start, end) ||
+						// or the other way around (to take care of either session containing the other completely)
+						start.isBetween(session.start, session.end) ||
+						end.isBetween(session.start, session.end)
+					)
+				)
+			})
 		}
 	}
 }
