@@ -14,8 +14,9 @@ RUN apt-get update && \
     mkdir /etc/pretalx && \
     mkdir /pretalx && \
     mkdir /pretalx/data && \
-    mkdir /pretalx/data/media && \
     mkdir /pretalx/public && \
+    mkdir /pretalx/public/static && \
+    mkdir /pretalx/public/media && \
     groupadd -g 1000 pretalxuser && \
     useradd -r -u 1000 -g pretalxuser -d /pretalx -ms /bin/bash pretalxuser && \
     echo 'pretalxuser ALL=(ALL) NOPASSWD: /usr/bin/supervisord' >> /etc/sudoers
@@ -47,7 +48,7 @@ RUN apt-get update && \
     rm -rf /var/lib/apt/lists/*
 
 RUN chmod +x /usr/local/bin/pretalx
-RUN chown -R pretalxuser:pretalxuser /pretalx /pretalx/data /pretalx/public
+RUN chown -R pretalxuser:pretalxuser /pretalx
 
 USER pretalxuser
 #VOLUME ["/etc/pretalx", "/pretalx/data", "/pretalx/public"]
