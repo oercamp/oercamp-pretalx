@@ -47,7 +47,7 @@ RUN apt-get update && \
     rm -rf /var/lib/apt/lists/*
 
 RUN chmod +x /usr/local/bin/pretalx
-RUN chown -R pretalxuser:pretalxuser /pretalx/data /pretalx/public
+RUN chown -R pretalxuser:pretalxuser /pretalx /pretalx/data /pretalx/public
 
 USER pretalxuser
 #VOLUME ["/etc/pretalx", "/pretalx/data", "/pretalx/public"]
