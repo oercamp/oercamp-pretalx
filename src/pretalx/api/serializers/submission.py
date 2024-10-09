@@ -48,6 +48,7 @@ class SubmissionSerializer(I18nAwareModelSerializer):
     submission_type = SlugRelatedField(slug_field="name", read_only=True)
     track = SlugRelatedField(slug_field="name", read_only=True)
     custom_speaker_title = SerializerMethodField()
+    emoji_label = SerializerMethodField()
     etherpad_url = SerializerMethodField()
     slot = SlotSerializer(
         TalkSlot.objects.none().filter(is_visible=True), read_only=True
@@ -124,6 +125,7 @@ class SubmissionSerializer(I18nAwareModelSerializer):
             "track",
             "track_id",
             "custom_speaker_title",
+            "emoji_label",
             "etherpad_url",
             "state",
             "abstract",
@@ -178,6 +180,7 @@ class SubmissionOrgaSerializer(SubmissionSerializer):
             "internal_notes",
             "tags",
             "custom_speaker_title",
+            "emoji_label",
             "etherpad_url",
             "tag_ids",
             "favourite_count",

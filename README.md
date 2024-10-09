@@ -25,7 +25,10 @@ you should dit the pretalx-schedule repository, and then there is a command that
 
 ### Running Pretalx-Schedule-Editor
 
-There is a module called "predalx-schedule-editor". It seems to need a running vite-server to function properly. So to use the schedule-editor, you will need to run ``src/pretalx/frontend/schedule-editor$ npm run build`` and then start the server with ``src/pretalx/frontend/schedule-editor$ npm start``
+This is only for developing (DEBUG = true):
+
+There is a module called "predalx-schedule-editor". It needs a running vite-server in develop-mode to function.
+So to use the schedule-editor, you need to run ``src/pretalx/frontend/schedule-editor$ npm run build`` and then start the server with ``src/pretalx/frontend/schedule-editor$ npm start``
 
 
 #### How to create a superuser

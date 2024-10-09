@@ -10,3 +10,16 @@ if (document.querySelector("#id_state")) {
   document.querySelector("#id_state").addEventListener("change", updateVisibility)
   updateVisibility()
 }
+
+document.addEventListener("DOMContentLoaded", function() {
+    new EmojiPicker({
+        trigger: [
+            {
+                selector: '#emoji_label_emoji_picker_button',
+                insertInto: '#id_emoji_label'
+            },
+        ],
+        closeButton: true,
+        specialButtons: 'green' // #008000, rgba(0, 128, 0);
+    });
+})

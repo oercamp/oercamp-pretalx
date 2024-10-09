@@ -131,8 +131,14 @@ class Submission(GenerateCode, PretalxModel):
         default='',
         verbose_name=_("Custom speaker title"),
         help_text=_(
-            "This will add an editable Etherpad to the public submission page."
+            "This text will replace the speakers names in submissions."
         ),
+    )
+
+    emoji_label = models.CharField(
+        max_length=255,
+        default='',
+        verbose_name=_("Emoji/Label"),
     )
 
     etherpad_url = models.CharField(
@@ -140,7 +146,7 @@ class Submission(GenerateCode, PretalxModel):
             default='',
             verbose_name=_("Etherpad URL"),
             help_text=_(
-                "This text will replace the speakers names in submissions."
+                "This will add an editable Etherpad to the public submission page."
             ),
         )
 

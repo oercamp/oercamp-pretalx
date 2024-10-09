@@ -671,6 +671,9 @@ class Schedule(PretalxModel):
                         "custom_speaker_title": (
                             talk.submission.custom_speaker_title if talk.submission else None
                         ),
+                        "emoji_label": (
+                            talk.submission.emoji_label if talk.submission else None
+                        ),
                         "tags": (
                             [tag.tag for tag in talk.submission.tags.all()]
                             if talk.submission

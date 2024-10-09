@@ -33,6 +33,7 @@
         <script defer src="{% static "orga/js/datetimepicker.js" %}"></script>
         <script defer src="{% static "orga/js/speakers.js" %}"></script>
         <script defer src="{% static "orga/js/submission_form.js" %}"></script>
+        <script defer src="{% static "vendored/vanilla-emoji-picker/vanilla-emoji-picker.js" %}"></script>
     {% endcompress %}
     <form method="post" enctype="multipart/form-data"><fieldset>
         {% if not submission %}
@@ -77,6 +78,7 @@
         {% if form.track %}{% bootstrap_field form.track layout='event' %}{% endif %}
         {% if form.tags %}{% bootstrap_field form.tags layout='event' %}{% endif %}
         {% bootstrap_field form.custom_speaker_title layout='event' %}
+        {% bootstrap_field form.emoji_label layout='event' addon_after='<button type="button" id="emoji_label_emoji_picker_button">+Emoji</button>' %}
         {% bootstrap_field form.etherpad_url layout='event' %}
         {% if form.abstract %}{% bootstrap_field form.abstract layout='event' %}{% endif %}
         {% if form.description %}{% bootstrap_field form.description layout='event' %}{% endif %}

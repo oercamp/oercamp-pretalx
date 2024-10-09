@@ -8299,6 +8299,10 @@ msgstr "Benutzerdefinierter Vorträgername"
 msgid "This text will replace the speakers names in submissions."
 msgstr "Dieser Eintrag ersetzt den Namen des oder der Vortragenden."
 
+#: pretalx/submission/models/submission.py:141
+msgid "Emoji/Label"
+msgstr "Emoji oder Label"
+
 #: pretalx/submission/models/submission.py:163
 msgid "Pending proposal state"
 msgstr "Vorgemerkter Status"

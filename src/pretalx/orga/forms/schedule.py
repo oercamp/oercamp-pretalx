@@ -67,6 +67,7 @@ class ScheduleExportForm(ExportForm):
             "created",
             "tags",
             "custom_speaker_title",
+            "emoji_label",
             "etherpad_url",
             "abstract",
             "description",

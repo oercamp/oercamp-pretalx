@@ -154,6 +154,11 @@ class SubmissionForm(ReadOnlyFlag, RequestRequire, forms.ModelForm):
             ),
         )
 
+        if "emoji_label" in self.fields: self.fields["emoji_label"] = forms.CharField(
+            required=False,
+            label=_("Emoji/Label"),
+        )
+
         if "etherpad_url" in self.fields: self.fields["etherpad_url"] = forms.CharField(
                     required=False,
                     label=_("Etherpad URL"),
@@ -213,6 +218,7 @@ class SubmissionForm(ReadOnlyFlag, RequestRequire, forms.ModelForm):
             "track",
             "tags",
             "custom_speaker_title",
+            "emoji_label",
             "etherpad_url",
             "abstract",
             "description",
