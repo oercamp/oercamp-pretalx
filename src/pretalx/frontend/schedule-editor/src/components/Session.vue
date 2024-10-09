@@ -6,7 +6,7 @@
 			.ampm(v-if="startTime.ampm") {{ startTime.ampm }}
 		.duration {{ durationPretty }}
 	.info
-		.title {{ getLocalizedString(session.title) }}
+		.title {{ getLocalizedString(session.emoji_label) }} {{ getLocalizedString(session.title) }}
 		.speakers(v-if="session.speakers") {{ session.speakers.map(s => s.name).join(', ') }}
 		.pending-line(v-if="session.state && session.state !== 'confirmed' && session.state !== 'accepted'")
 			i.fa.fa-exclamation-circle

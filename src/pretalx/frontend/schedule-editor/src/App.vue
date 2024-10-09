@@ -172,6 +172,7 @@ export default {
 					abstract: session.abstract,
 					speakers: session.speakers?.map(s => this.speakersLookup[s]),
 					track: this.tracksLookup[session.track],
+					emoji_label: session.emoji_label,
 					duration: session.duration,
 					state: session.state,
 				})
@@ -213,6 +214,7 @@ export default {
 					duration: moment(session.end).diff(session.start, 'm'),
 					speakers: session.speakers?.map(s => this.speakersLookup[s]),
 					track: this.tracksLookup[session.track],
+					emoji_label: session.emoji_label,
 					state: session.state,
 					room: this.roomsLookup[session.room]
 				})
