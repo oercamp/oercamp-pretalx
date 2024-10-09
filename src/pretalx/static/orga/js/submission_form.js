@@ -20,6 +20,6 @@ document.addEventListener("DOMContentLoaded", function() {
             },
         ],
         closeButton: true,
-        specialButtons: 'green' // #008000, rgba(0, 128, 0);
+        specialButtons: '#00175C' // $brand-primary
     });
 })
