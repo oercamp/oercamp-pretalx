@@ -1,6 +1,6 @@
 #!/bin/bash
 sudo -u pretalxuser -H git pull
-docker compose exec -u pretalxuser -T pretalx python3 /pretalx/src/manage.py makemigrations
+#docker compose exec -u pretalxuser -T pretalx python3 /pretalx/src/manage.py makemigrations <- what why??
 docker compose exec -u pretalxuser -T pretalx python3 /pretalx/src/manage.py migrate
 docker compose exec -u pretalxuser -T pretalx python3 /pretalx/src/manage.py rebuild --npm-install
 docker compose exec -u pretalxuser -T pretalx python3 /pretalx/src/manage.py regenerate_css

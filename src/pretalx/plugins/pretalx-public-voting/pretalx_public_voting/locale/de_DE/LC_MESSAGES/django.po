@@ -259,6 +259,10 @@ msgstr "Das Titelbild des Vortags"
 msgid "Save!"
 msgstr "Speichern!"
 
+#: local/pretalx-public-voting/pretalx_public_voting/templates/pretalx_public_voting/submission_list.html:50
+msgid "Comments from other users"
+msgstr "Kommentare anderer Nutzer"
+
 #: local/pretalx-public-voting/pretalx_public_voting/templates/pretalx_public_voting/submission_list.html:59
 msgid ""
 "This page is invalid. Please double-check that you have followed a complete "

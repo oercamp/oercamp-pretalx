@@ -33,18 +33,30 @@
                         </div>
                     </div>
                     <div class="card-header card-footer"{% if request.event.public_vote_settings.hide_score %} style="visibility:hidden;height: 0px;"{% endif %}>
-                        <strong>{% trans "Score" %}:</strong>
+                        <strong class="w-25 pr-2">{% trans "Score" %}:</strong>
                         <div class="form ml-auto">
                             {% bootstrap_field submission.vote_form.score layout="inline" %}
                         </div>
                     </div>
                     <div class="card-header card-footer card-columns align-items-start">
-                      <strong class="pr-2">{% trans "Comment" %}:</strong>
-                      <div class="form">
+                      <strong class="w-25 pr-2">{% trans "Comment" %}:</strong>
+                      <div class="flex-grow-1">
                         {% bootstrap_field submission.vote_form.comment layout="inline" %}
                       </div>
                       <div class="btn-save-comment btn btn-info ml-auto mt-auto">{% trans "Save!" %}</div>
                     </div>
+                    {% if submission.comments|length > 0 %}
+                    <div class="card-header card-footer card-columns align-items-start">
+                      <strong class="w-25 pr-2">{% trans "Comments from other users" %}:</strong>
+                      <div class="flex-grow-1">
+                        {% for submission_comment in submission.comments %}
+                          <p class="card p-2 bg-light">
+                            {{ submission_comment }}
+                          </p>
+                        {% endfor %}
+                      </div>
+                    </div>
+                  {% endif %}
                 </div>
             {% empty %}
                 <p>No submissions yet.</p>

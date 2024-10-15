@@ -123,6 +123,15 @@ class SubmissionListView(PublicVotingRequired, ListView):
         result = super().get_context_data(**kwargs)
         for submission in result["submissions"]:
             submission.vote_form = self.get_form_for_submission(submission)
+            submission.comments = (
+                submission.public_votes
+                .exclude(comment='')
+                .exclude(comment__isnull=True)
+                .exclude(comment__regex=r'^\s*$')
+                .exclude(email_hash=self.hashed_email)
+                .order_by('timestamp')
+                .values_list("comment", flat=True)
+            )
         return result
 
     def post(self, request, *args, **kwargs):
