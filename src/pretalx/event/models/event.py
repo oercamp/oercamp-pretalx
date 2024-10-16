@@ -314,6 +314,26 @@ class Event(PretalxModel):
     )
     plugins = models.TextField(null=True, blank=True, verbose_name=_("Plugins"))
 
+    pretix_api_key = models.CharField(
+        max_length=255,
+        null=True,
+        blank=True,
+        verbose_name=_("Pretix API Key"),
+        help_text=_(
+            "Provide the Pretix API authentication Token to use the features connected to Pretix."
+        ),
+    )
+
+    pretix_identifier_question_participant_list = models.CharField(
+            max_length=255,
+            null=True,
+            blank=True,
+            verbose_name=_("Participant list question-identifier "),
+            help_text=_(
+                "Provide the identifier for the question, if attendee permits to be displayed on participant list."
+            ),
+        )
+
     template_names = [
         f"{template}_template"
         for template in ("accept", "ack", "reject", "update", "question")
@@ -358,6 +378,7 @@ class Event(PretalxModel):
         schedule_widget_script = "{base}widgets/schedule.js"
         page_sponsors = "{base}page/sponsors"
         page_public_voting = "{base}p/voting/signup"
+        participants = "{base}participants/"
 
     class orga_urls(EventUrls):
         create = "/orga/event/new"

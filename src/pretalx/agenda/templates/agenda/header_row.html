@@ -13,6 +13,9 @@
         <a href="{{ request.event.urls.speakers }}" class="btn btn-outline-success {% if "/speaker/" in request.path %} active{% endif %}">
             <i class="fa fa-group"></i> {{ phrases.schedule.speakers }}
         </a>
+        <a href="{{ request.event.urls.participants }}" class="btn btn-outline-success {% if "/participants/" in request.path %} active{% endif %}">
+        <i class="fa fa-group"></i> Teilnahmeliste
+        </a>
         <a href="{{ request.event.urls.page_sponsors }}" class="btn btn-outline-success {% if "/page/sponsors/" in request.path %} active{% endif %}">
           <i class="fa fa-group"></i> Kooperationspartner*innen
         </a>

@@ -133,6 +133,24 @@ class EventForm(ReadOnlyFlag, I18nHelpText, JsonSubfieldMixin, I18nModelForm):
         label=_("Ask search engines not to index the event pages"), required=False
     )
 
+    pretix_api_key = forms.CharField(
+        required=False,
+        widget=forms.TextInput(),
+        label=_("Pretix API Key"),
+        help_text=_(
+            "Provide the Pretix API authentication Token to use the features connected to Pretix."
+        ),
+    )
+
+    pretix_identifier_question_participant_list = forms.CharField(
+        required=False,
+        widget=forms.TextInput(),
+        label=_("Participant list question-identifier "),
+        help_text=_(
+            "Provide the identifier for the question, if attendee permits to be displayed on participant list."
+        ),
+    )
+
     def __init__(self, *args, **kwargs):
         self.is_administrator = kwargs.pop("is_administrator", False)
         super().__init__(*args, **kwargs)
@@ -327,6 +345,8 @@ class EventForm(ReadOnlyFlag, I18nHelpText, JsonSubfieldMixin, I18nModelForm):
             "header_image",
             "landing_page_text",
             "featured_sessions_text",
+            "pretix_api_key",
+            "pretix_identifier_question_participant_list"
         ]
         field_classes = {
             "logo": ImageField,

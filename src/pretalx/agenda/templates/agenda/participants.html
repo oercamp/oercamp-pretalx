@@ -1,0 +1,22 @@
+{% extends "agenda/base.html" %}
+{% load compress %}
+{% load i18n %}
+{% load rich_text %}
+{% load static %}
+
+{% block agenda_content %}
+{% include "agenda/header_row.html" %}
+<p></p>
+<article>
+  {% if not isPretixParticipantsApiConfigured %}
+    <p>Die Teilnehmerliste ist zur Zeit nicht verfügbar</p>
+  {% else %}
+
+    <pre>{{ participantsApiResponse }}</pre>
+
+    {% for participant in participants %}
+      <p>Array Element: {{ participant }}</p>
+    {% endfor %}
+  {% endif %}
+</article>
+{% endblock %}
