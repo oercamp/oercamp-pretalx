@@ -357,6 +357,7 @@ class Event(PretalxModel):
         schedule_widget_data = "{schedule}widgets/schedule.json"
         schedule_widget_script = "{base}widgets/schedule.js"
         page_sponsors = "{base}page/sponsors"
+        page_public_voting = "{base}p/voting/signup"
 
     class orga_urls(EventUrls):
         create = "/orga/event/new"

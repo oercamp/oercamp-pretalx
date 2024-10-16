@@ -3,6 +3,7 @@
 {% load i18n %}
 
 {% block content %}
+    {% include "agenda/header_row.html" with with_margin=True %}
     <h1>{% trans "Public voting signup" %}</h1>
 
     <p>{% blocktrans trimmed with event_name=request.event.name %}

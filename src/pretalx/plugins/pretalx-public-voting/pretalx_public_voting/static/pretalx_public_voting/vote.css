@@ -19,9 +19,6 @@
   max-height: 200px;
   overflow: hidden;
 }
-nav {
-  margin-top: 32px;
-}
 #save-bar {
   position: fixed;
   display: flex;

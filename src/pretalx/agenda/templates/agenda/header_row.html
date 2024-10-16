@@ -4,14 +4,21 @@
     <div class="navigation">
         <a href="{{ request.event.urls.schedule }}" class="btn btn-outline-success {% if "/schedule/" in request.path %} active{% endif %}">
             <i class="fa fa-calendar"></i> {{ phrases.schedule.schedule }}
-            {% if request.event.display_settings.schedule_display != "list" %}
-                </a><a href="{{ request.event.urls.talks }}" class="btn btn-outline-success {% if "/talk/" in request.path %} active{% endif %}">
-                    <i class="fa fa-comments-o"></i> {{ phrases.schedule.sessions }}
-            {% endif %}
-        </a><a href="{{ request.event.urls.speakers }}" class="btn btn-outline-success {% if "/speaker/" in request.path %} active{% endif %}">
-            <i class="fa fa-group"></i> {{ phrases.schedule.speakers }}</a>
-      </a><a href="{{ request.event.urls.page_sponsors }}" class="btn btn-outline-success {% if "/page/sponsors/" in request.path %} active{% endif %}">
-      <i class="fa fa-group"></i> Kooperationspartner*innen</a>
+        </a>
+        {% if request.event.display_settings.schedule_display != "list" %}
+           <a href="{{ request.event.urls.talks }}" class="btn btn-outline-success {% if "/talk/" in request.path %} active{% endif %}">
+              <i class="fa fa-comments-o"></i> {{ phrases.schedule.sessions }}
+           </a>
+        {% endif %}
+        <a href="{{ request.event.urls.speakers }}" class="btn btn-outline-success {% if "/speaker/" in request.path %} active{% endif %}">
+            <i class="fa fa-group"></i> {{ phrases.schedule.speakers }}
+        </a>
+        <a href="{{ request.event.urls.page_sponsors }}" class="btn btn-outline-success {% if "/page/sponsors/" in request.path %} active{% endif %}">
+          <i class="fa fa-group"></i> Kooperationspartner*innen
+        </a>
+        <a href="{{ request.event.urls.page_public_voting }}" class="btn btn-outline-success {% if "/p/voting/signup/" in request.path %} active{% endif %}">
+          <i class="fa fa-comment-o"></i> Öffentlichen Abstimmung
+        </a>
     </div>
     <div class="header-right">
         {% if with_extra %}

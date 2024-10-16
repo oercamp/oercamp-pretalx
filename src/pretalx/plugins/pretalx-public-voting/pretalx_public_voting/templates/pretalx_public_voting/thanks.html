@@ -3,6 +3,7 @@
 {% load i18n %}
 
 {% block content %}
+    {% include "agenda/header_row.html" with with_margin=True %}
     <h1>{% trans "Thanks for signing up!" %}</h1>
 
     {% blocktrans trimmed %}
