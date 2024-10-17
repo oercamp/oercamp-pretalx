@@ -18,7 +18,7 @@
   <div class="p-3">
     {% if attendees|length > 0 %}
       {% for attendee in attendees %}
-        <p><strong>{{attendee}}</strong></p>
+        <p><i class="fa fa-user pr-2"></i><strong>{{attendee}}</strong></p>
       {% endfor %}
     {% else %}
     <p><strong>-</strong></p>

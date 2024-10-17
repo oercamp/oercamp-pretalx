@@ -24,13 +24,11 @@ from pretalx.common.views.mixins import (
     PermissionRequired,
     SocialMediaCardMixin,
 )
-from pretalx.person.models import SpeakerProfile, User
-from pretalx.submission.models import QuestionTarget
 
 
 
 class ParticipantsList(EventPermissionRequired, ListView):
-    context_object_name = "participants"
+    context_object_name = "attendees"
     template_name = "agenda/participants.html"
     permission_required = "agenda.view_schedule"
 
@@ -41,7 +39,6 @@ class ParticipantsList(EventPermissionRequired, ListView):
         else:
             return False
 
-    @context
     @cached_property
     def attendees(self):
         url = f"https://{self.request.event.pretix_api_domain}/api/v1/organizers/{self.request.event.pretix_api_organisator_slug}/events/{self.request.event.pretix_api_event_slug}/orders/"
@@ -70,9 +67,12 @@ class ParticipantsList(EventPermissionRequired, ListView):
                         # Iterate through the answers list
                         for answer in position.get('answers', []):
                             # Check if question_identifier is 'allow_participant_list' and answer is 'True'
-                            if answer.get('question_identifier') == self.request.event.pretix_identifier_question_participant_list and answer.get('answer') == 'True':
+                            if answer.get('question_identifier') == 'allow_participant_list' and answer.get('answer') == 'True':
                                 # Add attendee_email to the result array
                                 attendee_names.append(position['attendee_name'])
 
         #return JsonResponse(data)  # Return the data as a response to the client
         return attendee_names
+
+    def get_queryset(self):
+        return self.attendees
