@@ -287,17 +287,15 @@ if ADMINS:
 MAIL_FROM = SERVER_EMAIL = DEFAULT_FROM_EMAIL = config.get("mail", "from")
 EMAIL_HOST = config.get("mail", "host")
 EMAIL_PORT = config.get("mail", "port")
-if DEBUG:
-    #EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
-    EMAIL_BACKEND = "django.core.mail.backends.filebased.EmailBackend" # This is temporary for production until email server is configured
-    EMAIL_FILE_PATH = "/pretalx/data/emails"  #This is temporary for production until email server is configured
-else:
-    EMAIL_BACKEND = "django.core.mail.backends.filebased.EmailBackend" # This is temporary for production until email server is configured
-    EMAIL_FILE_PATH = "/pretalx/data/emails"  #This is temporary for production until email server is configured
-    EMAIL_HOST_USER = config.get("mail", "user")
-    EMAIL_HOST_PASSWORD = config.get("mail", "password")
-    EMAIL_USE_TLS = config.getboolean("mail", "tls")
-    EMAIL_USE_SSL = config.getboolean("mail", "ssl")
+EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
+#if DEBUG:
+    #EMAIL_BACKEND = "django.core.mail.backends.filebased.EmailBackend" # This is temporary for production until email server is configured
+    #EMAIL_FILE_PATH = "/pretalx/data/emails"  #This is temporary for production until email server is configured
+
+EMAIL_HOST_USER = config.get("mail", "user")
+EMAIL_HOST_PASSWORD = config.get("mail", "password")
+EMAIL_USE_TLS = config.getboolean("mail", "tls")
+EMAIL_USE_SSL = config.getboolean("mail", "ssl")
 
 
 ## CACHE SETTINGS

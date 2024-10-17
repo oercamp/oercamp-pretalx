@@ -301,6 +301,7 @@ class QueuedMail(PretalxModel):
         to = self.to.split(",") if self.to else []
         if self.id:
             to += [user.email for user in self.to_users.all()]
+        # Hint: You can remove "_async" for fast debugging, to see results in pretalx.log
         mail_send_task.apply_async(
             kwargs={
                 "to": to,
