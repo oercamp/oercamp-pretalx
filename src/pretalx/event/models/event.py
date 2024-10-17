@@ -324,15 +324,45 @@ class Event(PretalxModel):
         ),
     )
 
+    pretix_api_domain = models.CharField(
+        max_length=255,
+        null=True,
+        blank=True,
+        verbose_name=_("Pretix Domain/Base-URL"),
+        help_text=_(
+            "Provide the Pretix Base-Url (without https/protocol)"
+        ),
+    )
+
+    pretix_api_organisator_slug = models.CharField(
+        max_length=255,
+        null=True,
+        blank=True,
+        verbose_name=_("Pretix organisator slug"),
+        help_text=_(
+            "Provide the Pretix organisator slug"
+        ),
+    )
+
+    pretix_api_event_slug = models.CharField(
+        max_length=255,
+        null=True,
+        blank=True,
+        verbose_name=_("Pretix event slug"),
+        help_text=_(
+            "Provide the Pretix event slug"
+        ),
+    )
+
     pretix_identifier_question_participant_list = models.CharField(
-            max_length=255,
-            null=True,
-            blank=True,
-            verbose_name=_("Participant list question-identifier "),
-            help_text=_(
-                "Provide the identifier for the question, if attendee permits to be displayed on participant list."
-            ),
-        )
+        max_length=255,
+        null=True,
+        blank=True,
+        verbose_name=_("Participant list question-identifier"),
+        help_text=_(
+            "Provide the identifier for the question, if attendee permits to be displayed on participant list."
+        ),
+    )
 
     template_names = [
         f"{template}_template"

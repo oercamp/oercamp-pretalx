@@ -83,6 +83,9 @@
                 {% translate "Pretix API settings" %}
               </legend>
               {% bootstrap_field form.pretix_api_key layout='event' %}
+              {% bootstrap_field form.pretix_api_domain layout='event' %}
+              {% bootstrap_field form.pretix_api_organisator_slug layout='event' %}
+              {% bootstrap_field form.pretix_api_event_slug layout='event' %}
               {% bootstrap_field form.pretix_identifier_question_participant_list layout='event' %}
             </fieldset>
           <fieldset>

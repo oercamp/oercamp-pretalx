@@ -142,10 +142,37 @@ class EventForm(ReadOnlyFlag, I18nHelpText, JsonSubfieldMixin, I18nModelForm):
         ),
     )
 
+    pretix_api_domain = forms.CharField(
+        required=False,
+        widget=forms.TextInput(),
+        label=_("Pretix Domain/Base-URL"),
+        help_text=_(
+            "Provide the Pretix Base-Url (without https/protocol)"
+        ),
+    )
+
+    pretix_api_organisator_slug = forms.CharField(
+        required=False,
+        widget=forms.TextInput(),
+        label=_("Pretix organisator slug"),
+        help_text=_(
+            "Provide the Pretix organisator slug"
+        ),
+    )
+
+    pretix_api_event_slug = forms.CharField(
+        required=False,
+        widget=forms.TextInput(),
+        label=_("Pretix event slug"),
+        help_text=_(
+            "Provide the Pretix event slug"
+        ),
+    )
+
     pretix_identifier_question_participant_list = forms.CharField(
         required=False,
         widget=forms.TextInput(),
-        label=_("Participant list question-identifier "),
+        label=_("Participant list question-identifier"),
         help_text=_(
             "Provide the identifier for the question, if attendee permits to be displayed on participant list."
         ),
@@ -346,6 +373,9 @@ class EventForm(ReadOnlyFlag, I18nHelpText, JsonSubfieldMixin, I18nModelForm):
             "landing_page_text",
             "featured_sessions_text",
             "pretix_api_key",
+            "pretix_api_domain",
+            "pretix_api_organisator_slug",
+            "pretix_api_event_slug",
             "pretix_identifier_question_participant_list"
         ]
         field_classes = {

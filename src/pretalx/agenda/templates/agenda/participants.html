@@ -8,15 +8,22 @@
 {% include "agenda/header_row.html" %}
 <p></p>
 <article>
+  <h1>Teilnahmeliste</h1>
   {% if not isPretixParticipantsApiConfigured %}
-    <p>Die Teilnehmerliste ist zur Zeit nicht verfügbar</p>
+    <p>Die Teilnahmeliste ist zur Zeit nicht verfügbar.</p>
   {% else %}
-
-    <pre>{{ participantsApiResponse }}</pre>
-
-    {% for participant in participants %}
-      <p>Array Element: {{ participant }}</p>
-    {% endfor %}
+  <p class="pt-3">
+    Folgende Teilnehmer haben sich für die Konferenz angemeldet:
+  </p>
+  <div class="p-3">
+    {% if attendees|length > 0 %}
+      {% for attendee in attendees %}
+        <p><strong>{{attendee}}</strong></p>
+      {% endfor %}
+    {% else %}
+    <p><strong>-</strong></p>
+    {% endif %}
   {% endif %}
+  </div>
 </article>
 {% endblock %}

@@ -3305,6 +3305,26 @@ msgstr ""
 msgid "Ask search engines not to index the event pages"
 msgstr "Veranstaltung von Indizierung in Suchmaschinen ausnehmen"
 
+#: pretalx/orga/forms/event.py:141
+msgid "Provide the Pretix API authentication Token to use the features connected to Pretix."
+msgstr "Geben Sie den Pretix API Authentifizierungs Token hier ein, damit Pretix-abhängige Features funktionieren."
+
+#: pretalx/orga/forms/event.py:150
+msgid "Provide the Pretix Base-Url (without https/protocol)"
+msgstr "Geben Sie hier die Pretix Basis-Url ein (ohne http(s) Protokoll)"
+
+#: pretalx/orga/forms/event.py:159
+msgid "Provide the Pretix organisator slug"
+msgstr "Geben Sie hier den Pretix Organisator Identifikator ein"
+
+#: pretalx/orga/forms/event.py:168
+msgid "Provide the Pretix event slug"
+msgstr "Geben Sie hier den Pretix Event Identifikator ein"
+
+#: pretalx/orga/forms/event.py:168
+msgid "Provide the identifier for the question, if attendee permits to be displayed on participant list."
+msgstr "Geben Sie hier den Pretix-Fragen-Identifikator ein zu der Frage für die Teilnahmelisten Erlaubis"
+
 #: pretalx/orga/forms/event.py:145
 #, python-brace-format
 msgid "You can find the page <a {href}>here</a>."
