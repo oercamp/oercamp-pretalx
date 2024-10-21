@@ -24,4 +24,19 @@ urlpatterns = [
         views.SubmissionListView.as_view(),
         name="talks",
     ),
+    re_path(
+        f"^(?P<event>{SLUG_REGEX})/p/voting/public/talks$",
+        views.PublicSubmissionListView.as_view(),
+        name="public_talks",
+    ),
+    re_path(
+        f"^(?P<event>{SLUG_REGEX})/p/voting/wishes/(?P<signed_user>[^/]+)/$",
+        views.SubmissionWishListView.as_view(),
+        name="wishes",
+    ),
+    re_path(
+        f"^(?P<event>{SLUG_REGEX})/p/voting/public/wishes/$",
+        views.PublicSubmissionWishListView.as_view(),
+        name="public_wishes",
+    ),
 ]

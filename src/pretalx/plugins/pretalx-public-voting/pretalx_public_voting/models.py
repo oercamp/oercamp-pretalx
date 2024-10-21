@@ -4,6 +4,7 @@ from django.utils.translation import gettext_lazy as _
 from django_scopes import ScopedManager
 from i18nfield.fields import I18nTextField
 from pretalx.common.text.phrases import phrases
+from pretalx.common.models.mixins import PretalxModel
 
 
 def get_dict():
@@ -123,3 +124,45 @@ class PublicVote(models.Model):
 
     def __str__(self):
         return f"Vote(score={self.score}, email_hash={self.email_hash}, timestamp={self.timestamp}, submission={self.submission.title})"
+
+
+class SubmissionWish(PretalxModel):
+    event = models.ForeignKey(
+        to="event.Event",
+        on_delete=models.CASCADE,
+        related_name="submission_wishes"
+    )
+    name = models.CharField(
+        max_length=255,
+        unique=True,
+        null=False,
+        blank=False
+    )
+
+
+class SubmissionWishVote(models.Model):
+    score = models.IntegerField(
+        default=None,
+        verbose_name=_("Score"),
+        null=True,
+        blank=True,
+    )
+    comment = models.TextField(
+        null=True,
+        blank=True,
+        verbose_name=_("Comment"),
+    )
+
+    submission_wish = models.ForeignKey(
+        to=SubmissionWish,
+        related_name="submissionwish_public_votes",
+        on_delete=models.CASCADE,
+    )
+    # The hashed email addresses are always 16 bytes long => 32 characters
+    email_hash = models.CharField(max_length=32, blank=False)
+    timestamp = models.DateTimeField(auto_now=True)
+
+    objects = ScopedManager(event="submission_wish__event")
+
+    class Meta:
+        unique_together = (("submission_wish", "email_hash"),)

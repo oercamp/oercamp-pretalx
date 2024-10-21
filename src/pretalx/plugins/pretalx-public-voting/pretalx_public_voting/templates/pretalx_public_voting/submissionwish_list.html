@@ -1,0 +1,73 @@
+{% extends "cfp/event/base.html" %}
+{% load bootstrap4 %}
+{% load i18n %}
+{% load rich_text %}
+{% load static %}
+
+{% block content %}
+    <script src="{% static "vendored/jquery-3.1.1.js" %}"></script>
+    <script src="{% static "pretalx_public_voting/vote.js" %}"></script>
+    <link rel="stylesheet" href="{% static "pretalx_public_voting/vote.css" %}" />
+
+    {% include "agenda/header_row.html" with with_margin=True %}
+    <h1>{% trans "Public voting" %}</h1>
+    {{ request.event.public_vote_settings.text|rich_text }}
+    {% if hashed_email %}
+        <form method="POST" >{% csrf_token %}
+            {% for submission in submission_wishes %}
+                <div class="card submission-card">
+                    <div class="card-body">
+                        <h3 class="card-title">{{ submission.name }}</h3>
+                    </div>
+                    <div class="card-header card-footer"{% if request.event.public_vote_settings.hide_score %} style="visibility:hidden;height: 0px;"{% endif %}>
+                        <strong class="w-25 pr-2">{% trans "Score" %}:</strong>
+                        <div class="form ml-auto">
+                            {% bootstrap_field submission.vote_form.score layout="inline" %}
+                        </div>
+                    </div>
+                    <div class="card-header card-footer card-columns align-items-start">
+                      <strong class="w-25 pr-2">{% trans "Comment" %}:</strong>
+                      <div class="flex-grow-1">
+                        {% bootstrap_field submission.vote_form.comment layout="inline" %}
+                      </div>
+                      <div class="btn-save-comment btn btn-info ml-auto mt-auto">{% trans "Save!" %}</div>
+                    </div>
+                    <div class="card-header card-footer card-columns align-items-start">
+                      <strong class="w-25 pr-2">{% trans "Comments from other users" %}:</strong>
+                      <div class="flex-grow-1">
+                        {% if submission.comments|length > 0 %}
+                          {% for submission_comment in submission.comments %}
+                            <p class="card p-2 bg-light">
+                              {{ submission_comment }}
+                            </p>
+                          {% endfor %}
+                        {% else %}
+                          <p>-</p>
+                        {% endif %}
+                      </div>
+                    </div>
+                </div>
+            {% empty %}
+                <p>No submissions yet.</p>
+            {% endfor %}
+            {% include "orga/includes/pagination.html" %}
+
+            <div id="save-bar">
+                <i class="fa fa-spinner fa-spin d-none"></i>
+                <div id="js-save" class="m-2">
+                    <span class="badge badge-primary d-none">Saving…</span>
+                    <span class="badge badge-success d-none">Saved!</span>
+                </div>
+                <noscript>
+                    <button class="btn btn-lg btn-info" name="action" value="manual">{% trans "Save!" %}</button>
+                </noscript>
+            </div>
+        </form>
+    {% else %}
+        <p>{% blocktrans trimmed %}
+            This page is invalid. Please double-check that you have followed a complete link to this place.
+        {% endblocktrans %}
+            <a href="{% url "plugins:pretalx_public_voting:signup" event=request.event.slug %}">{% trans "Click here to sign up for voting." %}</a>
+        </p>
+    {% endif %}
+{% endblock %}

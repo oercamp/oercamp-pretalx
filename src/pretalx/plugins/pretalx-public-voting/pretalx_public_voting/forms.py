@@ -5,7 +5,7 @@ from i18nfield.forms import I18nModelForm
 from pretalx.common.urls import build_absolute_uri
 from pretalx.mail.models import QueuedMail
 
-from .models import PublicVote, PublicVotingSettings
+from .models import PublicVote, PublicVotingSettings, SubmissionWishVote
 from .utils import event_sign, hash_email
 
 
@@ -38,13 +38,20 @@ class SignupForm(forms.Form):
             kwargs={"event": event.slug, "signed_user": email_signed},
         )
 
+        vote_wishes_url = build_absolute_uri(
+            "plugins:pretalx_public_voting:wishes",
+            kwargs={"event": event.slug, "signed_user": email_signed},
+        )
+
         mail_text = _(
             """Hi,
 
-you have registered to vote for submissions for {event.name}.
-Please confirm that this email address is valid by following this link:
+you have registered to vote for submissions or submission-wishes for {event.name}.
+Please confirm that this email address is valid by following one of the following links:
 
-    {vote_url}
+    Submissions: {vote_url}
+
+    Submission-wishes: {vote_wishes_url}
 
 If you did not register for voting, you can ignore this email.
 
@@ -57,7 +64,7 @@ The {event.name} organisers
             event=event,
             to=self.cleaned_data["email"],
             subject=_("Public voting registration"),
-            text=str(mail_text).format(vote_url=vote_url, event=event),
+            text=str(mail_text).format(vote_url=vote_url, vote_wishes_url=vote_wishes_url, event=event),
         ).send()
 
 
@@ -181,3 +188,60 @@ class PublicVotingSettingsForm(I18nModelForm):
         field_classes = {
             "limit_tracks": SafeModelMultipleChoiceField,
         }
+
+class SubmissionWishVoteForm(forms.Form):
+    def __init__(
+        self,
+        *args,
+        event=None,
+        submission_wish=None,
+        hashed_email=None,
+        require_score=False,
+        **kwargs,
+    ):
+        self.submission_wish = submission_wish
+        self.hashed_email = hashed_email
+        super().__init__(*args, **kwargs)
+        self.min_value = event.public_vote_settings.min_score
+        self.max_value = event.public_vote_settings.max_score
+        choices = []
+        for counter in range(abs(self.max_value - self.min_value) + 1):
+            value = self.min_value + counter
+            name = event.public_vote_settings.score_names.get(str(value)) or value
+            choices.append((str(value), name))
+        self.fields["score"] = forms.ChoiceField(
+            choices=choices,
+            required=require_score,
+            widget=forms.RadioSelect,
+        )
+        self.fields["score"].widget.attrs["autocomplete"] = "off"
+
+        self.fields["comment"] = forms.CharField(
+            label=_("Comment"),
+            required=False,
+            widget=forms.Textarea(attrs={
+              'rows': 3,
+              'class': 'w-100 mx-2'
+            }),
+        )
+
+    def clean_score(self):
+        scoreData = self.cleaned_data.get("score")
+        if scoreData in [None, '']:
+            return None  # Convert empty string to None
+
+        score = int(scoreData)
+        if not self.min_value <= score <= self.max_value:
+            raise forms.ValidationError(
+                _(
+                    f"Please assign a score between {self.min_value} and {self.max_value}!"
+                )
+            )
+        return score
+
+    def save(self):
+        return SubmissionWishVote.objects.update_or_create(
+            submission_wish=self.submission_wish,
+            email_hash=self.hashed_email,
+            defaults={"score": self.cleaned_data["score"], "comment": self.cleaned_data["comment"]},
+        )

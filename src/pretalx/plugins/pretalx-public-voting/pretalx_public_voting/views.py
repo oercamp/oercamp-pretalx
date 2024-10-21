@@ -16,8 +16,8 @@ from pretalx.common.views.mixins import PermissionRequired
 from pretalx.submission.models import Submission, SubmissionStates
 
 from .exporters import PublicVotingCSVExporter
-from .forms import PublicVotingSettingsForm, SignupForm, VoteForm
-from .models import PublicVote, PublicVotingSettings
+from .forms import PublicVotingSettingsForm, SignupForm, VoteForm, SubmissionWishVoteForm
+from .models import PublicVote, PublicVotingSettings, SubmissionWish, SubmissionWishVote
 from .utils import event_unsign
 
 
@@ -75,6 +75,7 @@ class SubmissionListView(PublicVotingRequired, ListView):
             email_hash=self.hashed_email, submission_id=OuterRef("pk")
         ).values("score")
 
+        #TODO: do we need this? get_context_data is fetching the comments later on
         comments = PublicVote.objects.filter(
             email_hash=self.hashed_email, submission_id=OuterRef("pk")
         ).values("comment")
@@ -187,4 +188,155 @@ class PublicVotingSettingsView(PermissionRequired, FormView):
         result["export_url"] = PublicVotingCSVExporter(
             self.request.event
         ).urls.base.full()
+        return result
+
+class PublicSubmissionListView(ListView):
+    model = Submission
+    template_name = "pretalx_public_voting/public_submission_list.html"
+    paginate_by = 20
+    context_object_name = "submissions"
+
+    def get_queryset(self):
+        # Idea is from https://stackoverflow.com/questions/4916851/django-get-a-queryset-from-array-of-ids-in-specific-order/37648265#37648265
+        base_qs = self.request.event.submissions.all().filter(
+            state=SubmissionStates.SUBMITTED
+        )
+        tracks = self.request.event.public_vote_settings.limit_tracks.all()
+        if tracks:
+            base_qs = base_qs.filter(track__in=tracks)
+        submission_pks = list(base_qs.values_list("pk", flat=True))
+        user_order = Case(
+            *[When(pk=pk, then=pos) for pos, pk in enumerate(submission_pks)]
+        )
+
+        return (
+            base_qs
+            .prefetch_related("speakers")
+            .order_by(user_order)
+        )
+
+    def get_context_data(self, **kwargs):
+        result = super().get_context_data(**kwargs)
+        for submission in result["submissions"]:
+            submission.comments = (
+                submission.public_votes
+                .exclude(comment='')
+                .exclude(comment__isnull=True)
+                .exclude(comment__regex=r'^\s*$')
+                .order_by('timestamp')
+                .values_list("comment", flat=True)
+            )
+        return result
+
+
+class SubmissionWishListView(PublicVotingRequired, ListView):
+    model = SubmissionWish
+    template_name = "pretalx_public_voting/submission_wish_list.html"
+    paginate_by = 20
+    context_object_name = "submission_wishes"
+
+    @context
+    @cached_property
+    def hashed_email(self):
+        return event_unsign(self.kwargs["signed_user"], self.request.event)
+
+    def get_queryset(self):
+        if not self.hashed_email:
+            # If the use wasn't valid, there is no point of returning a
+            # QuerySet with the talks
+            return None
+
+        votes = SubmissionWishVote.objects.filter(
+            email_hash=self.hashed_email, submission_wish_id=OuterRef("pk")
+        ).values("score")
+
+        #TODO: do we need this? get_context_data is fetching the comments later on
+        comments = SubmissionWishVote.objects.filter(
+            email_hash=self.hashed_email, submission_wish_id=OuterRef("pk")
+        ).values("comment")
+
+        # Idea is from https://stackoverflow.com/questions/4916851/django-get-a-queryset-from-array-of-ids-in-specific-order/37648265#37648265
+        base_qs = self.request.event.submission_wishes.all()
+
+        return (
+            base_qs.annotate(
+                score=Subquery(votes),
+                comment=Subquery(comments)
+            )
+        )
+
+    def get_form_for_submission_wish(self, submissionwish):
+        if self.request.method == "POST":
+            return SubmissionWishVoteForm(
+                data=self.request.POST,
+                submission_wish=submissionwish,
+                hashed_email=self.hashed_email,
+                require_score=False, #was True originally
+                initial={"score": submissionwish.score, "comment": submissionwish.comment},
+                event=self.request.event,
+                prefix=submissionwish.name,
+            )
+        return SubmissionWishVoteForm(
+            initial={"score": submissionwish.score, "comment": submissionwish.comment},
+            event=self.request.event,
+            prefix=submissionwish.name,
+        )
+
+    def get_context_data(self, **kwargs):
+        result = super().get_context_data(**kwargs)
+        for submissionwish in result["submission_wishes"]:
+            submissionwish.vote_form = self.get_form_for_submission_wish(submissionwish)
+            submissionwish.comments = (
+                submissionwish.submissionwish_public_votes
+                .exclude(comment='')
+                .exclude(comment__isnull=True)
+                .exclude(comment__regex=r'^\s*$')
+                .exclude(email_hash=self.hashed_email)
+                .order_by('timestamp')
+                .values_list("comment", flat=True)
+            )
+        return result
+
+    def post(self, request, *args, **kwargs):
+        submission_wishes = {
+            submissionwish.name: submissionwish for submissionwish in self.get_queryset()
+        }
+        for key in self.request.POST.keys():
+            if "score" not in key and "comment" not in key:
+                continue
+            prefix, __ = key.split("-", maxsplit=1)
+            submissionwish = submission_wishes.get(prefix)
+            if not submissionwish:
+                continue
+            form = self.get_form_for_submission_wish(submissionwish)
+            if form.is_valid():
+                # Only save the form if the score has changed
+                # if form.initial["score"] != form.cleaned_data["score"]:
+                form.save()
+        if request.POST.get("action") == "manual":
+            messages.success(self.request, _("Thank you for your vote!"))
+            return redirect(self.request.path)
+        return JsonResponse({})
+
+
+class PublicSubmissionWishListView(ListView):
+    model = SubmissionWish
+    template_name = "pretalx_public_voting/public_submissionwish_list.html"
+    paginate_by = 20
+    context_object_name = "submission_wishes"
+
+    def get_queryset(self):
+        return self.request.event.submission_wishes.all()
+
+    def get_context_data(self, **kwargs):
+        result = super().get_context_data(**kwargs)
+        for submissionwish in result["submission_wishes"]:
+            submissionwish.comments = (
+                submissionwish.submissionwish_public_votes
+                .exclude(comment='')
+                .exclude(comment__isnull=True)
+                .exclude(comment__regex=r'^\s*$')
+                .order_by('timestamp')
+                .values_list("comment", flat=True)
+            )
         return result

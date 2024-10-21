@@ -4,7 +4,7 @@ sudo -u pretalxuser -H git pull
 docker compose exec -u pretalxuser -T pretalx python3 /pretalx/src/manage.py migrate
 docker compose exec -u pretalxuser -T pretalx python3 /pretalx/src/manage.py rebuild --npm-install
 docker compose exec -u pretalxuser -T pretalx python3 /pretalx/src/manage.py clearcache
+docker compose exec -u pretalxuser -T pretalx python3 /pretalx/src/manage.py regenerate_css
 # well, this will clear the cache. there should be a better way but ok for now
 docker compose down
 docker compose -f docker-compose.yml -f docker-compose.prod.yml up -d
-docker compose exec -u pretalxuser -T pretalx python3 /pretalx/src/manage.py regenerate_css
