@@ -19,7 +19,7 @@ class Command(BaseCommand):
 
     def handle_regeneration(self, event, silent=False):
         # NOVA: removing async call "apply_async" for better control and debugging
-        regenerate_css.apply(args=(event.pk,), ignore_result=True)
+        regenerate_css.apply_async(args=(event.pk,), ignore_result=True)
         if not silent:
             self.stdout.write(
                 self.style.SUCCESS(

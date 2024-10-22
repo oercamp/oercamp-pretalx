@@ -79,6 +79,21 @@ Mailpit is configured for local development. Access it at http://localhost:8025/
 
 * SSH to the live server, change to workdir ``cd /sites/oercamp/oercamp-pretalx/`` and run ``./bin/deploy-prod``
 
+#### Setting up cronjobs on production (important for pretix API):
+
+* We run the cronjobs from the host machine. It's not the most optimal solution, but ok for now. Add these instructions to pretalxuser crontab:
+
+```
+Install cron if needed:
+apt-get update
+apt-get install -y cron
+
+Add to pretalxuser's crontab:
+*/10 * * * * cd /sites/oercamp/oercamp-pretalx && docker compose exec -u pretalxuser -T pretalx python3 /pretalx/src/manage.py runperiodic 2>&1
+5 5 5 */1 * cd /sites/oercamp/oercamp-pretalx && docker compose exec -u pretalxuser -T pretalx python3 /pretalx/src/manage.py clearsessions 2>&1
+*/5 * * * * cd /sites/oercamp/oercamp-pretalx && docker compose exec -u pretalxuser -T pretalx python3 /pretalx/src/manage.py pretix_import_session_wishes 2>&1
+```
+
 #### Tips & Troubleshooting
 
 * Exception log: ``(.docker/volumes)/data/logs/pretalx.log``

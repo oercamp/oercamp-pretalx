@@ -139,6 +139,8 @@ class SubmissionWish(PretalxModel):
         blank=False
     )
 
+    objects = ScopedManager(event="event")
+
 
 class SubmissionWishVote(models.Model):
     score = models.IntegerField(

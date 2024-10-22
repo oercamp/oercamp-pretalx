@@ -67,7 +67,7 @@ class ParticipantsList(EventPermissionRequired, ListView):
                         # Iterate through the answers list
                         for answer in position.get('answers', []):
                             # Check if question_identifier is 'allow_participant_list' and answer is 'True'
-                            if answer.get('question_identifier') == 'allow_participant_list' and answer.get('answer') == 'True':
+                            if answer.get('question_identifier') == event.pretix_identifier_question_participant_list and answer.get('answer') == 'True':
                                 # Add attendee_email to the result array
                                 attendee_names.append(position['attendee_name'])
 

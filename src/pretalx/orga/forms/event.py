@@ -178,6 +178,15 @@ class EventForm(ReadOnlyFlag, I18nHelpText, JsonSubfieldMixin, I18nModelForm):
         ),
     )
 
+    pretix_identifier_question_submission_wishes = forms.CharField(
+        required=False,
+        widget=forms.TextInput(),
+        label=_("Submission wishes question-identifier"),
+        help_text=_(
+            "Provide the identifier for the Submission wishes question."
+        ),
+    )
+
     def __init__(self, *args, **kwargs):
         self.is_administrator = kwargs.pop("is_administrator", False)
         super().__init__(*args, **kwargs)
@@ -376,7 +385,8 @@ class EventForm(ReadOnlyFlag, I18nHelpText, JsonSubfieldMixin, I18nModelForm):
             "pretix_api_domain",
             "pretix_api_organisator_slug",
             "pretix_api_event_slug",
-            "pretix_identifier_question_participant_list"
+            "pretix_identifier_question_participant_list",
+            "pretix_identifier_question_submission_wishes"
         ]
         field_classes = {
             "logo": ImageField,

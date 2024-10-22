@@ -364,6 +364,16 @@ class Event(PretalxModel):
         ),
     )
 
+    pretix_identifier_question_submission_wishes = models.CharField(
+        max_length=255,
+        null=True,
+        blank=True,
+        verbose_name=_("Submission wishes question-identifier"),
+        help_text=_(
+            "Provide the identifier for the Submission wishes question."
+        ),
+    )
+
     template_names = [
         f"{template}_template"
         for template in ("accept", "ack", "reject", "update", "question")
