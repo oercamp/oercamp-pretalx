@@ -408,7 +408,9 @@ class Event(PretalxModel):
         schedule_widget_script = "{base}widgets/schedule.js"
         page_sponsors = "{base}page/sponsors"
         page_public_voting = "{base}p/voting/public/talks"
+        page_public_voting_wishes = "{base}p/voting/public/wishes"
         participants = "{base}participants/"
+
 
     class orga_urls(EventUrls):
         create = "/orga/event/new"

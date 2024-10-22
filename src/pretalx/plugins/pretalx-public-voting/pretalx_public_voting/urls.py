@@ -25,7 +25,7 @@ urlpatterns = [
         name="talks",
     ),
     re_path(
-        f"^(?P<event>{SLUG_REGEX})/p/voting/public/talks$",
+        f"^(?P<event>{SLUG_REGEX})/p/voting/public/talks/$",
         views.PublicSubmissionListView.as_view(),
         name="public_talks",
     ),

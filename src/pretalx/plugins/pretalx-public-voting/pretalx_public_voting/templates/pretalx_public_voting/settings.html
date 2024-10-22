@@ -12,24 +12,40 @@
         <script defer src="{% static "orga/js/datetimepicker.js" %}"></script>
     {% endcompress %}
 
-    <h2 class="d-flex">
-        {% trans "Set up public voting" %}
-        <div class="ml-auto">
+    <h2 class="d-flex flex-row justify-content-between">
+        <p>
+          {% trans "Set up public voting" %}
+        </p>
+        <div class="flex-shrink-0">
             <a class="btn btn-outline-info" href="{{ export_url }}">
                 {% translate "Download results CSV" %}
             </a>
-            <a class="btn btn-info" href="{% if request.event.custom_domain %}{{ request.event.custom_domain }}{% endif %}{% url "plugins:pretalx_public_voting:signup" event=request.event.slug %}">
+            <a class="btn btn-info" target="_blank" href="{% if request.event.custom_domain %}{{ request.event.custom_domain }}{% endif %}{% url "plugins:pretalx_public_voting:signup" event=request.event.slug %}">
                 {% translate "Go to public voting" %}
             </a>
         </div>
     </h2>
+  <div class="d-flex flex-row justify-content-between">
     <p>
-        {% blocktrans trimmed %}
-            Public voting will show your submissions publicly, and will allow anybody who
-            provides a valid email address to vote. The email addresses are not saved,
-            so the process is anonymous.
-        {% endblocktrans %}
-    </p><p> </p>
+      {% blocktrans trimmed %}
+      Public voting will show your submissions publicly, and will allow anybody who
+      provides a valid email address to vote. The email addresses are not saved,
+      so the process is anonymous.
+      {% endblocktrans %}
+    </p>
+    <div class="flex-shrink-0">
+      <p class="text-right">
+        <a class="btn btn-outline-info m-1" target="_blank" href="{% if request.event.custom_domain %}{{ request.event.custom_domain }}{% endif %}{% url "plugins:pretalx_public_voting:public_talks" event=request.event.slug %}">
+        Einreichungen öffentlich
+        </a>
+        <br>
+        <a class="btn btn-outline-info m-1" target="_blank" href="{% if request.event.custom_domain %}{{ request.event.custom_domain }}{% endif %}{% url "plugins:pretalx_public_voting:public_wishes" event=request.event.slug %}">
+        Einreichungswünsche öffentlich
+        </a>
+      </p>
+    </div>
+  </div>
+    <p></p>
     <form method="post">
         {% csrf_token %}
         {% bootstrap_form form layout='event' %}
