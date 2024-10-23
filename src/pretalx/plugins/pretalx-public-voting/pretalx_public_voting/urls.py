@@ -39,4 +39,14 @@ urlpatterns = [
         views.PublicSubmissionWishListView.as_view(),
         name="public_wishes",
     ),
+    re_path(
+        f"^(?P<event>{SLUG_REGEX})/p/voting/talks/delete/(?P<submission_key>[0-9]+)/$",
+        views.PublicSubmissionDelete.as_view(),
+        name="submission_comment_delete",
+    ),
+    re_path(
+        f"^(?P<event>{SLUG_REGEX})/p/voting/wishes/delete/(?P<submission_key>[0-9]+)/$",
+        views.PublicSubmissionWishDelete.as_view(),
+        name="submissionwish_comment_delete",
+    )
 ]

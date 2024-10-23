@@ -11,6 +11,7 @@ from django.utils.translation import gettext_lazy as _
 from django.views.generic.base import TemplateView
 from django.views.generic.edit import FormView
 from django.views.generic.list import ListView
+from django.views.generic import DeleteView
 from django_context_decorator import context
 from pretalx.common.views.mixins import PermissionRequired
 from pretalx.submission.models import Submission, SubmissionStates
@@ -224,7 +225,7 @@ class PublicSubmissionListView(ListView):
                 .exclude(comment__isnull=True)
                 .exclude(comment__regex=r'^\s*$')
                 .order_by('timestamp')
-                .values_list("comment", flat=True)
+                .values('id', 'comment')
             )
         return result
 
@@ -337,6 +338,46 @@ class PublicSubmissionWishListView(ListView):
                 .exclude(comment__isnull=True)
                 .exclude(comment__regex=r'^\s*$')
                 .order_by('timestamp')
-                .values_list("comment", flat=True)
+                .values('id', 'comment')
             )
         return result
+
+###
+# This function will delete the whole database vote entry, including the score/voting.
+# This is not the right way. Better would be to delete only the comment, i.e. make the comment= ''.
+# But because the score voting is not used anyway right-now, we will keep this as it is.
+###
+class PublicSubmissionDelete(DeleteView):
+    model = PublicVote
+    pk_url_kwarg = 'submission_key'
+    permission_required = "person.is_administrator"
+
+    def get(self, request, *args, **kwargs):
+        # Instead of rendering a confirmation page, immediately redirect to success URL
+        return self.post(request, *args, **kwargs)
+
+    def get_success_url(self):
+        #return self.request.path
+        # Use the HTTP_REFERER to redirect back to the previous page
+        referer_url = self.request.META.get('HTTP_REFERER', '/')
+        return referer_url
+
+###
+# This function will delete the whole database vote entry, including the score/voting.
+# This is not the right way. Better would be to delete only the comment, i.e. make the comment= ''.
+# But because the score-voting is not used anyway right now, we will keep this as it is.
+###
+class PublicSubmissionWishDelete(DeleteView):
+    model = SubmissionWishVote
+    pk_url_kwarg = 'submission_key'
+    permission_required = "person.is_administrator"
+
+    def get(self, request, *args, **kwargs):
+        # Instead of rendering a confirmation page, immediately redirect to success URL
+        return self.post(request, *args, **kwargs)
+
+    def get_success_url(self):
+        #return self.request.path
+        # Use the HTTP_REFERER to redirect back to the previous page
+        referer_url = self.request.META.get('HTTP_REFERER', '/')
+        return referer_url

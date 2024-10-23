@@ -43,9 +43,19 @@
           <strong class="w-25 pr-2">{% trans "Public Comments" %}:</strong>
           <div class="flex-grow-1">
             {% for submission_comment in submission.comments %}
-            <p class="card p-2 bg-light">
-              {{ submission_comment }}
-            </p>
+            <div class="d-flex flex-row gap-2">
+              <p class="flex-grow-1 card p-2 bg-light">
+                {{ submission_comment.comment }}
+              </p>
+              {% if user.is_administrator %}
+              <form class="form-delete-comment" action="{% url "plugins:pretalx_public_voting:submission_comment_delete" event=request.event.slug submission_key=submission_comment.id %}" method="post">
+              {% csrf_token %}
+              <button type="submit" class="btn btn-danger btn-sm ml-2">
+                <i class="fa fa-trash"></i>
+              </button>
+              </form>
+              {% endif %}
+            </div>
             {% empty %}
             <p>-</p>
             {% endfor %}
