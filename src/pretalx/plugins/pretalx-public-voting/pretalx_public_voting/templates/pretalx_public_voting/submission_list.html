@@ -10,7 +10,7 @@
     <link rel="stylesheet" href="{% static "pretalx_public_voting/vote.css" %}" />
 
     {% include "agenda/header_row.html" with with_margin=True %}
-    <h1>{% trans "Public voting" %}</h1>
+    <h2>{% trans "Public voting" %} - Einreichungen</h2>
     {{ request.event.public_vote_settings.text|rich_text }}
     {% if hashed_email %}
         <form method="POST" >{% csrf_token %}
@@ -62,7 +62,7 @@
                     </div>
                 </div>
             {% empty %}
-                <p>No submissions yet.</p>
+                <p>Noch keine Einreichungen.</p>
             {% endfor %}
             {% include "orga/includes/pagination.html" %}
 

@@ -3322,8 +3322,16 @@ msgid "Provide the Pretix event slug"
 msgstr "Geben Sie hier den Pretix Event Identifikator ein"
 
 #: pretalx/orga/forms/event.py:168
-msgid "Provide the identifier for the question, if attendee permits to be displayed on participant list."
-msgstr "Geben Sie hier den Pretix-Fragen-Identifikator ein zu der Frage für die Teilnahmelisten Erlaubis"
+msgid "Provide the identifier for the Submission wishes question."
+msgstr "Geben Sie hier den Pretix-Fragen-Identifikator ein zu der Frage für die Veranstaltungswünsche."
+
+#: pretalx/orga/forms/event.py:168
+msgid "Participant list question-identifier"
+msgstr "Teilnahmeliste Pretix-Frage-ID"
+
+#: pretalx/orga/forms/event.py:168
+msgid "Submission wishes question-identifier"
+msgstr "Veranstaltungswünsche Pretix-Frage-ID"
 
 #: pretalx/orga/forms/event.py:145
 #, python-brace-format

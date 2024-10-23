@@ -157,8 +157,8 @@ class SubmissionWishVote(models.Model):
 
     submission_wish = models.ForeignKey(
         to=SubmissionWish,
-        related_name="submissionwish_public_votes",
         on_delete=models.CASCADE,
+        related_name="submissionwish_public_votes",
     )
     # The hashed email addresses are always 16 bytes long => 32 characters
     email_hash = models.CharField(max_length=32, blank=False)

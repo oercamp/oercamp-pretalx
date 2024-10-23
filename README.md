@@ -88,7 +88,7 @@ Install cron if needed:
 apt-get update
 apt-get install -y cron
 
-Add to pretalxuser's crontab:
+Add to (root user's) crontab:
 */10 * * * * cd /sites/oercamp/oercamp-pretalx && docker compose exec -u pretalxuser -T pretalx python3 /pretalx/src/manage.py runperiodic 2>&1
 5 5 5 */1 * cd /sites/oercamp/oercamp-pretalx && docker compose exec -u pretalxuser -T pretalx python3 /pretalx/src/manage.py clearsessions 2>&1
 */5 * * * * cd /sites/oercamp/oercamp-pretalx && docker compose exec -u pretalxuser -T pretalx python3 /pretalx/src/manage.py pretix_import_session_wishes 2>&1
@@ -97,4 +97,4 @@ Add to pretalxuser's crontab:
 #### Tips & Troubleshooting
 
 * Exception log: ``(.docker/volumes)/data/logs/pretalx.log``
-* Dependencies are not installed locally or on a volume. This means, if you change dependencies, then you should rebuild the docker image with ``docker compose build --no-cache [--progress=plain]``
+* (Python) Dependencies are not installed locally or on a volume. This means, if you change dependencies, then you should rebuild the docker image with ``docker compose build --no-cache [--progress=plain]``
