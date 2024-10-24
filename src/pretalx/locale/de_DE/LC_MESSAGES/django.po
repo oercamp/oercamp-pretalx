@@ -3322,16 +3322,100 @@ msgid "Provide the Pretix event slug"
 msgstr "Geben Sie hier den Pretix Event Identifikator ein"
 
 #: pretalx/orga/forms/event.py:168
+msgid "Provide the identifier for the organisation question."
+msgstr "Geben Sie die Pretix-Fragen-ID für die Organisation ein."
+
+#: pretalx/orga/forms/event.py:168
+msgid "Provide the identifier for the postcode question."
+msgstr "Geben Sie die Pretix-Fragen-ID für die PLZ ein."
+
+#: pretalx/orga/forms/event.py:168
+msgid "Provide the identifier for the city question."
+msgstr "Geben Sie die Pretix-Fragen-ID für den Ort ein."
+
+#: pretalx/orga/forms/event.py:168
+msgid "Provide the identifier for the country question."
+msgstr "Geben Sie die Pretix-Fragen-ID für das Land ein."
+
+#: pretalx/orga/forms/event.py:168
 msgid "Provide the identifier for the Submission wishes question."
 msgstr "Geben Sie hier den Pretix-Fragen-Identifikator ein zu der Frage für die Veranstaltungswünsche."
 
 #: pretalx/orga/forms/event.py:168
+msgid "Provide the identifier for the question, if attendee permits to be displayed on participant list."
+msgstr "Geben Sie hier den Pretix-Fragen-Identifikator ein zu der Frage für die Teilnahmeliste."
+
+#: pretalx/orga/forms/event.py:168
+msgid "Provide the identifier for the firstname participant list question."
+msgstr "Geben Sie hier die Pretix-Fragen-Id ein für den Teilnahmelisten Vorname."
+
+#: pretalx/orga/forms/event.py:168
+msgid "Provide the identifier for the lastname participant list question."
+msgstr "Geben Sie hier die Pretix-Fragen-Id ein für den Teilnahmelisten Nachname."
+
+#: pretalx/orga/forms/event.py:168
+msgid "Provide the identifier for the organisation participant list question."
+msgstr "Geben Sie hier die Pretix-Fragen-Id ein für den Teilnahmelisten Organisation."
+
+#: pretalx/orga/forms/event.py:168
+msgid "Provide the identifier for the email participant list question."
+msgstr "Geben Sie hier die Pretix-Fragen-Id ein für den Teilnahmelisten E-Mail."
+
+#: pretalx/orga/forms/event.py:168
+msgid "Provide the identifier for the postcode participant list question."
+msgstr "Geben Sie hier die Pretix-Fragen-Id ein für den Teilnahmelisten PLZ."
+
+#: pretalx/orga/forms/event.py:168
+msgid "Provide the identifier for the city participant list question."
+msgstr "Geben Sie hier die Pretix-Fragen-Id ein für den Teilnahmelisten Ort."
+
+#: pretalx/orga/forms/event.py:168
+msgid "Question-id organisation"
+msgstr "Pretix-Frage-ID Organisation"
+
+#: pretalx/orga/forms/event.py:168
+msgid "Question-id city"
+msgstr "Pretix-Frage-ID Ort"
+
+#: pretalx/orga/forms/event.py:168
+msgid "Question-id postcode"
+msgstr "Pretix-Frage-ID PLZ"
+
+#: pretalx/orga/forms/event.py:168
+msgid "Question-id country"
+msgstr "Pretix-Frage-ID Land"
+
+#: pretalx/orga/forms/event.py:168
 msgid "Participant list question-identifier"
-msgstr "Teilnahmeliste Pretix-Frage-ID"
+msgstr "Teilnahmeliste: Pretix-Frage-ID"
 
 #: pretalx/orga/forms/event.py:168
 msgid "Submission wishes question-identifier"
-msgstr "Veranstaltungswünsche Pretix-Frage-ID"
+msgstr "Veranstaltungswünsche: Pretix-Frage-ID"
+
+#: pretalx/orga/forms/event.py:168
+msgid "Participant list: question-id firstname"
+msgstr "Teilnahmeliste: Pretix-Frage-ID Vorname"
+
+#: pretalx/orga/forms/event.py:168
+msgid "Participant list: question-id lastname"
+msgstr "Teilnahmeliste: Pretix-Frage-ID Nachname"
+
+#: pretalx/orga/forms/event.py:168
+msgid "Participant list: question-id organisation"
+msgstr "Teilnahmeliste: Pretix-Frage-ID Organisation"
+
+#: pretalx/orga/forms/event.py:168
+msgid "Participant list: question-id email"
+msgstr "Teilnahmeliste: Pretix-Frage-ID E-Mail"
+
+#: pretalx/orga/forms/event.py:168
+msgid "Participant list: question-id postcode"
+msgstr "Teilnahmeliste: Pretix-Frage-ID PLZ"
+
+#: pretalx/orga/forms/event.py:168
+msgid "Participant list: question-id city"
+msgstr "Teilnahmeliste: Pretix-Frage-ID Ort"
 
 #: pretalx/orga/forms/event.py:145
 #, python-brace-format

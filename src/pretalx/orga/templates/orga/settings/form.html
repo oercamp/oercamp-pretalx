@@ -86,8 +86,21 @@
               {% bootstrap_field form.pretix_api_domain layout='event' %}
               {% bootstrap_field form.pretix_api_organisator_slug layout='event' %}
               {% bootstrap_field form.pretix_api_event_slug layout='event' %}
-              {% bootstrap_field form.pretix_identifier_question_participant_list layout='event' %}
+
+              {% bootstrap_field form.pretix_qid_organisation layout='event' %}
+              {% bootstrap_field form.pretix_qid_postcode layout='event' %}
+              {% bootstrap_field form.pretix_qid_city layout='event' %}
+              {% bootstrap_field form.pretix_qid_country layout='event' %}
+
               {% bootstrap_field form.pretix_identifier_question_submission_wishes layout='event' %}
+
+              {% bootstrap_field form.pretix_identifier_question_participant_list layout='event' %}
+              {% bootstrap_field form.pretix_qid_participant_list_firstname layout='event' %}
+              {% bootstrap_field form.pretix_qid_participant_list_lastname layout='event' %}
+              {% bootstrap_field form.pretix_qid_participant_list_email layout='event' %}
+              {% bootstrap_field form.pretix_qid_participant_list_organisation layout='event' %}
+              {% bootstrap_field form.pretix_qid_participant_list_city layout='event' %}
+              {% bootstrap_field form.pretix_qid_participant_list_postcode layout='event' %}
             </fieldset>
           <fieldset>
             <div class="submit-group panel">

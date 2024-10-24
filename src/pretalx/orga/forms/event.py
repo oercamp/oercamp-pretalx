@@ -169,12 +169,39 @@ class EventForm(ReadOnlyFlag, I18nHelpText, JsonSubfieldMixin, I18nModelForm):
         ),
     )
 
-    pretix_identifier_question_participant_list = forms.CharField(
+    pretix_qid_organisation = forms.CharField(
         required=False,
         widget=forms.TextInput(),
-        label=_("Participant list question-identifier"),
+        label=_("Question-id organisation"),
         help_text=_(
-            "Provide the identifier for the question, if attendee permits to be displayed on participant list."
+            "Provide the identifier for the organisation question."
+        ),
+    )
+
+    pretix_qid_postcode = forms.CharField(
+        required=False,
+        widget=forms.TextInput(),
+        label=_("Question-id postcode"),
+        help_text=_(
+            "Provide the identifier for the postcode question."
+        ),
+    )
+
+    pretix_qid_city = forms.CharField(
+        required=False,
+        widget=forms.TextInput(),
+        label=_("Question-id city"),
+        help_text=_(
+            "Provide the identifier for the city question."
+        ),
+    )
+
+    pretix_qid_country = forms.CharField(
+        required=False,
+        widget=forms.TextInput(),
+        label=_("Question-id country"),
+        help_text=_(
+            "Provide the identifier for the country question."
         ),
     )
 
@@ -184,6 +211,69 @@ class EventForm(ReadOnlyFlag, I18nHelpText, JsonSubfieldMixin, I18nModelForm):
         label=_("Submission wishes question-identifier"),
         help_text=_(
             "Provide the identifier for the Submission wishes question."
+        ),
+    )
+
+    pretix_identifier_question_participant_list = forms.CharField(
+        required=False,
+        widget=forms.TextInput(),
+        label=_("Participant list question-identifier"),
+        help_text=_(
+            "Provide the identifier for the question, if attendee permits to be displayed on participant list."
+        ),
+    )
+
+    pretix_qid_participant_list_firstname = forms.CharField(
+        required=False,
+        widget=forms.TextInput(),
+        label=_("Participant list: question-id firstname"),
+        help_text=_(
+            "Provide the identifier for the firstname participant list question."
+        ),
+    )
+
+    pretix_qid_participant_list_lastname = forms.CharField(
+        required=False,
+        widget=forms.TextInput(),
+        label=_("Participant list: question-id lastname"),
+        help_text=_(
+            "Provide the identifier for the lastname participant list question."
+        ),
+    )
+
+    pretix_qid_participant_list_organisation = forms.CharField(
+        required=False,
+        widget=forms.TextInput(),
+        label=_("Participant list: question-id organisation"),
+        help_text=_(
+            "Provide the identifier for the organisation participant list question."
+        ),
+    )
+
+    pretix_qid_participant_list_email = forms.CharField(
+        required=False,
+        widget=forms.TextInput(),
+        label=_("Participant list: question-id email"),
+        help_text=_(
+            "Provide the identifier for the email participant list question."
+        ),
+    )
+
+    pretix_qid_participant_list_postcode = forms.CharField(
+        required=False,
+        widget=forms.TextInput(),
+        label=_("Participant list: question-id postcode"),
+        help_text=_(
+            "Provide the identifier for the postcode participant list question."
+        ),
+    )
+
+    pretix_qid_participant_list_city = forms.CharField(
+        required=False,
+        widget=forms.TextInput(),
+        label=_("Participant list: question-id city"),
+        help_text=_(
+            "Provide the identifier for the city participant list question."
         ),
     )
 
@@ -385,8 +475,18 @@ class EventForm(ReadOnlyFlag, I18nHelpText, JsonSubfieldMixin, I18nModelForm):
             "pretix_api_domain",
             "pretix_api_organisator_slug",
             "pretix_api_event_slug",
+            "pretix_qid_organisation",
+            "pretix_qid_postcode",
+            "pretix_qid_city",
+            "pretix_qid_country",
+            "pretix_identifier_question_submission_wishes",
             "pretix_identifier_question_participant_list",
-            "pretix_identifier_question_submission_wishes"
+            "pretix_qid_participant_list_firstname",
+            "pretix_qid_participant_list_lastname",
+            "pretix_qid_participant_list_organisation",
+            "pretix_qid_participant_list_email",
+            "pretix_qid_participant_list_postcode",
+            "pretix_qid_participant_list_city",
         ]
         field_classes = {
             "logo": ImageField,

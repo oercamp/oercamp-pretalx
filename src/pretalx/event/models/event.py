@@ -354,6 +354,56 @@ class Event(PretalxModel):
         ),
     )
 
+    pretix_identifier_question_submission_wishes = models.CharField(
+        max_length=255,
+        null=True,
+        blank=True,
+        verbose_name=_("Submission wishes question-identifier"),
+        help_text=_(
+            "Provide the identifier for the Submission wishes question."
+        ),
+    )
+
+    pretix_qid_organisation = models.CharField(
+        max_length=255,
+        null=True,
+        blank=True,
+        verbose_name=_("Question-id organisation"),
+        help_text=_(
+            "Provide the identifier for the organisation question."
+        ),
+    )
+
+    pretix_qid_postcode = models.CharField(
+          max_length=255,
+          null=True,
+          blank=True,
+          verbose_name=_("Question-id postcode"),
+          help_text=_(
+              "Provide the identifier for the postcode question."
+          ),
+    )
+
+    pretix_qid_city = models.CharField(
+          max_length=255,
+          null=True,
+          blank=True,
+          verbose_name=_("Question-id city"),
+          help_text=_(
+              "Provide the identifier for the city question."
+          ),
+    )
+
+    pretix_qid_country = models.CharField(
+          max_length=255,
+          null=True,
+          blank=True,
+          verbose_name=_("Question-id country"),
+          help_text=_(
+              "Provide the identifier for the country question."
+          ),
+    )
+
     pretix_identifier_question_participant_list = models.CharField(
         max_length=255,
         null=True,
@@ -364,14 +414,64 @@ class Event(PretalxModel):
         ),
     )
 
-    pretix_identifier_question_submission_wishes = models.CharField(
+    pretix_qid_participant_list_firstname = models.CharField(
         max_length=255,
         null=True,
         blank=True,
-        verbose_name=_("Submission wishes question-identifier"),
+        verbose_name=_("Participant list: question-id firstname"),
         help_text=_(
-            "Provide the identifier for the Submission wishes question."
+            "Provide the identifier for the firstname participant list question."
         ),
+    )
+
+    pretix_qid_participant_list_lastname = models.CharField(
+        max_length=255,
+        null=True,
+        blank=True,
+        verbose_name=_("Participant list: question-id lastname"),
+        help_text=_(
+            "Provide the identifier for the lastname participant list question."
+        ),
+    )
+
+    pretix_qid_participant_list_organisation = models.CharField(
+        max_length=255,
+        null=True,
+        blank=True,
+        verbose_name=_("Participant list: question-id organisation"),
+        help_text=_(
+            "Provide the identifier for the organisation participant list question."
+        ),
+    )
+
+    pretix_qid_participant_list_email = models.CharField(
+        max_length=255,
+        null=True,
+        blank=True,
+        verbose_name=_("Participant list: question-id email"),
+        help_text=_(
+            "Provide the identifier for the email participant list question."
+        ),
+    )
+
+    pretix_qid_participant_list_postcode = models.CharField(
+          max_length=255,
+          null=True,
+          blank=True,
+          verbose_name=_("Participant list: question-id postcode"),
+          help_text=_(
+              "Provide the identifier for the postcode participant list question."
+          ),
+    )
+
+    pretix_qid_participant_list_city = models.CharField(
+          max_length=255,
+          null=True,
+          blank=True,
+          verbose_name=_("Participant list: question-id city"),
+          help_text=_(
+              "Provide the identifier for the city participant list question."
+          ),
     )
 
     template_names = [
