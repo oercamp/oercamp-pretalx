@@ -82,33 +82,37 @@ class Command(BaseCommand):
             'Authorization': f"Token {event.pretix_api_key}"
         }
 
-        response = requests.get(url, headers=headers)
-
-        if response.status_code != 200:
-            return {'error': 'Failed to fetch data'}
-
-        data = response.json()  # Parse the JSON response
-
         submission_wishes = []
 
-        # Iterate through each result in the results list
-        for result in data['results']:
-            # Check if the status is 'p' (= paid)
-            if result['status'] == 'p':
-                # Iterate through each position in the positions list
-                for position in result['positions']:
-                    # Check if attendee_email is set
-                    if position['attendee_name']:
-                        # Iterate through the answers list
-                        for answer in position.get('answers', []):
-                            # Check if question_identifier is 'allow_participant_list' and answer is 'True'
-                            if answer.get('question_identifier') == event.pretix_identifier_question_submission_wishes:
-                                # Extract the answer and split by commas
-                                raw_values = answer.get('answer', '').split(',')
-                                # Strip whitespaces and filter out empty or invalid strings
-                                valid_values = [value.strip() for value in raw_values if value.strip()]
-                                # Add attendee_email to the result array
-                                submission_wishes.extend(valid_values)
+        while url:  # Continue looping as long as there's a next URL
+            response = requests.get(url, headers=headers)
+
+            if response.status_code != 200:
+                return {'error': 'Failed to fetch data'}
+
+            data = response.json()  # Parse the JSON response
+
+            # Iterate through each result in the results list
+            for result in data['results']:
+                # Check if the status is 'p' (= paid)
+                if result['status'] == 'p':
+                    # Iterate through each position in the positions list
+                    for position in result['positions']:
+                        # Check if attendee_email is set
+                        if position['attendee_name']:
+                            # Iterate through the answers list
+                            for answer in position.get('answers', []):
+                                # Check if question_identifier is 'allow_participant_list' and answer is 'True'
+                                if answer.get('question_identifier') == event.pretix_identifier_question_submission_wishes:
+                                    # Extract the answer and split by commas
+                                    raw_values = answer.get('answer', '').split(',')
+                                    # Strip whitespaces and filter out empty or invalid strings
+                                    valid_values = [value.strip() for value in raw_values if value.strip()]
+                                    # Add attendee_email to the result array
+                                    submission_wishes.extend(valid_values)
+
+            # Get the URL for the next page, if any
+            url = data.get('next')
 
         unique_submission_wishes = list(set(submission_wishes))
         #return JsonResponse(data)  # Return the data as a response to the client

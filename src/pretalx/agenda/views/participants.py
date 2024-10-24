@@ -61,78 +61,83 @@ class ParticipantsList(EventPermissionRequired, ListView):
             'Authorization': f"Token {self.request.event.pretix_api_key}"
         }
 
-        response = requests.get(url, headers=headers)
-
-        if response.status_code != 200:
-            return {'error': 'Failed to fetch data'}
-
-        data = response.json()  # Parse the JSON response
-
         attendee_data_list = []
 
-        # Iterate through each result in the results list
-        for result in data['results']:
-            # Check if the status is 'p' (= paid)
-            if result['status'] == 'p':
-                # Iterate through each position in the positions list
-                for position in result['positions']:
+        while url:  # Continue looping as long as there's a next URL
+            response = requests.get(url, headers=headers)
 
-                    # First loop: Check if participant is allowed to be added
-                    should_add = False
-                    for answer in position.get('answers', []):
-                        if answer.get('question_identifier') == self.request.event.pretix_identifier_question_participant_list:
-                            if answer.get('answer') == 'True':
-                                should_add = True
-                            else:
-                                should_add = False
-                            break
-                    if not should_add:
-                        continue
+            if response.status_code != 200:
+                return {'error': 'Failed to fetch data'}
 
-                    attendee_data = {
-                        'given_name': None,
-                        'last_name': None,
-                        'email': position['attendee_email'],
-                        'organisation': None,
-                        'postcode': None,
-                        'city': None,
-                        'country': None
-                    }
+            data = response.json()  # Parse the JSON response
 
-                    # Additional step to handle given_name and family_name in the second loop
-                    if position.get('attendee_name_parts'):
-                        attendee_data['given_name'] = position['attendee_name_parts'].get('given_name')
-                        attendee_data['last_name'] = position['attendee_name_parts'].get('family_name')
 
-                    # Second loop: get participant data
-                    for answer in position.get('answers', []):
-                        if answer.get('answer'): # we overwrite only existing fields if there is actual data in the answer field
-                            if answer.get('question_identifier') == self.request.event.pretix_qid_organisation:
-                                attendee_data['organisation'] = answer.get('answer')
-                            elif answer.get('question_identifier') == self.request.event.pretix_qid_postcode:
-                                attendee_data['postcode'] = answer.get('answer')
-                            elif answer.get('question_identifier') == self.request.event.pretix_qid_city:
-                                attendee_data['city'] = answer.get('answer')
-                            elif answer.get('question_identifier') == self.request.event.pretix_qid_country:
-                                attendee_data['country'] = answer.get('answer')
-                            # From here we will overwrite the default fields if there is data
-                            elif answer.get('question_identifier') == self.request.event.pretix_qid_participant_list_firstname:
-                                attendee_data['given_name'] = answer.get('answer')
-                            elif answer.get('question_identifier') == self.request.event.pretix_qid_participant_list_lastname:
-                                attendee_data['last_name'] = answer.get('answer')
-                            elif answer.get('question_identifier') == self.request.event.pretix_qid_participant_list_email:
-                                attendee_data['email'] = answer.get('answer')
-                            elif answer.get('question_identifier') == self.request.event.pretix_qid_participant_list_postcode:
-                                attendee_data['postcode'] = answer.get('answer')
-                            elif answer.get('question_identifier') == self.request.event.pretix_qid_participant_list_city:
-                                attendee_data['city'] = answer.get('answer')
 
-                    # Add the fully processed participant data to the list
-                    # Check if both given_name and family_name are provided before appending,
-                    # because these are the minimal requirements to display the name
-                    if attendee_data['given_name'] and attendee_data['last_name']:
-                        attendee_data_list.append(attendee_data)
+            # Iterate through each result in the results list
+            for result in data['results']:
+                # Check if the status is 'p' (= paid)
+                if result['status'] == 'p':
+                    # Iterate through each position in the positions list
+                    for position in result['positions']:
 
+                        # First loop: Check if participant is allowed to be added
+                        should_add = False
+                        for answer in position.get('answers', []):
+                            if answer.get('question_identifier') == self.request.event.pretix_identifier_question_participant_list:
+                                if answer.get('answer') == 'True':
+                                    should_add = True
+                                else:
+                                    should_add = False
+                                break
+                        if not should_add:
+                            continue
+
+                        attendee_data = {
+                            'given_name': None,
+                            'last_name': None,
+                            'email': position['attendee_email'],
+                            'organisation': None,
+                            'postcode': None,
+                            'city': None,
+                            'country': None
+                        }
+
+                        # Additional step to handle given_name and family_name in the second loop
+                        if position.get('attendee_name_parts'):
+                            attendee_data['given_name'] = position['attendee_name_parts'].get('given_name')
+                            attendee_data['last_name'] = position['attendee_name_parts'].get('family_name')
+
+                        # Second loop: get participant data
+                        for answer in position.get('answers', []):
+                            if answer.get('answer'): # we overwrite only existing fields if there is actual data in the answer field
+                                if answer.get('question_identifier') == self.request.event.pretix_qid_organisation:
+                                    attendee_data['organisation'] = answer.get('answer')
+                                elif answer.get('question_identifier') == self.request.event.pretix_qid_postcode:
+                                    attendee_data['postcode'] = answer.get('answer')
+                                elif answer.get('question_identifier') == self.request.event.pretix_qid_city:
+                                    attendee_data['city'] = answer.get('answer')
+                                elif answer.get('question_identifier') == self.request.event.pretix_qid_country:
+                                    attendee_data['country'] = answer.get('answer')
+                                # From here we will overwrite the default fields if there is data
+                                elif answer.get('question_identifier') == self.request.event.pretix_qid_participant_list_firstname:
+                                    attendee_data['given_name'] = answer.get('answer')
+                                elif answer.get('question_identifier') == self.request.event.pretix_qid_participant_list_lastname:
+                                    attendee_data['last_name'] = answer.get('answer')
+                                elif answer.get('question_identifier') == self.request.event.pretix_qid_participant_list_email:
+                                    attendee_data['email'] = answer.get('answer')
+                                elif answer.get('question_identifier') == self.request.event.pretix_qid_participant_list_postcode:
+                                    attendee_data['postcode'] = answer.get('answer')
+                                elif answer.get('question_identifier') == self.request.event.pretix_qid_participant_list_city:
+                                    attendee_data['city'] = answer.get('answer')
+
+                        # Add the fully processed participant data to the list
+                        # Check if both given_name and family_name are provided before appending,
+                        # because these are the minimal requirements to display the name
+                        if attendee_data['given_name'] and attendee_data['last_name']:
+                            attendee_data_list.append(attendee_data)
+
+            # Get the URL for the next page, if any
+            url = data.get('next')
 
         # make alphabetical
         sorted_attendee_data_list = sorted(attendee_data_list, key=lambda x: (x['given_name'], x['last_name']))
