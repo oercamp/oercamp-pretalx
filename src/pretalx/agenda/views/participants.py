@@ -133,8 +133,12 @@ class ParticipantsList(EventPermissionRequired, ListView):
                     if attendee_data['given_name'] and attendee_data['last_name']:
                         attendee_data_list.append(attendee_data)
 
+
+        # make alphabetical
+        sorted_attendee_data_list = sorted(attendee_data_list, key=lambda x: (x['given_name'], x['last_name']))
+
         #return JsonResponse(data)  # Return the data as a response to the client
-        return attendee_data_list
+        return sorted_attendee_data_list
 
     def get_queryset(self):
         return self.attendees
