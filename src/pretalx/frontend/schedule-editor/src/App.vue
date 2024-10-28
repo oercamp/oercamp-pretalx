@@ -44,54 +44,55 @@
 					@rescheduleSession="rescheduleSession",
 					@createSession="createSession",
 					@editSession="editorStart($event)")
-			#session-editor-wrapper(v-if="editorSession", @click="editorSession = null")
-				form#session-editor(@click.stop="", @submit.prevent="editorSave")
-					h3.session-editor-title(v-if="editorSession.code")
-						a(v-if="editorSession.code", :href="`/orga/event/${eventSlug}/submissions/${editorSession.code}/`") {{editorSession.title }}
-						span(v-else) {{editorSession.title }}
-					.data
-						.data-row(v-if="editorSession.code && editorSession.speakers && editorSession.speakers.length > 0")
-							.data-label {{ $t('Speakers') }}
-							.data-value
-								span(v-for="speaker, index of editorSession.speakers")
-									a(:href="`/orga/event/${eventSlug}/speakers/${speaker.code}/`") {{speaker.name}}
-									span(v-if="index != editorSession.speakers.length - 1") {{', '}}
-						.data-row(v-else).form-group
-							.data-label {{ $t('Title') }}
-							.data-value.i18n-form-group
-								template(v-for="locale of locales")
-									input(v-model="editorSession.title[locale]", :required="true" :lang="locale")
-						.data-row(v-if="editorSession.track")
-							.data-label {{ $t('Track') }}
-							.data-value {{ getLocalizedString(editorSession.track.name) }}
-						.data-row
-							.data-label {{ $t('Room') }}
-							.data-value.select
-								select(v-model="editorSessionRoomInputId", :required="true")
-									template(v-for="room of roomsLookup")
-										option(:value="room.id", :selected="editorSessionRoomInputId === room.id") {{ getLocalizedString(room.name) }}
-						.data-row
-							.data-label {{ $t('Start') }}
-							.data-value.datetime-local
-								input(v-model="editorSessionStartInput", type="datetime-local", :min="editorSessionStartInputMin", :max="editorSessionStartInputMax", step="2", :required="true")
-						.data-row
-							.data-label {{ $t('Duration') }}
-							.data-value.number
-								input(v-model="editorSession.duration", type="number", min="1", max="1440", step="1", :required="true")
-								span {{ $t('minutes') }}
+			form#session-editor(v-if="editorSession", @click.stop="", @submit.prevent="editorSave")
+				.session-editor-close-btn(@click="editorSession = null").btn.btn-sm.btn-outline-info
+					i.fa.fa-close
+				h3.session-editor-title(v-if="editorSession.code")
+					a(v-if="editorSession.code", :href="`/orga/event/${eventSlug}/submissions/${editorSession.code}/`") {{editorSession.title }}
+					span(v-else) {{editorSession.title }}
+				.data
+					.data-row(v-if="editorSession.code && editorSession.speakers && editorSession.speakers.length > 0")
+						.data-label {{ $t('Speakers') }}
+						.data-value
+							span(v-for="speaker, index of editorSession.speakers")
+								a(:href="`/orga/event/${eventSlug}/speakers/${speaker.code}/`") {{speaker.name}}
+								span(v-if="index != editorSession.speakers.length - 1") {{', '}}
+					.data-row(v-else).form-group
+						.data-label {{ $t('Title') }}
+						.data-value.i18n-form-group
+							template(v-for="locale of locales")
+								input(v-model="editorSession.title[locale]", :required="true" :lang="locale")
+					.data-row(v-if="editorSession.track")
+						.data-label {{ $t('Track') }}
+						.data-value {{ getLocalizedString(editorSession.track.name) }}
+					.data-row
+						.data-label {{ $t('Room') }}
+						.data-value.select
+							select(v-model="editorSessionRoomInputId", :required="true")
+								template(v-for="room of roomsLookup")
+									option(:value="room.id", :selected="editorSessionRoomInputId === room.id") {{ getLocalizedString(room.name) }}
+					.data-row
+						.data-label {{ $t('Start') }}
+						.data-value.datetime-local
+							input(v-model="editorSessionStartInput", type="datetime-local", :min="editorSessionStartInputMin", :max="editorSessionStartInputMax", step="2", :required="true")
+					.data-row
+						.data-label {{ $t('Duration') }}
+						.data-value.number
+							input(v-model="editorSession.duration", type="number", min="1", max="1440", step="1", :required="true")
+							span {{ $t('minutes') }}
 
-						.data-row(v-if="editorSession.code && warnings[editorSession.code] && warnings[editorSession.code].length")
-							.data-label
-								i.fa.fa-exclamation-triangle.warning
-								span {{ $t('Warnings') }}
-							.data-value
-								ul(v-if="warnings[editorSession.code].length > 1")
-									li.warning(v-for="warning of warnings[editorSession.code]") {{ warning.message }}
-								span(v-else) {{ warnings[editorSession.code][0].message }}
-					.button-row
-						input(type="submit")
-						bunt-button#btn-delete(v-if="!editorSession.code", @click="editorDelete", :loading="editorSessionWaiting") {{ $t('Delete') }}
-						bunt-button#btn-save(@click="editorSave", :loading="editorSessionWaiting", :disabled="!isEditorSessionInDayRange") {{ $t('Save') }}
+				.data-row(v-if="editorSession.code && warnings[editorSession.code] && warnings[editorSession.code].length")
+					.data-label
+						i.fa.fa-exclamation-triangle.warning
+						span {{ $t('Warnings') }}
+					.data-value
+						ul(v-if="warnings[editorSession.code].length > 1")
+							li.warning(v-for="warning of warnings[editorSession.code]") {{ warning.message }}
+						span(v-else) {{ warnings[editorSession.code][0].message }}
+				.button-row
+					input(type="submit")
+					bunt-button#btn-delete(v-if="!editorSession.code", @click="editorDelete", :loading="editorSessionWaiting") {{ $t('Delete') }}
+					bunt-button#btn-save(@click="editorSave", :loading="editorSessionWaiting", :disabled="!isEditorSessionInDayRange") {{ $t('Save') }}
 	bunt-progress-circular(v-else, size="huge", :page="true")
 </template>
 <script>
@@ -554,6 +555,7 @@ export default {
 #page-content
 	padding: 0
 .pretalx-schedule
+	position: relative;
 	display: flex
 	flex-direction: column
 	min-height: 0
@@ -678,67 +680,72 @@ export default {
 		left: 0
 		width: 100%
 		height: 100%
-		background-color: rgba(0, 0, 0, 0.5)
+		background-color: rgba(0, 0, 0, 0.25)
+	#session-editor
+		z-index: 1000
+		background-color: $clr-white
+		border: 1px solid rgba(0, 0, 0, 0.12)
+		border-radius: 4px
+		box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5)
 
-		#session-editor
-			background-color: $clr-white
-			border-radius: 4px
-			padding: 32px 40px
-			position: absolute
-			top: 50%
-			left: 50%
-			transform: translate(-50%, -50%)
-			width: 680px
+		padding: 8px 10px
+		position: absolute
+		bottom: 8px
+		left: 8px
+		width: 330px
+		.session-editor-close-btn
+			position: absolute;
+			right: 8px;
+			padding: 4px 10px;
+		.session-editor-title
+			font-size: 22px
+			margin-bottom: 16px
+		.button-row
+			display: flex
+			width: 100%
+			margin-top: 24px
 
-			.session-editor-title
-				font-size: 22px
-				margin-bottom: 16px
-			.button-row
+			.bunt-button-content
+				font-size: 16px !important
+			#btn-delete
+				button-style(color: $clr-danger, text-color: $clr-white)
+				font-weight: bold;
+			#btn-save
+				margin-left: auto
+				font-weight: bold;
+				button-style(color: #3aa57c)
+			[type=submit]
+				display: none
+		.data
+			display: flex
+			flex-direction: column
+			font-size: 16px
+			.data-row
 				display: flex
-				width: 100%
-				margin-top: 24px
-
-				.bunt-button-content
-					font-size: 16px !important
-				#btn-delete
-					button-style(color: $clr-danger, text-color: $clr-white)
-					font-weight: bold;
-				#btn-save
-					margin-left: auto
-					font-weight: bold;
-					button-style(color: #3aa57c)
-				[type=submit]
-					display: none
-			.data
-				display: flex
-				flex-direction: column
-				font-size: 16px
-				.data-row
+				margin: 4px 0
+				.data-label
+					width: 96px
+					font-weight: bold
 					display: flex
-					margin: 4px 0
-					.data-label
-						width: 130px
-						font-weight: bold
-						display: flex
-						align-items: baseline
-					.data-value
-						input
-							border: 1px solid #ced4da
-							width: 100%
-							border-radius: 0.25rem
-							font-size: 16px
-							height: 30px
-							&:focus, &:active, &:focus-visible
-								border-color: #89d6b8
-								box-shadow: 0 0 0 1px rgba(58, 165, 124, 0.25)
-							&[type=number]
-								width: 60px
-								text-align: right
-								padding-right: 8px
-								margin-right: 8px
-						ul
-							list-style: none
-							padding: 0
-		.warning
-			color: #b23e65
+					align-items: baseline
+				.data-value
+					input
+						border: 1px solid #ced4da
+						width: 100%
+						border-radius: 0.25rem
+						font-size: 16px
+						height: 30px
+						&:focus, &:active, &:focus-visible
+							border-color: #89d6b8
+							box-shadow: 0 0 0 1px rgba(58, 165, 124, 0.25)
+						&[type=number]
+							width: 60px
+							text-align: right
+							padding-right: 8px
+							margin-right: 8px
+					ul
+						list-style: none
+						padding: 0
+	.warning
+		color: #b23e65
 </style>
