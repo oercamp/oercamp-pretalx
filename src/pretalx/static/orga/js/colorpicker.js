@@ -58,7 +58,7 @@ document.addEventListener("DOMContentLoaded", function() {
               .html("<span class='fa fa-fw fa-check-circle'></span>")
               .append("Your color has great contrast and is very easy to read!")
             $note
-              .addClass("text-success")
+              .addClass("text-info")
               .removeClass("text-warning")
               .removeClass("text-danger")
           } else if (c > 2.5) {
@@ -68,7 +68,7 @@ document.addEventListener("DOMContentLoaded", function() {
                 "Your color has decent contrast and is probably good-enough to read!"
               )
             $note
-              .removeClass("text-success")
+              .removeClass("text-info")
               .removeClass("text-warning")
               .removeClass("text-danger")
           } else {
@@ -80,7 +80,7 @@ document.addEventListener("DOMContentLoaded", function() {
               )
             $note
               .addClass("text-danger")
-              .removeClass("text-success")
+              .removeClass("text-info")
               .removeClass("text-warning")
           }
         } else {
@@ -89,7 +89,7 @@ document.addEventListener("DOMContentLoaded", function() {
               .html("<span class='fa fa-fw fa-check-circle'></span>")
               .append("Your color has great contrast and is very easy to see!")
             $note
-              .addClass("text-success")
+              .addClass("text-info")
               .removeClass("text-warning")
               .removeClass("text-danger")
           } else if (c > 2.5) {
@@ -97,7 +97,7 @@ document.addEventListener("DOMContentLoaded", function() {
               .html("<span class='fa fa-fw fa-info-circle'></span>")
               .append("Your color has decent contrast and is good to see!")
             $note
-              .removeClass("text-success")
+              .removeClass("text-info")
               .removeClass("text-warning")
               .removeClass("text-danger")
           } else {
@@ -108,7 +108,7 @@ document.addEventListener("DOMContentLoaded", function() {
               )
             $note
               .addClass("text-danger")
-              .removeClass("text-success")
+              .removeClass("text-info")
               .removeClass("text-warning")
           }
         }

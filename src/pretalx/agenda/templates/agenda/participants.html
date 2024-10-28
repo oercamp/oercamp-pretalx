@@ -26,37 +26,22 @@
   <div class="p-3">
     {% if attendees|length > 0 %}
       {% for attendee in attendees %}
-        <div class="participant-v-card d-flex flex-column flex-md-row">
+        <div
+          class="participant-v-card d-flex flex-row"
+          data-first_name="{{ attendee.given_name|default_if_none:''|escapejs }}"
+          data-last_name="{{attendee.last_name|default_if_none:''|escapejs}}"
+          data-organisation="{{attendee.organisation|default_if_none:''|escapejs}}"
+          data-email="{{attendee.email|default_if_none:''|escapejs}}"
+          data-postcode="{{attendee.postcode|default_if_none:''|escapejs}}"
+          data-city="{{attendee.city|default_if_none:''|escapejs}}"
+          data-country="{{attendee.country|default_if_none:''|escapejs}}"
+        >
           <p>
             <i class="fa fa-vcard pr-2"></i>
             <strong><span class="first_name">{{attendee.given_name}}</span>&nbsp<span class="last_name">{{attendee.last_name}}</span></strong>
           </p>
-          <div class="d-flex flex-column flex-md-row flex-grow-1">
-            <div class="mx-2 vcard">
-              {% if attendee.organisation %}
-              <div class="org">{{attendee.organisation}}</div>
-              {% endif %}
-              {% if attendee.email %}
-              <div class="email">{{attendee.email}}</div>
-              {% endif %}
-              {% if attendee.postcode or attendee.city %}
-              <div class="adr">
-                <span>Adresse:</span>
-                {% if attendee.postcode %}
-                &nbsp<span class="postal-code">{{attendee.postcode}}</span>
-                {% endif %}
-                {% if attendee.city %}
-                &nbsp<span class="city">{{attendee.city}}</span>
-                {% endif %}
-                {% if attendee.country %}
-                &nbsp<span class="country">{{attendee.country}}</span>
-                {% endif %}
-              </div>
-              {% endif %}
-            </div>
-            <div class="ml-auto py-2">
-              <button class="participant-v-card__download-btn btn btn-outline-info"><i class="fa fa-download"></i></button>
-            </div>
+          <div class="ml-auto py-2">
+            <button class="participant-v-card__download-btn btn btn-outline-info"><i class="fa fa-download"></i></button>
           </div>
         </div>
       {% endfor %}

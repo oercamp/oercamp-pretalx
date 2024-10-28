@@ -5,13 +5,13 @@ document.addEventListener('DOMContentLoaded', () => {
         const downloadButton = vCard.querySelector('.participant-v-card__download-btn');
         downloadButton.addEventListener('click', e => {
 
-            const givenName = vCard.querySelector('.first_name') ? vCard.querySelector('.first_name').textContent : '';
-            const lastName = vCard.querySelector('.last_name') ? vCard.querySelector('.last_name').textContent : '';
-            const organisation = vCard.querySelector('.org') ? vCard.querySelector('.org').textContent : '';
-            const email = vCard.querySelector('.email') ? vCard.querySelector('.email').textContent : '';
-            const postcode = vCard.querySelector('.postal-code') ? vCard.querySelector('.postal-code').textContent : '';
-            const city = vCard.querySelector('.city') ? vCard.querySelector('.city').textContent : '';
-            const country = vCard.querySelector('.country') ? vCard.querySelector('.country').textContent : '';
+            const givenName = vCard.dataset.first_name;
+            const lastName = vCard.dataset.last_name;
+            const organisation = vCard.dataset.organisation;
+            const email = vCard.dataset.email;
+            const postcode = vCard.dataset.postcode;
+            const city = vCard.dataset.city;
+            const country = vCard.dataset.country;
 
             // Constructing the vCard string
             let vCardString = `BEGIN:VCARD\n`;
