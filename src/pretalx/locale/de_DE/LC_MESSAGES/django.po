@@ -229,7 +229,7 @@ msgstr ""
 
 #: pretalx/cfp/flow.py:383
 msgid "Hey, nice to meet you!"
-msgstr "Hey, schön dich kennenzulernen!"
+msgstr "Schön dich kennenzulernen!"
 
 #: pretalx/cfp/flow.py:388
 msgid ""
@@ -237,7 +237,7 @@ msgid ""
 "Let’s get started, this won’t take long."
 msgstr ""
 "Wir freuen uns, dass du etwas bei unserer Veranstaltung einreichen möchtest. "
-"Hier geht es los – in ein paar Schritten ist es schon geschafft."
+"In ein paar Schritten ist es schon geschafft."
 
 #: pretalx/cfp/flow.py:447
 msgid "Tell us more!"

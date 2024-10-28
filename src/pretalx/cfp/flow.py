@@ -310,7 +310,7 @@ class InfoStep(GenericFlowStep, FormFlowStep):
     identifier = "info"
     icon = "paper-plane"
     form_class = InfoForm
-    priority = 0
+    priority = 25 #original: 0
 
     def get_form_kwargs(self):
         result = super().get_form_kwargs()
@@ -394,7 +394,7 @@ class QuestionsStep(GenericFlowStep, FormFlowStep):
     icon = "question-circle-o"
     form_class = QuestionsForm
     template_name = "cfp/event/submission_questions.html"
-    priority = 25
+    priority = 75 #original: 25
 
     def is_applicable(self, request):
         self.request = request
@@ -502,7 +502,7 @@ class ProfileStep(GenericFlowStep, FormFlowStep):
     icon = "address-card-o"
     form_class = SpeakerProfileForm
     template_name = "cfp/event/submission_profile.html"
-    priority = 75
+    priority = 0  #original: 75
 
     def get_form_kwargs(self):
         result = super().get_form_kwargs()
