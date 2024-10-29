@@ -27,6 +27,15 @@ class InfoForm(CfPFormMixin, RequestRequire, PublicContent, forms.ModelForm):
         label=_("Session image"),
         help_text=_("Use this if you want an illustration to go with your proposal."),
     )
+
+    custom_speaker_title = forms.CharField(
+       label=_("Custom speaker title"),
+       help_text=_(
+           "This text will replace the speakers names in submissions."
+       ),
+       required=False,
+   )
+
     content_locale = forms.ChoiceField(label=phrases.base.language)
 
     def __init__(self, event, **kwargs):
@@ -179,6 +188,7 @@ class InfoForm(CfPFormMixin, RequestRequire, PublicContent, forms.ModelForm):
             "do_not_record",
             "image",
             "duration",
+            "custom_speaker_title"
         ]
         request_require = [
             "title",
@@ -191,6 +201,7 @@ class InfoForm(CfPFormMixin, RequestRequire, PublicContent, forms.ModelForm):
             "duration",
             "content_locale",
             "additional_speaker",
+            "custom_speaker_title"
         ]
         public_fields = ["title", "abstract", "description", "image"]
         widgets = {

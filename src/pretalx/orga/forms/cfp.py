@@ -62,6 +62,7 @@ class CfPSettingsForm(
             "biography",
             "avatar",
             "additional_speaker",
+            "custom_speaker_title",
             "availabilities",
             "do_not_record",
             "image",
