@@ -105,7 +105,7 @@ class Command(BaseCommand):
                                 # Check if question_identifier is 'allow_participant_list' and answer is 'True'
                                 if answer.get('question_identifier') == event.pretix_identifier_question_submission_wishes:
                                     # Extract the answer and split by commas
-                                    raw_values = answer.get('answer', '').split(',')
+                                    raw_values = answer.get('answer', '').split(';')
                                     # Strip whitespaces and filter out empty or invalid strings
                                     valid_values = [value.strip() for value in raw_values if value.strip()]
                                     # Add attendee_email to the result array
