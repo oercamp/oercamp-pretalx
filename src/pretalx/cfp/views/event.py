@@ -86,4 +86,15 @@ class GeneralView(TemplateView):
         )
         result["past_events"] = self.filter_events(qs.filter(date_to__lt=_now))
         result["future_events"] = self.filter_events(qs.filter(date_from__gt=_now))
+
+        result["registered_events"] = self.get_pretix_ordered_events(
+            self.filter_events(qs)
+        )
+
         return result
+
+    def get_pretix_ordered_events(self, events):
+         if self.request.user.is_anonymous:
+            return []
+
+         return events

@@ -90,5 +90,7 @@ urlpatterns = [
         name="notpretix",
     ),
     path("robots.txt", robots.robots_txt, name="robots.txt"),
-    path("", event.GeneralView.as_view(), name="root.main"),
+    #path("", event.GeneralView.as_view(), name="root.main"),
+    path("", RedirectView.as_view(url="/orga/login?next=/events"), name="root.main"),
+    path("events", event.GeneralView.as_view(), name="root.main.events")
 ]

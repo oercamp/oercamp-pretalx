@@ -7,7 +7,23 @@
     {% if current_events or future_events or past_events %}
         <h1>{% translate "Events" %}</h1>
     {% endif %}
+
+    {% if registered_events %}
+    <h2>{% translate "Registered events" %}</h2>
+    <ul>
+      {% for event in registered_events %}
+        <li>
+          <a href="{{ event.urls.base }}">
+            {{ event.name }}
+            ({{ event.get_date_range_display }})
+          </a>
+        </li>
+      {% endfor %}
+    </ul>
+    {% endif %}
+
     {% if current_events %}
+        <h2>{% translate "Current events" %}</h2>
         <ul>
             {% for event in current_events %}
                 <li><a href="{{ event.urls.base }}">
