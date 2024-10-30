@@ -8,11 +8,11 @@
         <h1>{% translate "Events" %}</h1>
     {% endif %}
 
-    {% if registered_events %}
     <h2>{% translate "Registered events" %}</h2>
+    {% if registered_events %}
     <ul>
       {% for event in registered_events %}
-        <li>
+        <li class="d-flex flex-row align-items-center">
           <a href="{{ event.urls.base }}">
             {{ event.name }}
             ({{ event.get_date_range_display }})
@@ -20,40 +20,75 @@
         </li>
       {% endfor %}
     </ul>
+    {% elif request.user.is_anonymous %}
+    <ul>
+      <li class="d-flex flex-row align-items-center">
+        <i class="fa fa-sign-in mr-2"></i>
+        <a href="/">{% translate "Please login or register to see your registered events." %}</a>
+      </li>
+    </ul>
+    {% else %}
+      <p>{% translate "You are currently not registered for any events." %}</p>
     {% endif %}
 
+    <h2>{% translate "Other events" %}</h2>
+
     {% if current_events %}
-        <h2>{% translate "Current events" %}</h2>
+        <h3>{% translate "Current events" %}</h3>
         <ul>
             {% for event in current_events %}
-                <li><a href="{{ event.urls.base }}">
+                <li class="d-flex flex-row align-items-center">
+                  {% if event.pretix_ticket_shop_link %}
+                    <i class="fa fa-ticket mr-2"></i>
+                  {% endif %}
+                  <a href="{{ event.pretix_ticket_shop_link | default:event.urls.base }}">
                     {{ event.name }}
                     ({{ event.get_date_range_display }})
-                </a></li>
+                  </a>
+                  <div class="ml-auto py-2">
+                    <a class="btn btn-outline-info" href="{{ event.urls.base }}"><i class="fa fa-calendar"></i></a>
+                  </div>
+                </li>
             {% endfor %}
         </ul>
     {% else %}
         <p>{% translate "No events are currently ongoing." %}</p>
     {% endif %}
     {% if future_events %}
-        <h2>{% translate "Upcoming events" %}</h2>
+        <h3>{% translate "Upcoming events" %}</h3>
         <ul>
             {% for event in future_events %}
-                <li><a href="{{ event.urls.base }}">
-                    {{ event.name }}
-                    ({{ event.get_date_range_display }})
-                </a></li>
+            <li class="d-flex flex-row align-items-center">
+              {% if event.pretix_ticket_shop_link %}
+              <i class="fa fa-ticket mr-2"></i>
+              {% endif %}
+              <a href="{{ event.pretix_ticket_shop_link | default:event.urls.base }}">
+                  {{ event.name }}
+                  ({{ event.get_date_range_display }})
+              </a>
+              <div class="ml-auto py-2">
+                <a class="btn btn-outline-info" href="{{ event.urls.base }}"><i class="fa fa-calendar"></i></a>
+              </div>
+            </li>
             {% endfor %}
         </ul>
     {% endif %}
     {% if past_events %}
-        <h2>{% translate "Past events" %}</h2>
+        <h3>{% translate "Past events" %}</h3>
         <ul>
             {% for event in past_events %}
-                <li><a href="{{ event.urls.base }}">
-                    {{ event.name }}
-                    ({{ event.get_date_range_display }})
-                </a></li>
+            <li class="d-flex flex-row align-items-center">
+              {% if event.pretix_ticket_shop_link %}
+              <i class="fa fa-ticket mr-2"></i>
+              {% endif %}
+              <a href="{{ event.pretix_ticket_shop_link | default:event.urls.base }}">
+                  {{ event.name }}
+                  ({{ event.get_date_range_display }})
+              </a>
+              <div class="ml-auto py-2">
+                <a class="btn btn-outline-info" href="{{ event.urls.base }}"><i class="fa fa-calendar"></i></a>
+              </div>
+            </li>
             {% endfor %}
         </ul>
     {% endif %}

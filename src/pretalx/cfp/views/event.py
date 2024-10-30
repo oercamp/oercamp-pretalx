@@ -1,3 +1,4 @@
+import requests
 from urllib.parse import urlencode
 
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -9,6 +10,8 @@ from django_context_decorator import context
 from pretalx.common.views.mixins import PermissionRequired
 from pretalx.event.models import Event
 
+from django.utils.functional import cached_property
+import logging
 
 class EventPageMixin(PermissionRequired):
     permission_required = "cfp.view_event"
@@ -81,20 +84,73 @@ class GeneralView(TemplateView):
         result = super().get_context_data(**kwargs)
         _now = now().date()
         qs = Event.objects.order_by("-date_to")
-        result["current_events"] = self.filter_events(
-            qs.filter(date_from__lte=_now, date_to__gte=_now)
-        )
-        result["past_events"] = self.filter_events(qs.filter(date_to__lt=_now))
-        result["future_events"] = self.filter_events(qs.filter(date_from__gt=_now))
 
         result["registered_events"] = self.get_pretix_ordered_events(
             self.filter_events(qs)
         )
 
+        result["current_events"] = [
+            event for event in self.filter_events(qs.filter(date_from__lte=_now, date_to__gte=_now))
+            if event not in result["registered_events"]
+        ]
+
+        result["past_events"] = self.filter_events(qs.filter(date_to__lt=_now))
+
+        result["future_events"] = [
+            event for event in self.filter_events(qs.filter(date_from__gt=_now))
+            if event not in result["registered_events"]
+        ]
+
         return result
 
     def get_pretix_ordered_events(self, events):
-         if self.request.user.is_anonymous:
+
+        if (
+            self.request.user.is_anonymous or
+            not self.request.user.email
+        ):
             return []
 
-         return events
+        user_email = self.request.user.email
+
+        registered_events = []
+
+        for event in events:
+
+            if not event.is_pretix_api_configured:
+                break
+
+            ###
+            # We have this call around three times now, we should make a helper function
+            ###
+            url = f"https://{event.pretix_api_domain}/api/v1/organizers/{event.pretix_api_organisator_slug}/events/{event.pretix_api_event_slug}/orders/"
+            headers = {
+                'Authorization': f"Token {event.pretix_api_key}"
+            }
+
+            ticket_found = False
+
+            while url and not ticket_found:
+                response = requests.get(url, headers=headers)
+
+                if response.status_code != 200:
+                    return has_ticket #{'error': 'Failed to fetch data'}
+
+                data = response.json()  # Parse the JSON response
+
+                # Iterate through each result in the results list
+                for result in data['results']:
+                    # Check if the status is 'p' (= paid)
+                    if result['status'] == 'p':
+                        # Iterate through each position in the positions list
+                        for position in result['positions']:
+                            # Check if attendee_email is set
+                            if position.get('attendee_email') == user_email:
+                                registered_events.append(event)
+                                ticket_found = True
+                                break
+
+                # Get the URL for the next page, if any
+                url = data.get('next')
+
+        return registered_events

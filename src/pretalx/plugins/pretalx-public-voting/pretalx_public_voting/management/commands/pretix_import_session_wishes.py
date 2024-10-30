@@ -15,7 +15,7 @@ class Command(BaseCommand):
         events = Event.objects.all()
 
         for event in events:
-            if (not self.isPretixApiConfigured(event)):
+            if (not event.is_pretix_api_session_wishes_configured):
                 self.stdout.write(
                     self.style.WARNING(f"Pretix API is not configured for event [{event.id} - {event.slug}]. Skipping.")
                 )
@@ -63,19 +63,6 @@ class Command(BaseCommand):
             else:
                 self.stdout.write(self.style.WARNING('No SubmissionWishes added'))
 
-
-    def isPretixApiConfigured(self, event):
-        if (
-            event.pretix_api_key and
-            event.pretix_api_organisator_slug and
-            event.pretix_api_event_slug and
-            event.pretix_identifier_question_submission_wishes
-        ):
-            return True
-        else:
-            return False
-
-
     def getUniqueSubmissionWishes(self, event):
         url = f"https://{event.pretix_api_domain}/api/v1/organizers/{event.pretix_api_organisator_slug}/events/{event.pretix_api_event_slug}/orders/"
         headers = {
@@ -98,7 +85,7 @@ class Command(BaseCommand):
                 if result['status'] == 'p':
                     # Iterate through each position in the positions list
                     for position in result['positions']:
-                        # Check if attendee_email is set
+                        # Check if attendee_name is set
                         if position['attendee_name']:
                             # Iterate through the answers list
                             for answer in position.get('answers', []):

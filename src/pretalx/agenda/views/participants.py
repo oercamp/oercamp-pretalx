@@ -33,26 +33,8 @@ class ParticipantsList(EventPermissionRequired, ListView):
     permission_required = "agenda.view_schedule"
 
     @context
-    def isPretixParticipantsApiConfigured(self):
-        if (
-            self.request.event.pretix_api_key and
-            self.request.event.pretix_api_organisator_slug and
-            self.request.event.pretix_api_event_slug and
-            self.request.event.pretix_qid_organisation and
-            self.request.event.pretix_qid_postcode and
-            self.request.event.pretix_qid_city and
-            self.request.event.pretix_qid_country and
-            self.request.event.pretix_identifier_question_participant_list and
-            self.request.event.pretix_qid_participant_list_firstname and
-            self.request.event.pretix_qid_participant_list_lastname and
-            self.request.event.pretix_qid_participant_list_organisation and
-            self.request.event.pretix_qid_participant_list_email and
-            self.request.event.pretix_qid_participant_list_postcode and
-            self.request.event.pretix_qid_participant_list_city
-        ):
-            return True
-        else:
-            return False
+    def is_pretix_participants_api_configured(self):
+        return self.request.event.is_pretix_api_participants_configured
 
     @cached_property
     def attendees(self):

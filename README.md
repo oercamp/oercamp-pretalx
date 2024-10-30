@@ -99,4 +99,5 @@ Add to (root user's) crontab:
 #### Tips & Troubleshooting
 
 * Exception log: ``(.docker/volumes)/data/logs/pretalx.log``
-* (Python) Dependencies are not installed locally or on a volume. This means, if you change dependencies, then you should rebuild the docker image with ``docker compose build --no-cache [--progress=plain]``
+* Python-Dependencies are not installed locally or on a volume (i.e. like the vendor folder in composer). This means, if you change dependencies, then you should rebuild the docker image with ``docker compose build --no-cache [--progress=plain]``
+* Simple Debugging: ``import logging``, and then in code ``logging.info('hallo')``, then check the ``pretalx.log``

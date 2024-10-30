@@ -998,6 +998,18 @@ msgstr "Dauer"
 msgid "Events"
 msgstr "Veranstaltungen"
 
+#: pretalx/cfp/templates/cfp/index.html:11
+msgid "Registered events"
+msgstr "Angemeldete Veranstaltungen"
+
+#: pretalx/cfp/templates/cfp/index.html:27
+msgid "Please login or register to see your registered events."
+msgstr "Bitte melden Sie sich an um Ihre angemeldeten Veranstaltungen zu sehen."
+
+#: pretalx/cfp/templates/cfp/index.html:31
+msgid "You are currently not registered for any events."
+msgstr "Sie sind zur Zeit für keine Veranstaltung angemeldet."
+
 #: pretalx/cfp/templates/cfp/index.html:20
 msgid "No events are currently ongoing."
 msgstr "Derzeit finden keine Veranstaltungen statt."

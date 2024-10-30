@@ -38,7 +38,7 @@ class LoginView(GenericLoginView):
 
     @property
     def success_url(self):
-        return self.request.event.urls.user_submissions
+        return self.request.event.urls.base
 
     def get_password_reset_link(self):
         return self.request.event.urls.reset

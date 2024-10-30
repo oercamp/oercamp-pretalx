@@ -1314,3 +1314,51 @@ class Event(PretalxModel):
                 entry.delete()
 
     shred.alters_data = True
+
+    @cached_property
+    def is_pretix_api_configured(self):
+        if (
+            self.pretix_api_domain and
+            self.pretix_api_key and
+            self.pretix_api_organisator_slug and
+            self.pretix_api_event_slug
+        ):
+            return True
+        else:
+            return False
+
+    @cached_property
+    def is_pretix_api_session_wishes_configured(self):
+        if (
+            self.is_pretix_api_configured and
+            self.pretix_identifier_question_submission_wishes
+        ):
+            return True
+        else:
+            return False
+
+    @cached_property
+    def is_pretix_api_participants_configured(self):
+        if (
+            self.is_pretix_api_configured and
+            self.pretix_qid_organisation and
+            self.pretix_qid_postcode and
+            self.pretix_qid_city and
+            self.pretix_qid_country and
+            self.pretix_identifier_question_participant_list and
+            self.pretix_qid_participant_list_firstname and
+            self.pretix_qid_participant_list_lastname and
+            self.pretix_qid_participant_list_organisation and
+            self.pretix_qid_participant_list_email and
+            self.pretix_qid_participant_list_postcode and
+            self.pretix_qid_participant_list_city
+        ):
+            return True
+        else:
+            return False
+
+    @cached_property
+    def pretix_ticket_shop_link(self):
+        if not self.is_pretix_api_configured:
+            return None
+        return f"https://{self.pretix_api_domain}/{self.pretix_api_organisator_slug}/{self.pretix_api_event_slug}/"
