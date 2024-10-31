@@ -3367,7 +3367,7 @@ msgstr "Geben Sie die Pretix-Fragen-ID für das Land ein."
 
 #: pretalx/orga/forms/event.py:168
 msgid "Provide the identifier for the Submission wishes question."
-msgstr "Geben Sie hier den Pretix-Fragen-Identifikator ein zu der Frage für die Veranstaltungswünsche."
+msgstr "Geben Sie hier den Pretix-Fragen-Identifikator ein zu der Frage für die Themenwünsche."
 
 #: pretalx/orga/forms/event.py:168
 msgid "Provide the identifier for the question, if attendee permits to be displayed on participant list."
@@ -3419,7 +3419,7 @@ msgstr "Teilnahmeliste: Pretix-Frage-ID"
 
 #: pretalx/orga/forms/event.py:168
 msgid "Submission wishes question-identifier"
-msgstr "Veranstaltungswünsche: Pretix-Frage-ID"
+msgstr "Themenwünsche: Pretix-Frage-ID"
 
 #: pretalx/orga/forms/event.py:168
 msgid "Participant list: question-id firstname"
