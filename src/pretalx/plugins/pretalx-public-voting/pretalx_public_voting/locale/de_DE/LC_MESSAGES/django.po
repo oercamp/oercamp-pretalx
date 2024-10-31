@@ -289,7 +289,7 @@ msgstr "Bitte klicke hier, um dich für die öffentliche Abstimmung anzumelden."
 
 #: local/pretalx-public-voting/pretalx_public_voting/templates/pretalx_public_voting/submission_list.html:62
 msgid "Login here to give submission wishes."
-msgstr "Themenwünsche kann man bei der Ticket-Anmeldung abgeben. Hier anmelden!"
+msgstr "Möchtest du einen Themenwunsch abgeben? Hier anmelden!"
 
 #: local/pretalx-public-voting/pretalx_public_voting/templates/pretalx_public_voting/submission_list.html:62
 msgid "Click here to write a comment."
