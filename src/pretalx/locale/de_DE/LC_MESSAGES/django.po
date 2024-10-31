@@ -41,7 +41,7 @@ msgstr "Programm-Vorschau ansehen"
 
 #: pretalx/agenda/phrases.py:15
 msgid "Edit or view your proposals"
-msgstr "Meine Einreichungen ansehen/bearbeiten"
+msgstr "Meine Einreichungen"
 
 #: pretalx/agenda/templates/agenda/base.html:22
 msgid "This schedule-related page is non-public. Only organisers can see it."
