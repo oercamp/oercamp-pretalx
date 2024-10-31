@@ -1030,6 +1030,14 @@ msgstr "Kommende Veranstaltungen"
 msgid "Past events"
 msgstr "Vergangene Veranstaltungen"
 
+#: pretalx/cfp/templates/cfp/index.html:11
+msgid "Program"
+msgstr "Programm"
+
+#: pretalx/cfp/templates/cfp/index.html:11
+msgid "Purchase ticket"
+msgstr "Ticket bestellen"
+
 #: pretalx/cfp/templates/widgets/track-select-widget.html:9
 #: pretalx/cfp/templates/widgets/track-select-widget.html:22
 msgid "Track descriptions"

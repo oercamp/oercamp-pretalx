@@ -1,10 +1,12 @@
 {% extends "common/base.html" %}
 {% load i18n %}
+{% load compress %}
+{% load static %}
 
 {% block title %}{% translate "Events" %}{% endblock %}
 
 {% block content %}
-    {% if current_events or future_events or past_events %}
+    {% if registered_events or current_events or future_events or past_events %}
         <h1>{% translate "Events" %}</h1>
     {% endif %}
 
@@ -45,8 +47,29 @@
                     {{ event.name }}
                     ({{ event.get_date_range_display }})
                   </a>
-                  <div class="ml-auto py-2">
-                    <a class="btn btn-outline-info" href="{{ event.urls.base }}"><i class="fa fa-calendar"></i></a>
+                  <div class="ml-auto">
+                    <a
+                      class="btn btn-outline-info m-1"
+                      href="{{ event.urls.base }}"
+                      data-toggle="tooltip"
+                      data-placement="top"
+                      title="{% translate 'View conference schedule' %}"
+                    >
+                      <i class="fa fa-calendar"></i>
+                      {% translate 'Program' %}
+                    </a>
+                    {% if event.pretix_ticket_shop_link %}
+                      <a
+                        class="btn btn-outline-info m-1"
+                        href="{{ event.pretix_ticket_shop_link }}"
+                        data-toggle="tooltip"
+                        data-placement="top"
+                        title="{% translate 'Purchase ticket' %}"
+                      >
+                        <i class="fa fa-ticket"></i>
+                        {% translate 'Ticket' %}
+                      </a>
+                    {% endif %}
                   </div>
                 </li>
             {% endfor %}
@@ -66,8 +89,29 @@
                   {{ event.name }}
                   ({{ event.get_date_range_display }})
               </a>
-              <div class="ml-auto py-2">
-                <a class="btn btn-outline-info" href="{{ event.urls.base }}"><i class="fa fa-calendar"></i></a>
+              <div class="ml-auto">
+                <a
+                  class="btn btn-outline-info m-1"
+                  href="{{ event.urls.base }}"
+                  data-toggle="tooltip"
+                  data-placement="top"
+                  title="{% translate 'View conference schedule' %}"
+                >
+                  <i class="fa fa-calendar"></i>
+                  {% translate 'Program' %}
+                </a>
+                {% if event.pretix_ticket_shop_link %}
+                <a
+                  class="btn btn-outline-info m-1"
+                  href="{{ event.pretix_ticket_shop_link }}"
+                  data-toggle="tooltip"
+                  data-placement="top"
+                  title="{% translate 'Purchase ticket' %}"
+                >
+                  <i class="fa fa-ticket"></i>
+                  {% translate 'Ticket' %}
+                </a>
+                {% endif %}
               </div>
             </li>
             {% endfor %}
@@ -85,11 +129,37 @@
                   {{ event.name }}
                   ({{ event.get_date_range_display }})
               </a>
-              <div class="ml-auto py-2">
-                <a class="btn btn-outline-info" href="{{ event.urls.base }}"><i class="fa fa-calendar"></i></a>
+              <div class="ml-auto">
+                <a
+                  class="btn btn-outline-info m-1"
+                  href="{{ event.urls.base }}"
+                  data-toggle="tooltip"
+                  data-placement="top"
+                  title="{% translate 'View conference schedule' %}"
+                >
+                  <i class="fa fa-calendar"></i>
+                  {% translate 'Program' %}
+                </a>
+                {% if event.pretix_ticket_shop_link %}
+                <a
+                  class="btn btn-outline-info m-1"
+                  href="{{ event.pretix_ticket_shop_link }}"
+                  data-toggle="tooltip"
+                  data-placement="top"
+                  title="{% translate 'Purchase ticket' %}"
+                >
+                  <i class="fa fa-ticket"></i>
+                  {% translate 'Ticket' %}
+                </a>
+                {% endif %}
               </div>
             </li>
             {% endfor %}
         </ul>
     {% endif %}
+
+    {% compress js %}
+      <script defer src="{% static "common/js/copy.js" %}"></script>
+    {% endcompress %}
+
 {% endblock %}
