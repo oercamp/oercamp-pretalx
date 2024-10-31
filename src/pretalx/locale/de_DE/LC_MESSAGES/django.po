@@ -1012,7 +1012,15 @@ msgstr "Sie sind zur Zeit für keine Veranstaltung angemeldet."
 
 #: pretalx/cfp/templates/cfp/index.html:20
 msgid "No events are currently ongoing."
-msgstr "Derzeit finden keine Veranstaltungen statt."
+msgstr "Derzeit finden keine weiteren Veranstaltungen statt."
+
+#: pretalx/cfp/templates/cfp/index.html:11
+msgid "Other events"
+msgstr "Weitere Veranstaltungen"
+
+#: pretalx/cfp/templates/cfp/index.html:11
+msgid "Current events"
+msgstr "Laufende Veranstaltungen"
 
 #: pretalx/cfp/templates/cfp/index.html:23
 msgid "Upcoming events"
