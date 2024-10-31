@@ -17,7 +17,8 @@
   {% blocktrans trimmed %}
   Here you can see all submission wishes and their comments.
   {% endblocktrans %}
-  <a href="{% url "plugins:pretalx_public_voting:signup" event=request.event.slug %}">{% trans "Click here to sign up for voting." %}</a>
+  <a href="{% url "plugins:pretalx_public_voting:signup" event=request.event.slug %}">{% trans "Click here to sign up for voting." %}</a><br>
+  <a href="/">{% trans "Login here to give submission wishes." %}</a>
 </p>
 <div>
   {% for submission in submission_wishes %}

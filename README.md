@@ -78,7 +78,7 @@ Mailpit is configured for local development. Access it at http://localhost:8025/
 #### Current Live deployment procedure
 
 * SSH to the live server, change to workdir ``cd /sites/oercamp/oercamp-pretalx/`` and run ``./bin/deploy-prod``
-* Additionally its good to run ``docker compose exec -u pretalxuser -T pretalx python3 /pretalx/src/manage.py regenerate_css``. This is already inside the the deploy script, but somehow it does not always work.
+* ~~Additionally its good to run ``docker compose exec -u pretalxuser -T pretalx python3 /pretalx/src/manage.py regenerate_css``. This is already inside the the deploy script, but somehow it does not always work.~~
 
 
 #### Setting up cronjobs on production (important for pretix API):

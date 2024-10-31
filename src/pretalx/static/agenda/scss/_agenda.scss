@@ -1,12 +1,8 @@
-#main-container {
-    min-width: -webkit-fill-available !important;
-}
-
 #main-container.main-schedule {
   min-width: min-content;
   margin: 0 auto;
-  padding-left: 15px;
-  padding-right: 15px;
+  padding-left: 0;
+  padding-right: 0;
   padding-bottom: 0;
   #main-card {
     min-width: 1200px; // make loading look less awkward

@@ -113,10 +113,9 @@ class GeneralView(TemplateView):
 
         user_email = self.request.user.email
 
-        registered_events = []
+        registered_events = set()
 
         for event in events:
-
             if not event.is_pretix_api_configured:
                 break
 
@@ -146,11 +145,12 @@ class GeneralView(TemplateView):
                         for position in result['positions']:
                             # Check if attendee_email is set
                             if position.get('attendee_email') == user_email:
-                                registered_events.append(event)
+                                registered_events.add(event)
                                 ticket_found = True
                                 break
 
                 # Get the URL for the next page, if any
                 url = data.get('next')
+
 
         return registered_events
