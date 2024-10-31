@@ -17,9 +17,10 @@ services:
     volumes:
       - ./pyproject.toml:/pretalx/pyproject.toml:ro
       - ./src/pretalx.cfg:/etc/pretalx/pretalx.cfg:ro
-      #- ./.docker/volumes/data:/pretalx/data -> TODO not working on live due to user errors (root instead of 1000)
-      #- ./.docker/volumes/public:/pretalx/public
       - ./src:/pretalx/src:delegated
+      # do not remove following entires, in production here are uploaded images saved and will be lost after docker-compose down
+      - ./.docker/volumes/data:/pretalx/data
+      - ./.docker/volumes/public:/pretalx/public
     labels:
        traefik.docker.network: "pretalxdocker"
        traefik.enable: "true"
