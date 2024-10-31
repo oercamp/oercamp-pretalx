@@ -27,7 +27,7 @@
     {% if attendees|length > 0 %}
       {% for attendee in attendees %}
         <div
-          class="participant-v-card d-flex flex-row"
+          class="participant-v-card d-flex flex-column flex-md-row mb-2"
           data-first_name="{{ attendee.given_name|default_if_none:''|escapejs }}"
           data-last_name="{{attendee.last_name|default_if_none:''|escapejs}}"
           data-organisation="{{attendee.organisation|default_if_none:''|escapejs}}"
@@ -36,12 +36,36 @@
           data-city="{{attendee.city|default_if_none:''|escapejs}}"
           data-country="{{attendee.country|default_if_none:''|escapejs}}"
         >
-          <p>
+          <p class="d-flex flex-row align-items-center">
             <i class="fa fa-vcard pr-2"></i>
-            <strong><span class="first_name">{{attendee.given_name}}</span>&nbsp<span class="last_name">{{attendee.last_name}}</span></strong>
+            <span class="flex-grow-1"><strong>{{attendee.given_name}}&nbsp{{attendee.last_name}}</strong></span>
           </p>
-          <div class="ml-auto py-2">
-            <button class="participant-v-card__download-btn btn btn-outline-info"><i class="fa fa-download"></i></button>
+          <div class="d-flex flex-row justify-content-end flex-grow-1 pb-2">
+            <div class="vcard card mx-2 p-2">
+              {% if attendee.organisation %}
+              <div class="org">{{attendee.organisation}}</div>
+              {% endif %}
+              {% if attendee.email %}
+              <div class="email">{{attendee.email}}</div>
+              {% endif %}
+              {% if attendee.postcode or attendee.city %}
+              <div class="adr">
+                <span>Adresse:</span>
+                {% if attendee.postcode %}
+                &nbsp<span class="postal-code">{{attendee.postcode}}</span>
+                {% endif %}
+                {% if attendee.city %}
+                &nbsp<span class="city">{{attendee.city}}</span>
+                {% endif %}
+                {% if attendee.country %}
+                &nbsp<span class="country">{{attendee.country}}</span>
+                {% endif %}
+              </div>
+              {% endif %}
+            </div>
+            <div>
+              <button class="participant-v-card__download-btn btn btn-outline-info"><i class="fa fa-download"></i></button>
+            </div>
           </div>
         </div>
       {% endfor %}
