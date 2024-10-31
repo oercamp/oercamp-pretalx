@@ -1754,7 +1754,7 @@ msgstr "Kontakt"
 
 #: pretalx/common/templates/common/base.html:156
 msgid "Imprint"
-msgstr "Impressum"
+msgstr "Impressum & Datenschutz"
 
 #: pretalx/common/templates/common/logs.html:17
 msgid "This change was performed by a member of the event orga."
