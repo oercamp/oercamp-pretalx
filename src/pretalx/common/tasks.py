@@ -70,11 +70,12 @@ def regenerate_css(event_id: int):
         # but the checksum exists and is the same as the new file,
         # then files won't be regenerated - so we just regenerate them every time, because why not.
 
-        #if event.settings.get(f"{local_app}_css_checksum", "") != checksum:
-        old_path = event.settings.get(f"{local_app}_css_file", "")
-        delete_media_file(old_path)
-        newname = default_storage.save(fname, ContentFile(css))
-        event.settings.set(
-            f"{local_app}_css_file", f"{settings.MEDIA_URL}{newname}"
-        )
-        event.settings.set(f"{local_app}_css_checksum", checksum)
+        # removed commented out line, because it deleted image files
+        if event.settings.get(f"{local_app}_css_checksum", "") != checksum:
+            old_path = event.settings.get(f"{local_app}_css_file", "")
+            delete_media_file(old_path)
+            newname = default_storage.save(fname, ContentFile(css))
+            event.settings.set(
+                f"{local_app}_css_file", f"{settings.MEDIA_URL}{newname}"
+            )
+            event.settings.set(f"{local_app}_css_checksum", checksum)
