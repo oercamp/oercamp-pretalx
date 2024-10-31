@@ -1,7 +1,5 @@
 {% extends "common/base.html" %}
 {% load i18n %}
-{% load compress %}
-{% load static %}
 
 {% block title %}{% translate "Events" %}{% endblock %}
 
@@ -157,9 +155,4 @@
             {% endfor %}
         </ul>
     {% endif %}
-
-    {% compress js %}
-      <script defer src="{% static "common/js/copy.js" %}"></script>
-    {% endcompress %}
-
 {% endblock %}
