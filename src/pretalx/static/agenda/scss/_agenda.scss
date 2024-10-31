@@ -1,3 +1,7 @@
+#main-container {
+    min-width: -webkit-fill-available !important;
+}
+
 #main-container.main-schedule {
   min-width: min-content;
   margin: 0 auto;
