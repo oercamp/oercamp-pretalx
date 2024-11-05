@@ -54,8 +54,6 @@ class ParticipantsList(EventPermissionRequired, ListView):
 
             data = response.json()  # Parse the JSON response
 
-            logging.info(data)
-
             # Iterate through each result in the results list
             for result in data['results']:
                 # Check if the status is 'p' (= paid)
