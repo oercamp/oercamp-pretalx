@@ -1,4 +1,5 @@
 import requests
+import logging
 from django.http import JsonResponse
 from django.utils.functional import cached_property
 
@@ -53,7 +54,7 @@ class ParticipantsList(EventPermissionRequired, ListView):
 
             data = response.json()  # Parse the JSON response
 
-
+            logging.info(data)
 
             # Iterate through each result in the results list
             for result in data['results']:
@@ -100,7 +101,7 @@ class ParticipantsList(EventPermissionRequired, ListView):
                         else: # This is for answer = "Ja, aber mit abweichenden Daten...."
                             for answer in position.get('answers', []):
                                 if answer.get('answer'): # we overwrite only existing fields if there is actual data in the answer field
-                                    elif answer.get('question_identifier') == self.request.event.pretix_qid_participant_list_firstname:
+                                    if answer.get('question_identifier') == self.request.event.pretix_qid_participant_list_firstname:
                                         attendee_data['given_name'] = answer.get('answer')
                                     elif answer.get('question_identifier') == self.request.event.pretix_qid_participant_list_lastname:
                                         attendee_data['last_name'] = answer.get('answer')
