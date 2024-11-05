@@ -37,12 +37,23 @@ html {
 }
 
 @each $color, $value in $theme-colors {
-  .alert-#{$color} {
-    border-color: $value;
+  // Brand-green is too bright, so we use the default green for alerts
+  @if($color == success) {
+      .alert-#{$color} {
+          border-color: #668547;
 
-    &::before {
-      background-color: $value;
-    }
+          &::before {
+              background-color: #668547;
+          }
+      }
+  } @else {
+      .alert-#{$color} {
+          border-color: $value;
+
+          &::before {
+              background-color: $value;
+          }
+      }
   }
 
   .btn-#{$color}:hover {
