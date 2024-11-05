@@ -63,15 +63,13 @@ class ParticipantsList(EventPermissionRequired, ListView):
                     for position in result['positions']:
 
                         # First loop: Check if participant is allowed to be added
-                        should_add = False
+                        participant_list_answer = 'Nein'
                         for answer in position.get('answers', []):
                             if answer.get('question_identifier') == self.request.event.pretix_identifier_question_participant_list:
-                                if answer.get('answer') != 'Nein':
-                                    should_add = True
-                                else:
-                                    should_add = False
+                                participant_list_answer = answer.get('answer')
                                 break
-                        if not should_add:
+
+                        if participant_list_answer == 'Nein':
                             continue
 
                         attendee_data = {
@@ -84,33 +82,37 @@ class ParticipantsList(EventPermissionRequired, ListView):
                             'country': None
                         }
 
-                        # Additional step to handle given_name and family_name in the second loop
-                        if position.get('attendee_name_parts'):
-                            attendee_data['given_name'] = position['attendee_name_parts'].get('given_name')
-                            attendee_data['last_name'] = position['attendee_name_parts'].get('family_name')
+                        if participant_list_answer == 'Ja': # Take original Data
+                            if position.get('attendee_name_parts'):
+                                attendee_data['given_name'] = position['attendee_name_parts'].get('given_name')
+                                attendee_data['last_name'] = position['attendee_name_parts'].get('family_name')
+                            # Second loop: get participant data
+                            for answer in position.get('answers', []):
+                                if answer.get('answer'): # we overwrite only existing fields if there is actual data in the answer field
+                                    if answer.get('question_identifier') == self.request.event.pretix_qid_organisation:
+                                        attendee_data['organisation'] = answer.get('answer')
+                                    elif answer.get('question_identifier') == self.request.event.pretix_qid_postcode:
+                                        attendee_data['postcode'] = answer.get('answer')
+                                    elif answer.get('question_identifier') == self.request.event.pretix_qid_city:
+                                        attendee_data['city'] = answer.get('answer')
+                                    elif answer.get('question_identifier') == self.request.event.pretix_qid_country:
+                                        attendee_data['country'] = answer.get('answer')
+                        else: # This is for answer = "Ja, aber mit abweichenden Daten...."
+                            for answer in position.get('answers', []):
+                                if answer.get('answer'): # we overwrite only existing fields if there is actual data in the answer field
+                                    elif answer.get('question_identifier') == self.request.event.pretix_qid_participant_list_firstname:
+                                        attendee_data['given_name'] = answer.get('answer')
+                                    elif answer.get('question_identifier') == self.request.event.pretix_qid_participant_list_lastname:
+                                        attendee_data['last_name'] = answer.get('answer')
+                                    elif answer.get('question_identifier') == self.request.event.pretix_qid_participant_list_email:
+                                        attendee_data['email'] = answer.get('answer')
+                                    elif answer.get('question_identifier') == self.request.event.pretix_qid_participant_list_postcode:
+                                        attendee_data['postcode'] = answer.get('answer')
+                                    elif answer.get('question_identifier') == self.request.event.pretix_qid_participant_list_city:
+                                        attendee_data['city'] = answer.get('answer')
+                                    elif answer.get('question_identifier') == self.request.event.pretix_qid_country:
+                                        attendee_data['country'] = answer.get('answer')
 
-                        # Second loop: get participant data
-                        for answer in position.get('answers', []):
-                            if answer.get('answer'): # we overwrite only existing fields if there is actual data in the answer field
-                                if answer.get('question_identifier') == self.request.event.pretix_qid_organisation:
-                                    attendee_data['organisation'] = answer.get('answer')
-                                elif answer.get('question_identifier') == self.request.event.pretix_qid_postcode:
-                                    attendee_data['postcode'] = answer.get('answer')
-                                elif answer.get('question_identifier') == self.request.event.pretix_qid_city:
-                                    attendee_data['city'] = answer.get('answer')
-                                elif answer.get('question_identifier') == self.request.event.pretix_qid_country:
-                                    attendee_data['country'] = answer.get('answer')
-                                # From here we will overwrite the default fields if there is data
-                                elif answer.get('question_identifier') == self.request.event.pretix_qid_participant_list_firstname:
-                                    attendee_data['given_name'] = answer.get('answer')
-                                elif answer.get('question_identifier') == self.request.event.pretix_qid_participant_list_lastname:
-                                    attendee_data['last_name'] = answer.get('answer')
-                                elif answer.get('question_identifier') == self.request.event.pretix_qid_participant_list_email:
-                                    attendee_data['email'] = answer.get('answer')
-                                elif answer.get('question_identifier') == self.request.event.pretix_qid_participant_list_postcode:
-                                    attendee_data['postcode'] = answer.get('answer')
-                                elif answer.get('question_identifier') == self.request.event.pretix_qid_participant_list_city:
-                                    attendee_data['city'] = answer.get('answer')
 
                         # Add the fully processed participant data to the list
                         # Check if both given_name and family_name are provided before appending,
