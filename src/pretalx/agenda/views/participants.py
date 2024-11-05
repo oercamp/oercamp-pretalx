@@ -66,7 +66,7 @@ class ParticipantsList(EventPermissionRequired, ListView):
                         should_add = False
                         for answer in position.get('answers', []):
                             if answer.get('question_identifier') == self.request.event.pretix_identifier_question_participant_list:
-                                if answer.get('answer') == 'True':
+                                if answer.get('answer') != 'Nein':
                                     should_add = True
                                 else:
                                     should_add = False
