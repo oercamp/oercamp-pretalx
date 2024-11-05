@@ -29,7 +29,7 @@
 {% endblock %}
 
 {% block agenda_content %}
-    <article>
+    <article class="talk-article">
         {% html_signal "pretalx.agenda.signals.html_above_session_pages" sender=request.event request=request submission=submission %}
         <h3 class="talk-title">
             <div class="heading-with-buttons">
@@ -78,7 +78,7 @@
                 {% endif %}
             </small>
         </h3>
-        <div class="talk row">
+        <div class="talk">
             <div class="talk-content">
                 {% if recording_iframe %}
                     {{ recording_iframe|safe }}
@@ -133,7 +133,7 @@
                 </section>
             {% endif %}
             {% if submission.etherpad_url %}
-            <div class="embed-responsive embed-responsive-16by9 card">
+            <div class="etherpad-container embed-responsive embed-responsive-16by9 card">
               <iframe src="{{ submission.etherpad_url }}" allowfullscreen></iframe>
             </div>
             {% endif %}
@@ -144,7 +144,7 @@
     </div>
     {% if not hide_speaker_links %}
         {% for speaker in speakers %}
-            <div class="pretalx-session">
+            <div class="pretalx-session my-2">
                 <div class="pretalx-session-time-box avatar">
                     <a href="{{ speaker.talk_profile.urls.public }}">
                         <div class="avatar-wrapper">

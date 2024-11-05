@@ -303,6 +303,9 @@ article .pretalx-session .pretalx-session-info .abstract {
   header {
     text-align: right;
     flex-direction: column;
+      #event-logo {
+          max-height: 132px;
+      }
   }
   #main-container.main-schedule #main-card {
     min-width: 1000px;

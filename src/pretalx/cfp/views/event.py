@@ -133,7 +133,7 @@ class GeneralView(TemplateView):
                 response = requests.get(url, headers=headers)
 
                 if response.status_code != 200:
-                    return has_ticket #{'error': 'Failed to fetch data'}
+                    return []; #{'error': 'Failed to fetch data'}
 
                 data = response.json()  # Parse the JSON response
 

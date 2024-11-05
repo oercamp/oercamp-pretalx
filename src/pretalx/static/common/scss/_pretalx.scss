@@ -162,3 +162,20 @@ pre {
 .state-fragment {
   white-space: nowrap;
 }
+
+.talk-article {
+    .talk {
+        .talk-content {
+            @include media-breakpoint-down(md) {
+                .etherpad-container {
+                    min-height: 50vh;
+                }
+            }
+        }
+    }
+
+    .pretalx-session {
+        min-width: 0;
+        margin: 0;
+    }
+}
