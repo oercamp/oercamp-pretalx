@@ -16,12 +16,13 @@
     <p>
         {{ text|rich_text }}
     </p>
+    {% bootstrap_field form.name layout='event' %}
+    {% if form.biography %}{% bootstrap_field form.biography layout='event' %}{% endif %}
+
     {% if form.avatar or form.get_gravatar %}
         {% include "common/avatar.html" with user=user form=form %}
     {% endif %}
 
-    {% bootstrap_field form.name layout='event' %}
-    {% if form.biography %}{% bootstrap_field form.biography layout='event' %}{% endif %}
     {% if form.availabilities %}
         {% compress js %}
             <script defer src="{% static "vendored/moment-with-locales.js" %}"></script>
