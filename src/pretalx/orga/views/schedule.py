@@ -297,6 +297,7 @@ def serialize_slot(slot, warnings=None):
             "description": str(slot.submission.description),
             "abstract": str(slot.submission.abstract),
             "notes": slot.submission.notes,
+            "internal_notes": str(slot.submission.internal_notes),
             "duration": slot.submission.duration
             or slot.submission.submission_type.default_duration,
             "content_locale": slot.submission.content_locale,

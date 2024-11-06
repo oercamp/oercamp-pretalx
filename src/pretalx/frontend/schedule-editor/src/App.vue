@@ -81,6 +81,10 @@
 							input(v-model="editorSession.duration", type="number", min="1", max="1440", step="1", :required="true")
 							span {{ $t('minutes') }}
 
+					.data-row(v-if="editorSession.internal_notes")
+						.data-label {{ $t('Internal notes') }}
+						.data-value {{ getLocalizedString(editorSession.internal_notes) }}
+
 				.data-row(v-if="editorSession.code && warnings[editorSession.code] && warnings[editorSession.code].length")
 					.data-label
 						i.fa.fa-exclamation-triangle.warning
@@ -171,6 +175,7 @@ export default {
 					code: session.code,
 					title: session.title,
 					abstract: session.abstract,
+					internal_notes: session.internal_notes,
 					speakers: session.speakers?.map(s => this.speakersLookup[s]),
 					track: this.tracksLookup[session.track],
 					emoji_label: session.emoji_label,
@@ -199,6 +204,9 @@ export default {
 					return (a.duration - b.duration) * this.unassignedSortDirection
 				}
 			})
+
+			console.log(sessions);
+
 			return sessions
 		},
 		sessions () {
@@ -210,6 +218,7 @@ export default {
 					code: session.code,
 					title: session.title,
 					abstract: session.abstract,
+					internal_notes: session.internal_notes,
 					start: moment(session.start),
 					end: moment(session.end),
 					duration: moment(session.end).diff(session.start, 'm'),
@@ -221,6 +230,7 @@ export default {
 				})
 			}
 			sessions.sort((a, b) => a.start.diff(b.start))
+			console.log(sessions);
 			return sessions
 		},
 		days () {

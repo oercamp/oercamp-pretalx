@@ -663,6 +663,9 @@ class Schedule(PretalxModel):
                         "abstract": (
                             talk.submission.abstract if talk.submission else None
                         ),
+                        "internal_notes": (
+                            talk.submission.internal_notes if talk.submission else None
+                        ),
                         "speakers": (
                             [speaker.code for speaker in talk.submission.speakers.all()]
                             if talk.submission

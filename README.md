@@ -23,11 +23,11 @@ Please clone the repo and follow the installation instructions.
 Basically, pretalx uses a built & compressed version of this editor at ``src/pretalx/static/agenda/js/pretalx-schedule.js`` . So to make changes
 you should dit the pretalx-schedule repository, and then there is a command that builds and copies the code over to pretalx.
 
-### Running Pretalx-Schedule-Editor
+### Running Pretalx-Schedule-Editor (Backend)
 
 This is only for developing (DEBUG = true):
 
-There is a module called "predalx-schedule-editor". It needs a running vite-server in develop-mode to function.
+There is a module called "predalx-schedule-editor" (not same as pretalx-schedule). It needs a running vite-server in develop-mode to function.
 To use the schedule-editor, you need to run ``src/pretalx/frontend/schedule-editor$ npm run build`` and then start the server with ``src/pretalx/frontend/schedule-editor$ npm start``
 
 
