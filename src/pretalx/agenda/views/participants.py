@@ -1,5 +1,6 @@
 import requests
 import logging
+from django.core.cache import cache
 from django.http import JsonResponse
 from django.utils.functional import cached_property
 
@@ -39,6 +40,12 @@ class ParticipantsList(EventPermissionRequired, ListView):
 
     @cached_property
     def attendees(self):
+
+        cache_key = f"attendees_{self.request.event.id}"
+        cached_sorted_attendee_data_list = cache.get(cache_key)
+        if cached_sorted_attendee_data_list is not None:
+            return cached_sorted_attendee_data_list
+
         url = f"https://{self.request.event.pretix_api_domain}/api/v1/organizers/{self.request.event.pretix_api_organisator_slug}/events/{self.request.event.pretix_api_event_slug}/orders/"
         headers = {
             'Authorization': f"Token {self.request.event.pretix_api_key}"
@@ -124,6 +131,9 @@ class ParticipantsList(EventPermissionRequired, ListView):
 
         # make alphabetical
         sorted_attendee_data_list = sorted(attendee_data_list, key=lambda x: (x['given_name'], x['last_name']))
+
+        # Cache the data for a specified duration
+        cache.set(cache_key, sorted_attendee_data_list, timeout=600)  # cached for 10 minutes - 3600 - Cache for 1 hour
 
         #return JsonResponse(data)  # Return the data as a response to the client
         return sorted_attendee_data_list
