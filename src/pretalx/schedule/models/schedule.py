@@ -625,7 +625,7 @@ class Schedule(PretalxModel):
 
         OERCAMP_QUESTION_EXTRAS = "Extras"
         ANSWER_MAPPING = {
-            "keine": "keine Werte ausgeben",
+            #"keine": "keine Werte ausgeben",
             "Session geht auch ohne Beamer.": "o. Beamer",
             "Die Session soll länger als 45 Minuten sein.": ">45",
             "Ich brauche einen besonderen Raum.": "Raum",
