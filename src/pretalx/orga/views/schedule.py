@@ -39,7 +39,7 @@ from pretalx.orga.forms.schedule import (
     ScheduleVersionForm,
 )
 from pretalx.schedule.forms import QuickScheduleForm, RoomForm
-from pretalx.schedule.models import Availability, Room, TalkSlot
+from pretalx.schedule.models import Availability, Room, TalkSlot, Schedule
 from pretalx.schedule.utils import guess_schedule_version
 
 SCRIPT_SRC = "'self' 'unsafe-eval'"
@@ -306,6 +306,7 @@ def serialize_slot(slot, warnings=None):
             "start": slot.local_start.isoformat() if slot.start else None,
             "end": slot.local_end.isoformat() if slot.end else None,
             "url": slot.submission.orga_urls.base,
+            "question_extras_notes":  Schedule.oercamp_get_extras_answers_mapped(slot.submission),
             "warnings": warnings or [],
         }
         return {**base_data, **submission_data}

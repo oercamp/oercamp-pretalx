@@ -85,6 +85,10 @@
 						.data-label {{ $t('Internal notes') }}
 						.data-value {{ getLocalizedString(editorSession.internal_notes) }}
 
+					.data-row(v-if="Array.isArray(editorSession.question_extras_notes) && editorSession.question_extras_notes.length > 0")
+						.data-label {{ $t('Extras') }}
+						.data-value {{ getLocalizedString(editorSession.question_extras_notes.join(', ')) }}
+
 				.data-row(v-if="editorSession.code && warnings[editorSession.code] && warnings[editorSession.code].length")
 					.data-label
 						i.fa.fa-exclamation-triangle.warning
@@ -176,6 +180,7 @@ export default {
 					title: session.title,
 					abstract: session.abstract,
 					internal_notes: session.internal_notes,
+					question_extras_notes: session.question_extras_notes,
 					speakers: session.speakers?.map(s => this.speakersLookup[s]),
 					track: this.tracksLookup[session.track],
 					emoji_label: session.emoji_label,
@@ -204,9 +209,6 @@ export default {
 					return (a.duration - b.duration) * this.unassignedSortDirection
 				}
 			})
-
-			console.log(sessions);
-
 			return sessions
 		},
 		sessions () {
@@ -219,6 +221,7 @@ export default {
 					title: session.title,
 					abstract: session.abstract,
 					internal_notes: session.internal_notes,
+					question_extras_notes: session.question_extras_notes,
 					start: moment(session.start),
 					end: moment(session.end),
 					duration: moment(session.end).diff(session.start, 'm'),
@@ -230,7 +233,6 @@ export default {
 				})
 			}
 			sessions.sort((a, b) => a.start.diff(b.start))
-			console.log(sessions);
 			return sessions
 		},
 		days () {

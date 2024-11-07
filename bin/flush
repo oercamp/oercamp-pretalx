@@ -1,0 +1,3 @@
+#!/bin/bash
+docker compose exec -u pretalxuser -T pretalx python3 /pretalx/src/manage.py clearcache
+docker compose exec -u root -T pretalx supervisorctl restart pretalxweb

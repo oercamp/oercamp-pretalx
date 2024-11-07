@@ -1,3 +1,4 @@
+import logging
 from collections import defaultdict, namedtuple
 from contextlib import suppress
 from urllib.parse import quote
@@ -619,6 +620,45 @@ class Schedule(PretalxModel):
 
         return self != self.event.current_schedule
 
+    @staticmethod
+    def oercamp_get_extras_answers_mapped(submission):
+
+        OERCAMP_QUESTION_EXTRAS = "Extras"
+        ANSWER_MAPPING = {
+            "keine": "keine Werte ausgeben",
+            "Session geht auch ohne Beamer.": "o. Beamer",
+            "Die Session soll länger als 45 Minuten sein.": ">45",
+            "Ich brauche einen besonderen Raum.": "Raum",
+            "Ich habe Einschränkungen in der Zeitplanung.": "Zeit",
+            "Ich biete mehr als eine Session an: Das hier ist die 1.": "S1",
+            "Ich biete mehr als eine Session an: Das hier ist die 2.": "S2",
+            "Ich biete mehr als eine Session an: Das hier ist die 3.": "S3",
+            "Ich biete mehr als eine Session an: Das hier ist die 4.": "S4",
+            "Sonstiges …": "Sonstiges"
+        }
+
+        submission_answers = submission.answers.all().select_related("question")
+
+        result = []
+        for submission_answer in submission_answers:
+
+            question_data = getattr(submission_answer.question.question, 'data', None)
+            if question_data:
+                question_text = question_data.get('de', None) or question_data.get('en', None)
+            else:
+                question_text = None
+
+            if (question_text != OERCAMP_QUESTION_EXTRAS):
+                continue
+
+            splitted_answers = submission_answer.answer.split(", ")
+            for text in splitted_answers:
+                simplified_answer = ANSWER_MAPPING.get(text, None)
+                if simplified_answer:
+                    result.append(simplified_answer)
+
+        return result
+
     def build_data(self, all_talks=False, filter_updated=None, all_rooms=False):
         talks = self.talks.all()
         if not all_talks:
@@ -665,6 +705,9 @@ class Schedule(PretalxModel):
                         ),
                         "internal_notes": (
                             talk.submission.internal_notes if talk.submission else None
+                        ),
+                        "question_extras_notes": (
+                            self.oercamp_get_extras_answers_mapped(talk.submission) if talk.submission else None
                         ),
                         "speakers": (
                             [speaker.code for speaker in talk.submission.speakers.all()]
