@@ -81,13 +81,13 @@
 							input(v-model="editorSession.duration", type="number", min="1", max="1440", step="1", :required="true")
 							span {{ $t('minutes') }}
 
-					.data-row(v-if="editorSession.internal_notes")
-						.data-label {{ $t('Internal notes') }}
-						.data-value {{ getLocalizedString(editorSession.internal_notes) }}
-
 					.data-row(v-if="Array.isArray(editorSession.question_extras_notes) && editorSession.question_extras_notes.length > 0")
 						.data-label {{ $t('Extras') }}
 						.data-value {{ getLocalizedString(editorSession.question_extras_notes.join(', ')) }}
+
+					.data-row(v-if="editorSession.internal_notes")
+						.data-label {{ $t('Internal notes') }}
+						.data-value {{ getLocalizedString(editorSession.internal_notes) }}
 
 				.data-row(v-if="editorSession.code && warnings[editorSession.code] && warnings[editorSession.code].length")
 					.data-label

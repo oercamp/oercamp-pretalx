@@ -438,6 +438,44 @@ class QuestionsStep(GenericFlowStep, FormFlowStep):
         form.is_valid()
         form.save()
 
+        if self.oercamp_check_and_add_angel_tag(form.submission, self.event):
+            # Here comes the double-save! Oh yeah pretty bad solution.
+            # But before the first form.save() its not possible to get submission-tags.
+            form.save()
+
+
+    @staticmethod
+    def oercamp_check_and_add_angel_tag(submission, event):
+
+        ANGEL_TAG_TAG = "Boten-Engel"
+        OERCAMP_QUESTION_ANGEL = "Die Session soll vom Boten-Engel vorgestellt werden"
+
+        submission_answers = submission.answers.all().select_related("question")
+
+        is_angel_question_selected = False
+
+        for submission_answer in submission_answers:
+            question_data = getattr(submission_answer.question.question, 'data', None)
+            if question_data:
+                question_text = question_data.get('de', None) or question_data.get('en', None)
+            else:
+                question_text = None
+
+            if (question_text != OERCAMP_QUESTION_ANGEL):
+                continue
+
+            is_angel_question_selected = submission_answer.answer == 'True'
+            break
+
+        if is_angel_question_selected:
+            angel_tag = next((tag for tag in event.tags.all() if tag.tag == ANGEL_TAG_TAG), None)
+            if (angel_tag is not None and not submission.tags.filter(id=angel_tag.id).exists()):
+                submission.tags.add(angel_tag)
+                return True
+
+        return False
+
+
     @property
     def label(self):
         return phrases.cfp.questions

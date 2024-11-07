@@ -26,6 +26,7 @@ from rest_framework.authtoken.models import Token
 
 from pretalx.cfp.forms.submissions import SubmissionInvitationForm
 from pretalx.cfp.views.event import LoggedInEventPageMixin
+from pretalx.cfp.flow import QuestionsStep
 from pretalx.common.middleware.event import get_login_redirect
 from pretalx.common.text.phrases import phrases
 from pretalx.common.views import is_form_bound
@@ -320,6 +321,12 @@ class SubmissionsEditView(LoggedInEventPageMixin, SubmissionViewMixin, UpdateVie
             elif form.has_changed():
                 form.instance.submission = obj
                 form.save()
+
+                if QuestionsStep.oercamp_check_and_add_angel_tag(form.instance.submission, self.request.event):
+                    # Here comes the double-save! Oh yeah pretty bad solution.
+                    # But before the first form.save() its not possible to get submission-tags.
+                    form.save()
+
                 change_data = {
                     key: form.cleaned_data.get(key) for key in form.changed_data
                 }
