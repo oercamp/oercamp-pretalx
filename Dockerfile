@@ -37,6 +37,7 @@ RUN pip3 install --upgrade-strategy eager -Ue ".[dev]"
 RUN pip3 install -e /pretalx/src/pretalx/plugins/pretalx-youtube
 RUN pip3 install -e /pretalx/src/pretalx/plugins/pretalx-public-voting
 RUN pip3 install -e /pretalx/src/pretalx/plugins/pretalx-pages
+RUN pip3 install -e /pretalx/src/pretalx/plugins/pretalx-venueless
 RUN rm -f /pretalx/pyproject.toml
 RUN rm -rf /pretalx/src
 
