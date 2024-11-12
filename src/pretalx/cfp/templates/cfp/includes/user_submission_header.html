@@ -1,10 +1,10 @@
 {% load i18n %}
-<h2>
+<h3>
     {{ quotation_open }}{{ submission.title }}{{ quotation_close }}
     {% if submission.state == "draft" %}
         <span class="badge badge-secondary">{% translate "Draft" %}</span>
     {% endif %}
-</h2>
+</h3>
 {% if submission.state != "draft" %}
     <p>
         {% translate "Current state of your proposal:" %}

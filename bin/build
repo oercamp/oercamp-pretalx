@@ -3,3 +3,4 @@ docker compose exec -u pretalxuser -T pretalx python3 /pretalx/src/manage.py mak
 docker compose exec -u pretalxuser -T pretalx python3 /pretalx/src/manage.py migrate
 docker compose exec -u pretalxuser -T pretalx python3 /pretalx/src/manage.py rebuild --npm-install
 docker compose exec -u pretalxuser -T pretalx python3 /pretalx/src/manage.py regenerate_css
+docker compose exec -u root -T pretalx supervisorctl restart pretalxweb
