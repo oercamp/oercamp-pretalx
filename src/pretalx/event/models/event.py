@@ -520,6 +520,7 @@ class Event(PretalxModel):
         page_public_voting = "{base}p/voting/public/talks"
         page_public_voting_wishes = "{base}p/voting/public/wishes"
         participants = "{base}participants/"
+        events = "/events"
 
 
     class orga_urls(EventUrls):

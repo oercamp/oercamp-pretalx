@@ -137,6 +137,8 @@ class GeneralView(TemplateView):
 
                 data = response.json()  # Parse the JSON response
 
+                """ This is the original code to get by ticket->attendee_email, but temporarily we will use the order-email
+
                 # Iterate through each result in the results list
                 for result in data['results']:
                     # Check if the status is 'p' (= paid)
@@ -148,6 +150,15 @@ class GeneralView(TemplateView):
                                 registered_events.add(event)
                                 ticket_found = True
                                 break
+
+                """
+                # Iterate through each result in the results list
+                for result in data['results']:
+                    # Check if the status is 'p' (= paid)
+                    if result['status'] == 'p' and result['email'] == user_email:
+                        registered_events.add(event)
+                        ticket_found = True
+                        break
 
                 # Get the URL for the next page, if any
                 url = data.get('next')

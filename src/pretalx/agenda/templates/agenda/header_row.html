@@ -20,14 +20,14 @@
         <i class="fa fa-group"></i> Teilnahmeliste
         </a>
         -->
-        <a href="{{ request.event.urls.page_sponsors }}" class="btn btn-outline-success {% if "/page/sponsors/" in request.path %} active{% endif %}">
-          <i class="fa fa-group"></i> Kooperationspartner*innen
-        </a>
         <a href="{{ request.event.urls.page_public_voting }}" class="btn btn-outline-success {% if "/p/voting/public/talks" in request.path %} active{% endif %}">
           <i class="fa fa-comment-o"></i> Einreichungen
         </a>
         <a href="{{ request.event.urls.page_public_voting_wishes }}" class="btn btn-outline-success {% if "/p/voting/public/wishes" in request.path %} active{% endif %}">
           <i class="fa fa-comment-o"></i> Themenwünsche
+        </a>
+        <a href="{{ request.event.urls.page_sponsors }}" class="btn btn-outline-success {% if "/page/sponsors/" in request.path %} active{% endif %}">
+          <i class="fa fa-group"></i> Kooperationspartner*innen
         </a>
     </div>
     <div class="header-right">

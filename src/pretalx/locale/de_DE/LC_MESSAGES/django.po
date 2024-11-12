@@ -952,7 +952,7 @@ msgstr "Veranstaltungen"
 
 #: pretalx/cfp/templates/cfp/index.html:11
 msgid "Registered events"
-msgstr "Angemeldete Veranstaltungen"
+msgstr "Deine Veranstaltungen"
 
 #: pretalx/cfp/templates/cfp/index.html:27
 msgid "Please login or register to see your registered events."
@@ -968,7 +968,7 @@ msgstr "Derzeit finden keine Veranstaltungen statt."
 
 #: pretalx/cfp/templates/cfp/index.html:11
 msgid "Other events"
-msgstr "Weitere Veranstaltungen"
+msgstr "Veranstaltungsübersicht"
 
 #: pretalx/cfp/templates/cfp/index.html:11
 msgid "Current events"

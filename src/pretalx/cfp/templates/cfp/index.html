@@ -41,14 +41,14 @@
                   {% if event.pretix_ticket_shop_link %}
                     <i class="fa fa-ticket mr-2"></i>
                   {% endif %}
-                  <a href="{{ event.pretix_ticket_shop_link | default:event.urls.schedule }}">
+                  <a href="{{ event.pretix_ticket_shop_link | default:event.urls.base }}">
                     {{ event.name }}
                     ({{ event.get_date_range_display }})
                   </a>
                   <div class="ml-auto">
                     <a
                       class="btn btn-outline-info m-1"
-                      href="{{ event.urls.schedule }}"
+                      href="{{ event.urls.base }}"
                       data-toggle="tooltip"
                       data-placement="top"
                       title="{% translate 'View conference schedule' %}"
@@ -72,8 +72,6 @@
                 </li>
             {% endfor %}
         </ul>
-    {% else %}
-        <p>{% translate "No events are currently ongoing." %}</p>
     {% endif %}
     {% if future_events %}
         <h3>{% translate "Upcoming events" %}</h3>
@@ -83,14 +81,14 @@
               {% if event.pretix_ticket_shop_link %}
               <i class="fa fa-ticket mr-2"></i>
               {% endif %}
-              <a href="{{ event.pretix_ticket_shop_link | default:event.urls.schedule }}">
+              <a href="{{ event.pretix_ticket_shop_link | default:event.urls.base }}">
                   {{ event.name }}
                   ({{ event.get_date_range_display }})
               </a>
               <div class="ml-auto">
                 <a
                   class="btn btn-outline-info m-1"
-                  href="{{ event.urls.schedule }}"
+                  href="{{ event.urls.base }}"
                   data-toggle="tooltip"
                   data-placement="top"
                   title="{% translate 'View conference schedule' %}"
@@ -123,14 +121,14 @@
               {% if event.pretix_ticket_shop_link %}
               <i class="fa fa-ticket mr-2"></i>
               {% endif %}
-              <a href="{{ event.pretix_ticket_shop_link | default:event.urls.schedule }}">
+              <a href="{{ event.pretix_ticket_shop_link | default:event.urls.base }}">
                   {{ event.name }}
                   ({{ event.get_date_range_display }})
               </a>
               <div class="ml-auto">
                 <a
                   class="btn btn-outline-info m-1"
-                  href="{{ event.urls.schedule }}"
+                  href="{{ event.urls.base }}"
                   data-toggle="tooltip"
                   data-placement="top"
                   title="{% translate 'View conference schedule' %}"
