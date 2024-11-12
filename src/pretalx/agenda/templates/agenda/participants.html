@@ -16,12 +16,12 @@
 {% include "agenda/header_row.html" %}
 <p></p>
 <article>
-  <h1>Teilnahmeliste</h1>
+  <h2>Teilnahmeliste</h2>
   {% if not is_pretix_participants_api_configured %}
     <p>Die Teilnahmeliste ist zur Zeit nicht verfügbar.</p>
   {% else %}
   <p class="pt-3">
-    Folgende Teilnehmer haben sich für die Konferenz angemeldet:
+    Folgende Personen haben sich für die Veranstaltung angemeldet und ihre Kontaktdaten geteilt:
   </p>
   <div class="p-3">
     {% if attendees|length > 0 %}

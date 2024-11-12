@@ -988,7 +988,7 @@ msgstr "Programm"
 
 #: pretalx/cfp/templates/cfp/index.html:11
 msgid "Purchase ticket"
-msgstr "Ticket bestellen"
+msgstr "Anmeldung"
 
 #: pretalx/cfp/templates/widgets/track-select-widget.html:9
 #: pretalx/cfp/templates/widgets/track-select-widget.html:22
@@ -8082,11 +8082,11 @@ msgstr "Titel"
 
 #: pretalx/submission/models/submission.py:132
 msgid "Custom speaker title"
-msgstr "Benutzerdefinierter Vorträgername"
+msgstr "Alternativer Name"
 
 #: src/pretalx/submission/models/submission.py:134
 msgid "This text will replace the speakers names in submissions."
-msgstr "Dieser Eintrag ersetzt den Namen des oder der Vortragenden."
+msgstr "Du kannst einen alternativen Namen im Programm anzeigen lassen, wenn du nicht deinen Account-Namen benutzen möchtest."
 
 #: pretalx/submission/models/submission.py:141
 msgid "Emoji/Label"
