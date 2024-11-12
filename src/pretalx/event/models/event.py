@@ -516,7 +516,7 @@ class Event(PretalxModel):
         ical = "{export}schedule.ics"
         schedule_widget_data = "{schedule}widgets/schedule.json"
         schedule_widget_script = "{base}widgets/schedule.js"
-        page_sponsors = "{base}page/sponsors"
+        page_sponsors = "{base}page/kooperation"
         page_public_voting = "{base}p/voting/public/talks"
         page_public_voting_wishes = "{base}p/voting/public/wishes"
         participants = "{base}participants/"
