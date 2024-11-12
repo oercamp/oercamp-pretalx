@@ -137,28 +137,29 @@ class GeneralView(TemplateView):
 
                 data = response.json()  # Parse the JSON response
 
-                """ This is the original code to get by ticket->attendee_email, but temporarily we will use the order-email
+                # For this particular event we will search by the order-email instead of attendee_email
+                if (event.pretix_api_event_slug == '24essen'):
 
-                # Iterate through each result in the results list
-                for result in data['results']:
-                    # Check if the status is 'p' (= paid)
-                    if result['status'] == 'p':
-                        # Iterate through each position in the positions list
-                        for position in result['positions']:
-                            # Check if attendee_email is set
-                            if position.get('attendee_email') == user_email:
-                                registered_events.add(event)
-                                ticket_found = True
-                                break
+                    # Iterate through each result in the results list
+                    for result in data['results']:
+                        # Check if the status is 'p' (= paid)
+                        if result['status'] == 'p' and result['email'] == user_email:
+                            registered_events.add(event)
+                            ticket_found = True
+                            break
 
-                """
-                # Iterate through each result in the results list
-                for result in data['results']:
-                    # Check if the status is 'p' (= paid)
-                    if result['status'] == 'p' and result['email'] == user_email:
-                        registered_events.add(event)
-                        ticket_found = True
-                        break
+                else:
+
+                    for result in data['results']:
+                        # Check if the status is 'p' (= paid)
+                        if result['status'] == 'p':
+                            # Iterate through each position in the positions list
+                            for position in result['positions']:
+                                # Check if attendee_email is set
+                                if position.get('attendee_email') == user_email:
+                                    registered_events.add(event)
+                                    ticket_found = True
+                                    break
 
                 # Get the URL for the next page, if any
                 url = data.get('next')
