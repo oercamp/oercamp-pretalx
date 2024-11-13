@@ -27,8 +27,21 @@
                 </a>
             {% endif %}
             {% if cfp.is_open and not is_html_export %}
+                <!--
                 <a class="btn btn-info btn-lg btn-block" href="{{ request.event.cfp.urls.public }}{{ submit_qs }}">
                     {{ phrases.cfp.go_to_cfp }}
+                </a>
+                -->
+            {% endif %}
+            {% if not is_html_export %}
+                <a class="btn btn-success btn-lg btn-block {% if not cfp.is_open and not access_code.is_valid %}disabled{% endif %}"
+                   href="{{ request.event.urls.submit }}{{ submit_qs }}"
+                >
+                    {% if cfp.is_open or access_code.is_valid %}
+                        {% translate "Submit a proposal" %}
+                    {% else %}
+                        {% translate "Proposals are closed" %}
+                    {% endif %}
                 </a>
             {% endif %}
         </div>
