@@ -102,6 +102,14 @@
               {% bootstrap_field form.pretix_qid_participant_list_city layout='event' %}
               {% bootstrap_field form.pretix_qid_participant_list_postcode layout='event' %}
             </fieldset>
+            <fieldset>
+              <legend id="venueless">
+                {% translate "Venueless Integration Settings" %}
+              </legend>
+              {% bootstrap_field form.venueless_embed layout='event' %}
+              {% bootstrap_field form.venueless_domain layout='event' %}
+              {% bootstrap_field form.venueless_secret layout='event' %}
+            </fieldset>
           <fieldset>
             <div class="submit-group panel">
               <span>

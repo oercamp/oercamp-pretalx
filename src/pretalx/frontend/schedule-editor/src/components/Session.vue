@@ -7,7 +7,9 @@
 		.duration {{ durationPretty }}
 	.info
 		.title {{ getLocalizedString(session.emoji_label) }} {{ getLocalizedString(session.title) }}
-		.speakers(v-if="session.speakers") {{ session.speakers.map(s => s.name).join(', ') }}
+		.custom_speaker_title(v-if="session.custom_speaker_title")
+			.name {{ session.custom_speaker_title }}
+		.speakers(v-else-if="session.speakers") {{ session.speakers.map(s => s.name).join(', ') }}
 		.pending-line(v-if="session.state && session.state !== 'confirmed' && session.state !== 'accepted'")
 			i.fa.fa-exclamation-circle
 			span {{ $t('Pending proposal state') }}
@@ -208,6 +210,9 @@ export default {
 		min-width: 0
 		.title
 			font-weight: 500
+		.custom_speaker_title
+		color: $clr-secondary-text-light
+		line-height: 24px
 		.speakers
 			color: $clr-secondary-text-light
 		.bottom-info

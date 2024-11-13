@@ -474,6 +474,34 @@ class Event(PretalxModel):
           ),
     )
 
+    venueless_embed = models.BooleanField(
+        default=False,
+        verbose_name=_("Embed Venueless World"),
+        help_text=_(
+            "Embeds the venueless world into the schedule"
+        ),
+    )
+
+    venueless_domain = models.CharField(
+        max_length=255,
+        null=True,
+        blank=True,
+        verbose_name=_("Venueless world Domain/Base-URL"),
+        help_text=_(
+            "Provide the Venueless Base-Url (without https/protocol)"
+        ),
+    )
+
+    venueless_secret = models.CharField(
+        max_length=255,
+        null=True,
+        blank=True,
+        verbose_name=_("Venueless world secret"),
+        help_text=_(
+            "Provide the Venueless secret you got when creating the world"
+        ),
+    )
+
     template_names = [
         f"{template}_template"
         for template in ("accept", "ack", "reject", "update", "question")
@@ -521,7 +549,7 @@ class Event(PretalxModel):
         page_public_voting_wishes = "{base}p/voting/public/wishes"
         participants = "{base}participants/"
         events = "/events"
-
+        venueless_embedded = "{base}venueless/"
 
     class orga_urls(EventUrls):
         create = "/orga/event/new"
@@ -1363,3 +1391,14 @@ class Event(PretalxModel):
         if not self.is_pretix_api_configured:
             return None
         return f"https://{self.pretix_api_domain}/{self.pretix_api_organisator_slug}/{self.pretix_api_event_slug}/"
+
+    @cached_property
+    def is_venueless_world_enabled(self):
+        if (
+            self.venueless_domain and
+            self.venueless_secret and
+            self.venueless_embed
+        ):
+            return True
+        else:
+            return False

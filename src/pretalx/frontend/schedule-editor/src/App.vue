@@ -182,6 +182,7 @@ export default {
 					internal_notes: session.internal_notes,
 					question_extras_notes: session.question_extras_notes,
 					speakers: session.speakers?.map(s => this.speakersLookup[s]),
+					custom_speaker_title: session.custom_speaker_title,
 					track: this.tracksLookup[session.track],
 					emoji_label: session.emoji_label,
 					duration: session.duration,
@@ -228,6 +229,7 @@ export default {
 					speakers: session.speakers?.map(s => this.speakersLookup[s]),
 					track: this.tracksLookup[session.track],
 					emoji_label: session.emoji_label,
+					custom_speaker_title: session.custom_speaker_title,
 					state: session.state,
 					room: this.roomsLookup[session.room]
 				})

@@ -1,0 +1,22 @@
+{% extends "agenda/base.html" %}
+{% load compress %}
+{% load i18n %}
+{% load rich_text %}
+{% load static %}
+
+{% block agenda_content %}
+
+  {% include "agenda/header_row.html" %}
+  <p></p>
+  <article class="d-flex">
+    {% if not is_venueless_world_enabled %}
+      <p>Feature is nicht aktiv</p>
+    {% elif not user_venueless_embedded_link  %}
+      <p>Bitte melden Sie sich an um dieses Feature zu nutzen.</p>
+    {% else %}
+    <div class="venueless-embedded-container embed-responsive embed-responsive-16by9 card">
+      <iframe src="{{ user_venueless_embedded_link }}" allowfullscreen></iframe>
+    </div>
+    {% endif %}
+  </article>
+{% endblock %}

@@ -277,6 +277,41 @@ class EventForm(ReadOnlyFlag, I18nHelpText, JsonSubfieldMixin, I18nModelForm):
         ),
     )
 
+    venueless_domain = forms.CharField(
+        required=False,
+        widget=forms.TextInput(),
+        label=_("Venueless world Domain/Base-URL"),
+        help_text=_(
+            "Provide the Venueless Base-Url (without https/protocol)"
+        ),
+    )
+
+    venueless_embed = forms.BooleanField(
+        label=_("Embed Venueless World"),
+        help_text=_(
+            "Embeds the venueless world into the schedule"
+        ),
+        required=False,
+    )
+
+    venueless_secret = forms.CharField(
+        required=False,
+        widget=forms.TextInput(),
+        label=_("Venueless world secret"),
+        help_text=_(
+            "Provide the Venueless secret you got when creating the world"
+        ),
+    )
+
+    venueless_secret = forms.CharField(
+        required=False,
+        widget=forms.TextInput(),
+        label=_("Venueless world secret"),
+        help_text=_(
+            "Provide the Venueless secret you got when creating the world"
+        ),
+    )
+
     def __init__(self, *args, **kwargs):
         self.is_administrator = kwargs.pop("is_administrator", False)
         super().__init__(*args, **kwargs)
@@ -487,6 +522,9 @@ class EventForm(ReadOnlyFlag, I18nHelpText, JsonSubfieldMixin, I18nModelForm):
             "pretix_qid_participant_list_email",
             "pretix_qid_participant_list_postcode",
             "pretix_qid_participant_list_city",
+            "venueless_embed",
+            "venueless_domain",
+            "venueless_secret"
         ]
         field_classes = {
             "logo": ImageField,

@@ -7,7 +7,7 @@
         </a>
         {% if request.event.display_settings.schedule_display != "list" %}
            <a href="{{ request.event.urls.talks }}" class="btn btn-outline-success {% if "/talk/" in request.path %} active{% endif %}">
-              <i class="fa fa-comments-o"></i> {{ phrases.schedule.sessions }}
+              <i class="fa fa-list"></i> {{ phrases.schedule.sessions }}
            </a>
         {% endif %}
         <!--
@@ -29,6 +29,11 @@
         <a href="{{ request.event.urls.page_sponsors }}" class="btn btn-outline-success {% if "/page/sponsors/" in request.path %} active{% endif %}">
           <i class="fa fa-group"></i> Kooperationspartner*innen
         </a>
+        {% if request.event.is_venueless_world_enabled %}
+        <a href="{{ request.event.urls.venueless_embedded }}" class="btn btn-outline-success {% if "/venueless/" in request.path %} active{% endif %}">
+          <i class="fa fa-comments-o"></i> Live Chat
+        </a>
+        {% endif %}
     </div>
     <div class="header-right">
         {% if with_extra %}

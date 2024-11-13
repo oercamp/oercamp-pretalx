@@ -2,7 +2,7 @@ from django.urls import include, path, re_path
 
 from pretalx.common.views import EventSocialMediaCard, get_static
 
-from .views import featured, feed, schedule, speaker, talk, widget, participants
+from .views import featured, feed, schedule, speaker, talk, widget, participants, venueless_embedded
 
 
 def get_schedule_urls(regex_prefix, name_prefix=""):
@@ -67,6 +67,7 @@ urlpatterns = [
                 path("featured/", featured.FeaturedView.as_view(), name="featured"),
                 path("speaker/", speaker.SpeakerList.as_view(), name="speakers"),
                 path("participants/", participants.ParticipantsList.as_view(), name="participants"),
+                path("venueless/", venueless_embedded.VenuelessEmbedded.as_view(), name="venueless_embedded"),
                 path(
                     "speaker/avatar.svg",
                     speaker.empty_avatar_view,

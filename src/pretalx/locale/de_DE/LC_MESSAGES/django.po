@@ -3312,6 +3312,22 @@ msgstr "Teilnahmeliste: Pretix-Frage-ID PLZ"
 msgid "Participant list: question-id city"
 msgstr "Teilnahmeliste: Pretix-Frage-ID Ort"
 
+#: pretalx/orga/forms/event.py:168
+msgid "Provide the Venueless Base-Url (without https/protocol)"
+msgstr "Geben Sie hier die Venueless World Basis-Url ein (ohne http(s) Protokoll)"
+
+#: pretalx/orga/forms/event.py:168
+msgid "Provide the Venueless secret you got when creating the world"
+msgstr "Geben Sie hier das Venueless-World secret ein, das bei Erstellung der World erhalten wurde."
+
+#: pretalx/orga/forms/event.py:168
+msgid "Embed Venueless World"
+msgstr "Venueless Welt einbetten"
+
+#: pretalx/orga/forms/event.py:168
+msgid "Embeds the venueless world into the schedule"
+msgstr "Bindet die angegebene Venueless Welt in Pretalx ein"
+
 #: pretalx/orga/forms/event.py:145
 #, python-brace-format
 msgid "You can find the page <a {href}>here</a>."
