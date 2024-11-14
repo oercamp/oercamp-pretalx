@@ -143,37 +143,53 @@
         </div>
     </div>
     {% if not hide_speaker_links %}
-        {% for speaker in speakers %}
-            <div class="pretalx-session my-2">
-                <div class="pretalx-session-time-box avatar">
-                    <a href="{{ speaker.talk_profile.urls.public }}">
-                        <div class="avatar-wrapper">
-                            {% if speaker.avatar_url and request.event.cfp.request_avatar %}
-                                <img loading="lazy" src="{{ speaker.avatar_url }}">
-                            {% else %}
-                                <img loading="lazy" src="{{ request.event.urls.speakers }}avatar.svg">
-                            {% endif %}
-                        </div>
-                    </a>
-                </div>
-                <div class="pretalx-session-info">
-                    <div class="title">
-                        <a href="{{ speaker.talk_profile.urls.public }}">{{ speaker.get_display_name }}</a>
+
+        {% if submission.custom_speaker_title and submission.custom_speaker_title|length > 0 %}
+          <div class="pretalx-session my-2">
+              <div class="pretalx-session-time-box avatar">
+                    <div class="avatar-wrapper">
+                        <img loading="lazy" src="{{ request.event.urls.speakers }}avatar.svg">
                     </div>
-                    <div class="abstract">{{ speaker.talk_profile.biography|default:''|rich_text }}</div>
-                    {% if speaker.other_submissions %}
-                        {% translate "This speaker also appears in:" %}
-                        <ul>
-                            {% for talk in speaker.other_submissions %}
-                                <li>
-                                    <a href="{{ talk.urls.public }}">{{ talk.title }}</a>
-                                </li>
-                            {% endfor %}
-                        </ul>
-                    {% endif %}
+              </div>
+              <div class="pretalx-session-info">
+                  <div class="title">
+                    <p>{{  submission.custom_speaker_title }}</p>
+                  </div>
+              </div>
+          </div>
+        {% else %}
+            {% for speaker in speakers %}
+                <div class="pretalx-session my-2">
+                    <div class="pretalx-session-time-box avatar">
+                        <a href="{{ speaker.talk_profile.urls.public }}">
+                            <div class="avatar-wrapper">
+                                {% if speaker.avatar_url and request.event.cfp.request_avatar %}
+                                    <img loading="lazy" src="{{ speaker.avatar_url }}">
+                                {% else %}
+                                    <img loading="lazy" src="{{ request.event.urls.speakers }}avatar.svg">
+                                {% endif %}
+                            </div>
+                        </a>
+                    </div>
+                    <div class="pretalx-session-info">
+                        <div class="title">
+                            <a href="{{ speaker.talk_profile.urls.public }}">{{ speaker.get_display_name }}</a>
+                        </div>
+                        <div class="abstract">{{ speaker.talk_profile.biography|default:''|rich_text }}</div>
+                        {% if speaker.other_submissions %}
+                            {% translate "This speaker also appears in:" %}
+                            <ul>
+                                {% for talk in speaker.other_submissions %}
+                                    <li>
+                                        <a href="{{ talk.urls.public }}">{{ talk.title }}</a>
+                                    </li>
+                                {% endfor %}
+                            </ul>
+                        {% endif %}
+                    </div>
                 </div>
-            </div>
-        {% endfor %}
+            {% endfor %}
+        {% endif %}
     {% endif %}
     </article>
 {% endblock %}
