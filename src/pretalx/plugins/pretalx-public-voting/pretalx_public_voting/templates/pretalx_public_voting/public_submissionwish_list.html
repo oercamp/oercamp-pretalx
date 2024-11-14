@@ -11,7 +11,7 @@
 
 {% include "agenda/header_row.html" with with_margin=True %}
 <h2>{% trans "Public voting" %} - Themenwünsche</h2>
-{{ request.event.public_vote_settings.text|rich_text }}
+{{ request.event.public_vote_settings.text_wishes|rich_text }}
 
 <p>
   {% blocktrans trimmed %}

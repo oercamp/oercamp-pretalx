@@ -40,6 +40,14 @@ class PublicVotingSettings(models.Model):
         + " "
         + phrases.base.use_markdown,
     )
+    text_wishes = I18nTextField(
+            null=True,
+            blank=True,
+            verbose_name=_("Text - Wishes"),
+            help_text=_("This text will be shown at the top of the public submission wishes page.")
+            + " "
+            + phrases.base.use_markdown,
+    )
     anonymize_speakers = models.BooleanField(
         verbose_name=_("Anonymise content"),
         help_text=_("Hide speaker names and use anonymized content where available?"),

@@ -171,6 +171,7 @@ class PublicVotingSettingsForm(I18nModelForm):
             "start",
             "end",
             "text",
+            "text_wishes",
             "anonymize_speakers",
             "show_session_image",
             "show_session_description",

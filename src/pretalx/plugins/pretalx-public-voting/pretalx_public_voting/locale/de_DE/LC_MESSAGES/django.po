@@ -115,9 +115,17 @@ msgstr "Ende"
 msgid "Text"
 msgstr "Text"
 
+#: local/pretalx-public-voting/pretalx_public_voting/models.py:37
+msgid "Text - Wishes"
+msgstr "Text - Themenwünsche"
+
 #: local/pretalx-public-voting/pretalx_public_voting/models.py:38
 msgid "This text will be shown at the top of the public voting page."
 msgstr "Dieser Text wird ganz oben auf der Seite mit der öffentlichen Ansicht gezeigt."
+
+#: local/pretalx-public-voting/pretalx_public_voting/models.py:38
+msgid "This text will be shown at the top of the public submission wishes page."
+msgstr "Dieser Text wird ganz oben auf der Seite mit den Themenwünschen gezeigt."
 
 #: local/pretalx-public-voting/pretalx_public_voting/models.py:43
 msgid "Anonymise content"
@@ -279,7 +287,7 @@ msgstr "Bitte klicke hier, wenn du die Kommentarfunktion nutzen möchtest."
 
 #: local/pretalx-public-voting/pretalx_public_voting/templates/pretalx_public_voting/submission_list.html:62
 msgid "Login here to give submission wishes."
-msgstr "Möchtest du einen Themenwunsch abgeben? Hier entlang!"
+msgstr "Themenwünsche konntest du im Anmeldeformular angeben. Du kannst zum Ticketshop gehen, um deine Anmeldung zu überprüfen und zu bearbeiten."
 
 #: local/pretalx-public-voting/pretalx_public_voting/templates/pretalx_public_voting/submission_list.html:62
 msgid "Click here to write a comment."
