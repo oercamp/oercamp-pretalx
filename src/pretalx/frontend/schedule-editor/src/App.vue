@@ -388,7 +388,7 @@ export default {
 				)
 			) {
 				this.editorSessionWaiting = false
-				return alert('Nicht möglich: Veranstaltung überkreuzt sich mit einer anderen Veranstaltung.')
+				return alert('Programmpunkt überschneidet sich mit einem anderen Programmpunkt.')
 			}
 
 			this.editorSession.start = newStart
