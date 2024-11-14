@@ -74,7 +74,7 @@
 					.data-row
 						.data-label {{ $t('Start') }}
 						.data-value.datetime-local
-							input(v-model="editorSessionStartInput", type="datetime-local", :min="editorSessionStartInputMin", :max="editorSessionStartInputMax", step="2", :required="true")
+							input(v-model="editorSessionStartInput", type="datetime-local", :min="editorSessionStartInputMin", :max="editorSessionStartInputMax", step="60", :required="true")
 					.data-row
 						.data-label {{ $t('Duration') }}
 						.data-value.number
