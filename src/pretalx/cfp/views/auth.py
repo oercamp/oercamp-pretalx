@@ -38,6 +38,9 @@ class LoginView(GenericLoginView):
 
     @property
     def success_url(self):
+        next_param = self.request.GET.get("next")
+        if next_param == "submit":
+            return self.request.event.urls.submit
         return self.request.event.urls.base
 
     def get_password_reset_link(self):

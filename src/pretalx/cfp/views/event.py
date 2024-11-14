@@ -49,7 +49,19 @@ class EventStartpage(EventPageMixin, TemplateView):
             for key in ("track", "submission_type", "access_code")
             if self.request.GET.get(key) is not None
         ]
+        #NOVA: adding param so login-mask redirects to submit page
+        if (self.request.user.is_anonymous):
+            params.append(("next", "submit"))
+
         return f"?{urlencode(params)}" if params else ""
+
+    # We will redirect to login if user is anonymous.
+    # The submit_qs function will contain "next=submit" to redirect back.
+    @context
+    def submit_url(self):
+        if (self.request.user.is_anonymous):
+            return self.request.event.urls.login
+        return self.request.event.urls.submit
 
     @context
     def access_code(self):
