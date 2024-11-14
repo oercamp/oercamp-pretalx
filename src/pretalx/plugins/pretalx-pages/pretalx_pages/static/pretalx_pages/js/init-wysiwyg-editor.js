@@ -38,8 +38,11 @@ document.addEventListener('DOMContentLoaded', () => {
         contextmenu: 'image sponsor-remove',
         plugins: 'image code pretalx-sponsor-plugin',
         content_style: '' +
+            "@import url('https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&family=Unbounded:wght@200..900&display=swap'); " +
             '.sponsor-card { margin: 1rem; display: flex; flex-direction: row; gap: 0.25rem; border: 1px solid rgba(0, 0, 0, 0.125); border-radius:0.25rem; } ' +
             '.sponsor-card img { margin: 1rem } ',
+        font_family_formats:
+            "Unbounded=Unbounded; Open Sans=Open Sans; Andale Mono=andale mono,times; Arial=arial,helvetica,sans-serif; Arial Black=arial black,avant garde; Book Antiqua=book antiqua,palatino; Comic Sans MS=comic sans ms,sans-serif; Courier New=courier new,courier; Georgia=georgia,palatino; Helvetica=helvetica; Impact=impact,chicago; Symbol=symbol; Tahoma=tahoma,arial,helvetica,sans-serif; Terminal=terminal,monaco; Times New Roman=times new roman,times; Trebuchet MS=trebuchet ms,geneva; Verdana=verdana,geneva; Webdings=webdings; Wingdings=wingdings,zapf dingbats",
         setup: (editor) => {
 
             editor.ui.registry.addButton('customInsertSponsorButton', {
