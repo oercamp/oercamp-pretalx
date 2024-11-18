@@ -101,7 +101,9 @@ class EventDetail(EventSettingsPermission, ActionFromUrl, UpdateView):
             "pretalx.event.update", person=self.request.user, orga=True
         )
         messages.success(self.request, _("The event settings have been saved."))
-        regenerate_css.apply_async(args=(form.instance.pk,), ignore_result=True)
+        # NOVA changed "apply_async" to "apply" because it was buggy.
+        # The task gets sent to celery so it must be checked how celery handles these tasks
+        regenerate_css.apply(args=(form.instance.pk,), ignore_result=True)
         return result
 
 
