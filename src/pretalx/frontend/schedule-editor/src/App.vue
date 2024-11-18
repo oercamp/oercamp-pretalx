@@ -743,6 +743,10 @@ export default {
 					display: flex
 					align-items: baseline
 				.data-value
+					min-width: 0
+					select
+						min-width: 0
+						max-width: 100%
 					input
 						border: 1px solid #ced4da
 						width: 100%
