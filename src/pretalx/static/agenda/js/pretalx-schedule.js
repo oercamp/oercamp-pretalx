@@ -15559,15 +15559,15 @@ const lib = {
 var moment_timezone = __webpack_require__("7f45");
 var moment_timezone_default = /*#__PURE__*/__webpack_require__.n(moment_timezone);
 
-// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"cd50843c-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/pug-plain-loader!./node_modules/cache-loader/dist/cjs.js??ref--1-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/LinearSchedule.vue?vue&type=template&id=21004e8e&lang=pug&
-var LinearSchedulevue_type_template_id_21004e8e_lang_pug_render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{directives:[{name:"scrollbar",rawName:"v-scrollbar.y",modifiers:{"y":true}}],staticClass:"c-linear-schedule"},_vm._l((_vm.sessionBuckets),function(ref,index){
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"cd50843c-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/pug-plain-loader!./node_modules/cache-loader/dist/cjs.js??ref--1-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/LinearSchedule.vue?vue&type=template&id=3f003a98&lang=pug&
+var LinearSchedulevue_type_template_id_3f003a98_lang_pug_render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{directives:[{name:"scrollbar",rawName:"v-scrollbar.y",modifiers:{"y":true}}],staticClass:"c-linear-schedule"},_vm._l((_vm.sessionBuckets),function(ref,index){
 var date = ref.date;
 var sessions = ref.sessions;
 return _c('div',{staticClass:"bucket"},[_c('div',{ref:_vm.getBucketName(date),refInFor:true,staticClass:"bucket-label",attrs:{"data-date":date.format()}},[(index === 0 || date.clone().startOf('day').diff(_vm.sessionBuckets[index - 1].date.clone().startOf('day'), 'day') > 0)?_c('div',{staticClass:"day"},[_vm._v(" "+_vm._s(date.format('dddd DD. MMMM')))]):_vm._e(),_c('div',{staticClass:"time"},[_vm._v(_vm._s(date.format('LT')))]),_vm._l((sessions),function(session){return [(_vm.isProperSession(session))?_c('session',{attrs:{"session":session,"faved":session.id && _vm.favs.includes(session.id)},on:{"fav":function($event){return _vm.$emit('fav', session.id)},"unfav":function($event){return _vm.$emit('unfav', session.id)}}}):_c('div',{staticClass:"break"},[_c('div',{staticClass:"title"},[_vm._v(_vm._s(_vm.getLocalizedString(session.title)))])])]})],2)])}),0)}
-var LinearSchedulevue_type_template_id_21004e8e_lang_pug_staticRenderFns = []
+var LinearSchedulevue_type_template_id_3f003a98_lang_pug_staticRenderFns = []
 
 
-// CONCATENATED MODULE: ./src/components/LinearSchedule.vue?vue&type=template&id=21004e8e&lang=pug&
+// CONCATENATED MODULE: ./src/components/LinearSchedule.vue?vue&type=template&id=3f003a98&lang=pug&
 
 // CONCATENATED MODULE: ./src/utils.js
 // import i18n from 'i18n'
@@ -15866,7 +15866,7 @@ var Session_component = Object(componentNormalizer["a" /* default */])(
         date: sessions[0].start,
         // sort by room for stable sort across time buckets
         // NOVA Update: this was sorted by room-id, now its sorted alphabetically by title
-        sessions: sessions.sort((a, b) => a.title.localeCompare(b.title)) // old: sessions: sessions.sort((a, b) => this.rooms.findIndex(room => room.id === a.room.id) - this.rooms.findIndex(room => room.id === b.room.id))
+        sessions: sessions.sort((a, b) => String(a.title).localeCompare(b.title)) // old: sessions: sessions.sort((a, b) => this.rooms.findIndex(room => room.id === a.room.id) - this.rooms.findIndex(room => room.id === b.room.id))
 
       }));
     }
@@ -15994,8 +15994,8 @@ if (style0.__inject__) style0.__inject__(context)
 
 var LinearSchedule_component = Object(componentNormalizer["a" /* default */])(
   components_LinearSchedulevue_type_script_lang_js_,
-  LinearSchedulevue_type_template_id_21004e8e_lang_pug_render,
-  LinearSchedulevue_type_template_id_21004e8e_lang_pug_staticRenderFns,
+  LinearSchedulevue_type_template_id_3f003a98_lang_pug_render,
+  LinearSchedulevue_type_template_id_3f003a98_lang_pug_staticRenderFns,
   false,
   LinearSchedule_injectStyles,
   null,
