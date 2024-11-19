@@ -183,3 +183,8 @@ pre {
 .venueless-embedded-container {
     min-height: 50vh;
 }
+
+.temporarily-hidden {
+    visibility: hidden;
+    height: 0;
+}

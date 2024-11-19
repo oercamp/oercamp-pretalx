@@ -46,7 +46,9 @@
                 <script defer src="{% static "vendored/moment-timezone-with-data-10-year-range.js" %}"></script>
             {% endcompress %}
             {% include "common/availabilities.html" %}
+            <div class="temporarily-hidden">
             {% bootstrap_field profile_form.availabilities layout='event' %}
+            </div>
         {% endif %}
         <div class="row">
             <div class="col-md-4 flip ml-auto">
@@ -91,7 +93,9 @@
             </div>
         </div>
     </form>
+    <div class="temporarily-hidden">
     {% include "common/user_api_token.html" %}
+    </div>
     <div>&nbsp;</div>
     <h3>{% translate "Account deletion" %}</h3>
     <form action="{{ request.event.urls.user_delete }}" method="post" class="form">
