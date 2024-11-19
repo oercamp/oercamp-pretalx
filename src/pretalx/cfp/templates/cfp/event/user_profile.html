@@ -45,8 +45,8 @@
                 <script defer src="{% static "vendored/moment-with-locales.js" %}"></script>
                 <script defer src="{% static "vendored/moment-timezone-with-data-10-year-range.js" %}"></script>
             {% endcompress %}
-            {% include "common/availabilities.html" %}
             <div class="temporarily-hidden">
+            {% include "common/availabilities.html" %}
             {% bootstrap_field profile_form.availabilities layout='event' %}
             </div>
         {% endif %}

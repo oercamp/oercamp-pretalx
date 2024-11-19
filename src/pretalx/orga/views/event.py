@@ -514,6 +514,12 @@ class UserSettings(TemplateView):
     def get_success_url(self) -> str:
         return reverse("orga:user.view")
 
+
+    @context
+    @cached_property
+    def user_is_administrator(self):
+        return self.request.user.is_administrator
+
     @context
     @cached_property
     def login_form(self):
