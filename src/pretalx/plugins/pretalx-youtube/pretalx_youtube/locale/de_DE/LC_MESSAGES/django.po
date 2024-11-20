@@ -111,3 +111,7 @@ msgstr ""
 #: local/pretalx-youtube/pretalx_youtube/views.py:75
 msgid "Please fix the errors below."
 msgstr ""
+
+#: local/pretalx-youtube/pretalx_youtube/models.py:23
+msgid "Please <a href=\"javascript:Cookiebot.renew()\">accept marketing-cookies</a> to watch this video."
+msgstr "Bitte <a href=\"javascript:Cookiebot.renew()\">akzeptiere die Marketing-Cookies</a> um das Video zu sehen."

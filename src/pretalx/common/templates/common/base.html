@@ -48,6 +48,9 @@
             <script defer src="{% static "vendored/moment-timezone-with-data-10-year-range.js" %}"></script>
         {% endcompress %}
         {% block custom_header %}{% endblock %}
+
+        <script id="Cookiebot" src="https://consent.cookiebot.com/uc.js" data-cbid="be4a83b6-2149-4c25-905e-1ba9fb2f7f19" data-blockingmode="auto" type="text/javascript"></script>
+
     </head>
     <body data-datetimeformat="{{ js_datetime_format }}" data-dateformat="{{ js_date_format }}" data-datetimelocale="{{ js_locale }}">
         <div id="top-bg" class="header {{ request.event.display_settings.header_pattern|default:"bg-primary" }}">
