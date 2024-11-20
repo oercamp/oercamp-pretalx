@@ -9,6 +9,7 @@ from pretalx.orga.views import (
     dashboard,
     event,
     mails,
+    tools,
     organiser,
     person,
     plugins,
@@ -739,6 +740,11 @@ urlpatterns = [
                     "schedule/api/warnings/",
                     schedule.ScheduleWarnings.as_view(),
                     name="schedule.api.warnings",
+                ),
+                path(
+                    "tools/survey_merger/",
+                    tools.SurveyMergerView.as_view(),
+                    name="tools.survey_merger",
                 ),
             ]
         ),

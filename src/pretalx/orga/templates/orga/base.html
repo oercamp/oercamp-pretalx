@@ -388,6 +388,12 @@
                                 </a>
                             </div>
                         </div>
+
+                        <a class="nav-link {% if url_name == "tools.survey_merger" %}active{% endif %}" href="{{ request.event.orga_urls.tools_survey_merger }}">
+                          <i class="fa fa-file-excel-o"></i>
+                          <span class="sidebar-text">{% translate "Survey Merger" %}</span>
+                        </a>
+
                         {% for nav_element in nav_event %}
                             {% include "orga/includes/sidebar_nav.html" %}
                         {% endfor %}

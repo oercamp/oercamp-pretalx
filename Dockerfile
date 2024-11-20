@@ -41,7 +41,7 @@ RUN pip3 install -e /pretalx/src/pretalx/plugins/pretalx-venueless
 RUN rm -f /pretalx/pyproject.toml
 RUN rm -rf /pretalx/src
 
-RUN pip3 install -U pip mysqlclient redis setuptools wheel typing pylibmc gunicorn
+RUN pip3 install -U pip mysqlclient redis setuptools wheel typing pylibmc gunicorn openpyxl
 
 RUN apt-get update && \
     apt-get install -y nodejs npm && \

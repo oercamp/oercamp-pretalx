@@ -1,0 +1,24 @@
+{% extends "orga/schedule/base.html" %}
+{% load i18n %}
+{% load bootstrap4 %}
+{% load static %}
+
+{% block schedule_content %}
+    <h2>
+        {% translate "Survey Merger" %}
+    </h2>
+    <div class="tab-content" id="myTabContent">
+        <div class="tab-pane fade show active" id="custom" role="tabpanel" aria-labelledby="custom-tab">
+            <form method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+                <fieldset>
+                    <legend>
+                        {% translate "Upload Excel File" %}
+                    </legend>
+                    {% bootstrap_field form.excel_file layout='event' %}
+                </fieldset>
+                <button type="submit" class="btn btn-primary">Upload</button>
+            </form>
+        </div>
+    </div>
+{% endblock %}

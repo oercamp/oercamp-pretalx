@@ -603,6 +603,7 @@ class Event(PretalxModel):
         plugins = "{settings}plugins"
         information = "{base}info/"
         new_information = "{base}info/new"
+        tools_survey_merger = "{base}tools/survey_merger"
 
     class api_urls(EventUrls):
         base = "/api/events/{self.slug}/"

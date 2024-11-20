@@ -1,4 +1,5 @@
 from django.db import models
+from django.utils.translation import gettext_lazy as _
 
 
 class YouTubeLink(models.Model):
@@ -19,4 +20,5 @@ class YouTubeLink(models.Model):
 
     @property
     def iframe(self):
-        return f'<div class="embed-responsive embed-responsive-16by9"><iframe src="{self.player_link}" frameborder="0" allowfullscreen></iframe></div>'
+        alternate_text = _('Please <a href="javascript:Cookiebot.renew()">accept marketing-cookies</a> to watch this video.')
+        return f'<div class="embed-responsive embed-responsive-16by9 d-flex align-items-center justify-content-center"><iframe src="{self.player_link}" frameborder="0" allowfullscreen></iframe><p class="cookieconsent-optout-marketing">{alternate_text}<p></div>'
