@@ -503,8 +503,8 @@ export default {
 		 * @param changeValue - can be a number or 'reset'
 		 */
 		zoomChange (changeValue) {
-			['c-grid-schedule', 'c-linear-schedule'].forEach((className) => {
-				const scheduleElArr = document.querySelectorAll(`.${className}`)
+			['#schedule-wrapper'].forEach((className) => {
+				const scheduleElArr = document.querySelectorAll(`${className}`)
 				if (scheduleElArr.length > 0) {
 					const scheduleEl = scheduleElArr[0]
 					if (changeValue === 'reset') {
@@ -613,7 +613,7 @@ export default {
 		margin-bottom: 0
 		flex: none
 		min-width: 0
-		height: 48px
+		height: 96px
 		z-index: 30
 		.bunt-tabs-header
 			min-width: min-content
