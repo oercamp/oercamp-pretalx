@@ -311,7 +311,7 @@ class QuestionFieldsMixin:
                 required=question.required,
                 widget=(
                     forms.CheckboxSelectMultiple
-                    if len(choices) < 8
+                    if len(choices) < 50 #8
                     else forms.SelectMultiple(attrs={"class": "select2"})
                 ),
                 initial=(
