@@ -33,7 +33,7 @@
         </div>
     </div>
     {% block cfp_form %}
-        <form method="post" enctype="multipart/form-data">
+        <form method="post" enctype="multipart/form-data" novalidate>
             {% csrf_token %}
             {{ wizard.management_form }}
             {% block inner %}
