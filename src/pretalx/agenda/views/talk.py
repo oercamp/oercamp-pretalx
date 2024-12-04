@@ -124,10 +124,14 @@ class TalkView(PermissionRequired, TemplateView):
     @context
     @cached_property
     def answers(self):
+        submission_type = getattr(self.submission, "submission_type", None)
         return self.submission.answers.filter(
             question__is_public=True,
             question__event=self.request.event,
             question__target=QuestionTarget.SUBMISSION,
+        ).filter( #NOVA Bugfix: adding filter for sumbission types
+             Q(question__submission_types__in=[submission_type]) |
+             Q(question__submission_types__isnull=True)
         ).select_related("question")
 
 
