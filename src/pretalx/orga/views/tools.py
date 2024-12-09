@@ -40,6 +40,9 @@ from pretalx.schedule.forms import QuickScheduleForm, RoomForm
 from pretalx.schedule.models import Availability, Room, TalkSlot, Schedule
 from pretalx.schedule.utils import guess_schedule_version
 
+import requests
+import logging
+
 
 class SurveyMergerView(EventPermissionRequired, FormView):
     template_name = "orga/tools/survey_merger.html"
@@ -58,6 +61,11 @@ class SurveyMergerView(EventPermissionRequired, FormView):
             messages.error(self.request, f"Uploaded file size: {uploaded_file.size} bytes")
         except Exception as e:
             form.add_error("excel_file", f"Error processing file: {e}")
+            return self.form_invalid(form)
+
+
+        if not self.request.event.is_pretix_api_configured:
+            form.add_error("excel_file", f"Error : Pretix API is not configured.")
             return self.form_invalid(form)
 
         modified_file = self.process_excel_file(uploaded_file)
@@ -83,19 +91,60 @@ class SurveyMergerView(EventPermissionRequired, FormView):
         result = super().get_context_data(**kwargs)
         return result
 
+
+    ###
+    # This Function takes the uploaded excel file, then
+    # 1. requests all orders from pretix.
+    # 2. connects orders and excel by token
+    # 3. add headers for the questions (question_identifier is used) to the result excel
+    # 4. fills the columns with answer data
+    # 5. removes the token column (TODO)
+    ###
     def process_excel_file(self, uploaded_file):
         workbook = openpyxl.load_workbook(uploaded_file)
         sheet = workbook.active  # or specify sheet by name: workbook['Sheet1']
 
-        # Iterate over each row (skip header row if needed)
-        for row_index, row in enumerate(sheet.iter_rows(min_row=2, max_row=sheet.max_row, min_col=1, max_col=sheet.max_column), start=2):
-            # Example: Add new columns to each row (modify the cells directly)
-            new_column_1 = "New Value 1"
-            new_column_2 = "New Value 2"
+        api_answer_data = self.request_answer_data()
 
-            # Insert the new values into the last columns of each row
-            sheet.cell(row=row_index, column=sheet.max_column + 1, value=new_column_1)
-            sheet.cell(row=row_index, column=sheet.max_column + 2, value=new_column_2)
+        # Create a dictionary to map tokens to their answers and question identifiers
+        token_data_map = {}
+        for entry in api_answer_data:
+            token = entry['token']
+            question_identifier = entry['question_identifier']
+            answer = entry['answer']
+
+            if token not in token_data_map:
+                token_data_map[token] = {}
+            token_data_map[token][question_identifier] = answer
+
+        # Identify the 'token' column dynamically from the header row (assuming headers are in the first row)
+        headers = {cell.value: idx for idx, cell in enumerate(sheet[1], start=1)}
+        token_column_index = headers.get("token")
+        if not token_column_index:
+            logging.error("Column with header 'token' not found.")
+            return
+
+        # Add headers for new columns dynamically if not already present
+        for entry in api_answer_data:
+            question_identifier = entry['question_identifier']
+            if question_identifier not in headers:
+                new_col_index = len(headers) + 1
+                headers[question_identifier] = new_col_index
+                sheet.cell(row=1, column=new_col_index, value=question_identifier)
+
+        # Iterate over each row, starting from the second row
+        for row_index, row in enumerate(sheet.iter_rows(min_row=2, max_row=sheet.max_row), start=2):
+            # Get the token value from the dynamically determined token column
+            token_cell = row[token_column_index - 1]  # Adjust for 0-based indexing
+            token_value = token_cell.value.strip() if token_cell.value else None
+
+            # Check if the token exists in the data map
+            if token_value in token_data_map:
+                for question_identifier, answer in token_data_map[token_value].items():
+                    # Find the correct column for the question identifier
+                    col_index = headers[question_identifier]
+                    # Insert the answer into the appropriate cell
+                    sheet.cell(row=row_index, column=col_index, value=answer)
 
 
         # Save the modified workbook to a byte stream (instead of saving to disk)
@@ -106,3 +155,45 @@ class SurveyMergerView(EventPermissionRequired, FormView):
 
         return file_stream.read()
 
+    def request_answer_data(self):
+
+        url = f"https://{self.request.event.pretix_api_domain}/api/v1/organizers/{self.request.event.pretix_api_organisator_slug}/events/{self.request.event.pretix_api_event_slug}/orders/"
+        headers = {
+            'Authorization': f"Token {self.request.event.pretix_api_key}"
+        }
+
+        result_data_list = []
+
+        while url:  # Continue looping as long as there's a next URL
+            response = requests.get(url, headers=headers)
+
+            if response.status_code != 200:
+                return {'error': 'Failed to fetch data'}
+
+            data = response.json()  # Parse the JSON response
+
+            # Iterate through each result in the results list
+            for result in data['results']:
+                # Check if the status is 'p' (= paid)
+                if result['status'] == 'p':
+                    # Iterate through each position in the positions list
+                    for position in result['positions']:
+
+                        answer_data = []
+
+                        # Second loop: get all answers
+                        for answer in position.get('answers', []):
+                            answer_data.append(
+                                {
+                                    'token': result.get('secret_token'),
+                                    'question_identifier': answer.get('question_identifier'),
+                                    'answer': answer.get('answer')
+                                }
+                            )
+
+                        result_data_list.extend(answer_data)
+
+            # Get the URL for the next page, if any
+            url = data.get('next')
+
+        return result_data_list
