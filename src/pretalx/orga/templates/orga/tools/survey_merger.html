@@ -7,6 +7,11 @@
     <h2>
         {% translate "Survey Merger" %}
     </h2>
+    <p>
+      Hier können Sie Ihre Survey Excel-Datei hochladen. Eine Spalte mit dem Namen "token" sollte existieren. <br>
+      Diese wird mit dem Token "{order_secret_token}" aus den Pretix-Bestellungen abgeglichen.<br>
+      Eine neue Excel Datei, welche die Daten aus dem Survey mit den Daten aus den Bestellungen zusammenführt, wird erstellt & zum Download angeboten.
+    </p>
     <div class="tab-content" id="myTabContent">
         <div class="tab-pane fade show active" id="custom" role="tabpanel" aria-labelledby="custom-tab">
             <form method="post" enctype="multipart/form-data">
