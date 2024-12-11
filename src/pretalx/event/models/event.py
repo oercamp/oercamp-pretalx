@@ -474,6 +474,16 @@ class Event(PretalxModel):
           ),
     )
 
+    survey_merger_pretix_qid_whitelist = models.CharField(
+          max_length=255,
+          null=True,
+          blank=True,
+          verbose_name=_("Survey Merger: question-id whitelist"),
+          help_text=_(
+              "Provide the comma-seperated question-identifiers that should be added in the survey merger."
+          ),
+    )
+
     venueless_embed = models.BooleanField(
         default=False,
         verbose_name=_("Embed Venueless World"),

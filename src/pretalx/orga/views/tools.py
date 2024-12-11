@@ -104,7 +104,12 @@ class SurveyMergerView(EventPermissionRequired, FormView):
         workbook = openpyxl.load_workbook(uploaded_file)
         sheet = workbook.active  # or specify sheet by name: workbook['Sheet1']
 
-        api_answer_data = self.request_answer_data()
+        qid_whitelist = self.request.event.survey_merger_pretix_qid_whitelist
+        qid_whitelist_array = [qid.strip() for qid in qid_whitelist.split(",")] if qid_whitelist else []
+
+        logging.info(qid_whitelist_array)
+
+        api_answer_data = self.request_answer_data() if qid_whitelist_array else []
 
         # Create a dictionary to map tokens to their answers and question identifiers
         token_data_map = {}
@@ -124,10 +129,13 @@ class SurveyMergerView(EventPermissionRequired, FormView):
             logging.error("Column with header 'token' not found.")
             return
 
-        # Add headers for new columns dynamically if not already present
+        # Filter question identifiers based on the whitelist
+        qid_whitelist_set = set(qid_whitelist_array)  # Convert whitelist to a set for faster lookups
+
+        # Add headers for new columns dynamically if not already present and in the whitelist
         for entry in api_answer_data:
             question_identifier = entry['question_identifier']
-            if question_identifier not in headers:
+            if question_identifier in qid_whitelist_set and question_identifier not in headers:
                 new_col_index = len(headers) + 1
                 headers[question_identifier] = new_col_index
                 sheet.cell(row=1, column=new_col_index, value=question_identifier)
@@ -141,10 +149,12 @@ class SurveyMergerView(EventPermissionRequired, FormView):
             # Check if the token exists in the data map
             if token_value in token_data_map:
                 for question_identifier, answer in token_data_map[token_value].items():
-                    # Find the correct column for the question identifier
-                    col_index = headers[question_identifier]
-                    # Insert the answer into the appropriate cell
-                    sheet.cell(row=row_index, column=col_index, value=answer)
+                    # Only process question identifiers in the whitelist
+                    if question_identifier in qid_whitelist_set:
+                        # Find the correct column for the question identifier
+                        col_index = headers[question_identifier]
+                        # Insert the answer into the appropriate cell
+                        sheet.cell(row=row_index, column=col_index, value=answer)
 
 
         # Save the modified workbook to a byte stream (instead of saving to disk)

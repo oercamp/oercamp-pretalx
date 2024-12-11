@@ -277,6 +277,15 @@ class EventForm(ReadOnlyFlag, I18nHelpText, JsonSubfieldMixin, I18nModelForm):
         ),
     )
 
+    survey_merger_pretix_qid_whitelist = forms.CharField(
+          required=False,
+          widget=forms.TextInput(),
+          label=_("Survey Merger: question-id whitelist"),
+          help_text=_(
+              "Provide the comma-seperated question-identifiers that should be added in the survey merger."
+          ),
+    )
+
     venueless_domain = forms.CharField(
         required=False,
         widget=forms.TextInput(),
@@ -522,6 +531,7 @@ class EventForm(ReadOnlyFlag, I18nHelpText, JsonSubfieldMixin, I18nModelForm):
             "pretix_qid_participant_list_email",
             "pretix_qid_participant_list_postcode",
             "pretix_qid_participant_list_city",
+            "survey_merger_pretix_qid_whitelist",
             "venueless_embed",
             "venueless_domain",
             "venueless_secret"
