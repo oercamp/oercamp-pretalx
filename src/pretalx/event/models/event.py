@@ -1413,3 +1413,9 @@ class Event(PretalxModel):
             return True
         else:
             return False
+
+    @cached_property
+    def pretix_ticket_shop_base_url(self):
+        if not self.is_pretix_api_configured:
+            return None
+        return f"https://{self.pretix_api_domain}/"

@@ -113,6 +113,17 @@ class GeneralView(TemplateView):
             if event not in result["registered_events"]
         ]
 
+        # We will use the first existing event to load the widget javascript and css from.
+        result["widget_event"] = next(
+            (events[0] for events in [
+                result["registered_events"],
+                result["current_events"],
+                result["future_events"],
+                result["past_events"]
+            ] if events),
+            None
+        )
+
         return result
 
     def get_pretix_ordered_events(self, events):
