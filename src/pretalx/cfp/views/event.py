@@ -115,7 +115,7 @@ class GeneralView(TemplateView):
 
         # We will use the first existing event to load the widget javascript and css from.
         result["widget_event"] = next(
-            (events[0] for events in [
+            (list(events)[0] for events in [
                 result["registered_events"],
                 result["current_events"],
                 result["future_events"],
