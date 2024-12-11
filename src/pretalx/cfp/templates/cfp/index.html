@@ -1,5 +1,6 @@
 {% extends "common/base.html" %}
 {% load i18n %}
+{% load static %}
 
 {% block title %}{% translate "Events" %}{% endblock %}
 
@@ -8,6 +9,7 @@
     {% if widget_event and widget_event.pretix_ticket_shop_link and widget_event.pretix_ticket_shop_base_url %}
       <script type="text/javascript" src="{{ widget_event.pretix_ticket_shop_base_url }}/widget/v1.en.js" async crossorigin></script>
       <link rel="stylesheet" type="text/css" href="{{ widget_event.pretix_ticket_shop_link }}/widget/v1.css" crossorigin>
+      <script src="{% static "common/js/pretix_widget.js" %}"></script>
     {% endif %}
 
     {% if registered_events or current_events or future_events or past_events %}
@@ -64,7 +66,7 @@
                     </a>
                     {% if event.pretix_ticket_shop_link %}
                       <a
-                        class="btn btn-outline-info m-1"
+                        class="btn btn-outline-info m-1 btn-pretix-purchase-ticket"
                         href="{{ event.pretix_ticket_shop_link }}"
                         data-toggle="tooltip"
                         data-placement="top"
@@ -73,11 +75,6 @@
                         <i class="fa fa-ticket"></i>
                         {% translate 'Purchase ticket' %}
                       </a>
-                      <div class="invisible">
-                        <pretix-button event="{{ event.pretix_ticket_shop_link }}">
-                          Test Button
-                        </pretix-button>
-                      </div>
                     {% endif %}
                   </div>
                 </li>
@@ -158,11 +155,6 @@
                   <i class="fa fa-ticket"></i>
                   {% translate 'Purchase ticket' %}
                 </a>
-                <div class="invisible">
-                  <pretix-button event="{{ event.pretix_ticket_shop_link }}">
-                    Test Button
-                  </pretix-button>
-                </div>
                 {% endif %}
               </div>
             </li>
