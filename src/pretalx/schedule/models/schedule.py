@@ -778,6 +778,7 @@ class Schedule(PretalxModel):
                 "tag": atag.tag,
                 "public": atag.public,
                 "color": atag.color,
+                "emoji_label": atag.emoji_label
             }
             for atag in tags
         ]

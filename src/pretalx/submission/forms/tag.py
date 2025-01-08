@@ -23,4 +23,4 @@ class TagForm(ReadOnlyFlag, I18nHelpText, I18nModelForm):
 
     class Meta:
         model = Tag
-        fields = ("tag", "description", "color", "public")
+        fields = ("tag", "description", "color", "public", "emoji_label")

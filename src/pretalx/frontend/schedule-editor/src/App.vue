@@ -170,6 +170,10 @@ export default {
 			if (!this.schedule) return {}
 			return this.schedule.speakers.reduce((acc, s) => { acc[s.code] = s; return acc }, {})
 		},
+		tagsLookup () {
+			if (!this.schedule) return {}
+			return this.schedule.tags.reduce((acc, s) => { acc[s.tag] = s; return acc }, {})
+		},
 		unscheduled () {
 			if (!this.schedule) return
 			let sessions = []
@@ -182,6 +186,7 @@ export default {
 					internal_notes: session.internal_notes,
 					question_extras_notes: session.question_extras_notes,
 					speakers: session.speakers?.map(s => this.speakersLookup[s]),
+					tags: session.tags?.map(s => this.tagsLookup[s]),
 					custom_speaker_title: session.custom_speaker_title,
 					track: this.tracksLookup[session.track],
 					emoji_label: session.emoji_label,
@@ -227,6 +232,7 @@ export default {
 					end: moment(session.end),
 					duration: moment(session.end).diff(session.start, 'm'),
 					speakers: session.speakers?.map(s => this.speakersLookup[s]),
+					tags: session.tags?.map(s => this.tagsLookup[s]),
 					track: this.tracksLookup[session.track],
 					emoji_label: session.emoji_label,
 					custom_speaker_title: session.custom_speaker_title,

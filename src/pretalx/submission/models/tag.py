@@ -31,6 +31,13 @@ class Tag(PretalxModel):
             "Tags are currently only in use for organisers and reviewers. They will be visible publicly in a future release of pretalx."
         ),
     )
+    emoji_label = models.CharField(
+        max_length=255,
+        default='',
+        verbose_name=_("Emoji/Label"),
+        null=True,
+        blank=True,
+    )
 
     class urls(EventUrls):
         base = edit = "{self.event.orga_urls.tags}{self.pk}/"

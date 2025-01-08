@@ -34,6 +34,9 @@
         <h3 class="talk-title">
             <div class="heading-with-buttons">
                 <span>
+                    {% for submission_tag in submission.tags.all %}
+                        {{ submission_tag.emoji_label }}&nbsp;
+                    {% endfor %}
                     {{ submission.emoji_label }} {{ submission.title }}
                     <button class="btn btn-xs btn-link d-none" id="fav-button">
                         <i class="fa fa-star-o d-none" title="{% translate "Favourite this session" %}"></i>

@@ -12,6 +12,8 @@
     {% compress js %}
         <script defer src="{% static "vendored/colorpicker/js/bootstrap-colorpicker.min.js" %}"></script>
         <script defer src="{% static "orga/js/colorpicker.js" %}"></script>
+        <script defer src="{% static "orga/js/tag_form.js" %}"></script>
+        <script defer src="{% static "vendored/vanilla-emoji-picker/vanilla-emoji-picker.js" %}"></script>
     {% endcompress %}
 {% endblock %}
 
@@ -31,6 +33,7 @@
         {% bootstrap_field form.description layout='event' %}
         {% bootstrap_field form.color layout='event' addon_before="<i></i>" addon_before_class="colorpicker-input-addon color-visible" %}
         {% bootstrap_field form.public layout='event' %}
+        {% bootstrap_field form.emoji_label layout='event' addon_after='<button type="button" id="emoji_label_emoji_picker_button">+Emoji</button>' %}
         {% include "orga/includes/submit_row.html" %}
     </form>
 
