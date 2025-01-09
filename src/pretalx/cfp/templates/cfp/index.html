@@ -86,36 +86,36 @@
         <ul>
             {% for event in future_events %}
             <li class="d-flex flex-row align-items-center">
-              {% if event.pretix_ticket_shop_link %}
-              <i class="fa fa-ticket mr-2"></i>
-              {% endif %}
-              <a href="{{ event.pretix_ticket_shop_link | default:event.urls.base }}"{% if event.pretix_ticket_shop_link %} class="btn-pretix-purchase-ticket" skip-ssl-check{% endif %}>
-                  {{ event.name }}
-                  ({{ event.get_date_range_display }})
-              </a>
-              <div class="ml-auto">
-                <a
-                  class="btn btn-outline-info m-1"
-                  href="{{ event.urls.base }}"
-                  data-toggle="tooltip"
-                  data-placement="top"
-                  title="{% translate 'View conference schedule' %}"
-                >
-                  <i class="fa fa-calendar"></i>
-                  {% translate 'Program' %}
-                </a>
                 {% if event.pretix_ticket_shop_link %}
-                <a
-                  class="btn btn-outline-info m-1 btn-pretix-purchase-ticket"
-                  href="{{ event.pretix_ticket_shop_link }}"
-                  data-toggle="tooltip"
-                  data-placement="top"
-                  title="{% translate 'Purchase ticket' %}"
-                >
-                  <i class="fa fa-ticket"></i>
-                  {% translate 'Purchase ticket' %}
-                </a>
+                    <i class="fa fa-ticket mr-2"></i>
                 {% endif %}
+                <a href="{{ event.pretix_ticket_shop_link | default:event.urls.base }}"{% if event.pretix_ticket_shop_link %} class="btn-pretix-purchase-ticket" skip-ssl-check{% endif %}>
+                    {{ event.name }}
+                    ({{ event.get_date_range_display }})
+                </a>
+                <div class="ml-auto">
+                  <a
+                    class="btn btn-outline-info m-1"
+                    href="{{ event.urls.base }}"
+                    data-toggle="tooltip"
+                    data-placement="top"
+                    title="{% translate 'View conference schedule' %}"
+                  >
+                    <i class="fa fa-calendar"></i>
+                    {% translate 'Program' %}
+                  </a>
+                  {% if event.pretix_ticket_shop_link %}
+                  <a
+                    class="btn btn-outline-info m-1 btn-pretix-purchase-ticket"
+                    href="{{ event.pretix_ticket_shop_link }}"
+                    data-toggle="tooltip"
+                    data-placement="top"
+                    title="{% translate 'Purchase ticket' %}"
+                  >
+                    <i class="fa fa-ticket"></i>
+                    {% translate 'Purchase ticket' %}
+                  </a>
+                  {% endif %}
               </div>
             </li>
             {% endfor %}

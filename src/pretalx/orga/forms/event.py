@@ -312,12 +312,12 @@ class EventForm(ReadOnlyFlag, I18nHelpText, JsonSubfieldMixin, I18nModelForm):
         ),
     )
 
-    venueless_secret = forms.CharField(
+    event_website_link = forms.CharField(
         required=False,
         widget=forms.TextInput(),
-        label=_("Venueless world secret"),
+        label=_("Event website Link"),
         help_text=_(
-            "Provide the Venueless secret you got when creating the world"
+            "If you provide a website link, then it will be used on the events page."
         ),
     )
 
@@ -534,7 +534,8 @@ class EventForm(ReadOnlyFlag, I18nHelpText, JsonSubfieldMixin, I18nModelForm):
             "survey_merger_pretix_qid_whitelist",
             "venueless_embed",
             "venueless_domain",
-            "venueless_secret"
+            "venueless_secret",
+            "event_website_link"
         ]
         field_classes = {
             "logo": ImageField,

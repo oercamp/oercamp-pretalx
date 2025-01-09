@@ -512,6 +512,16 @@ class Event(PretalxModel):
         ),
     )
 
+    event_website_link = models.CharField(
+        max_length=255,
+        null=True,
+        blank=True,
+        verbose_name=_("Event website Link"),
+        help_text=_(
+            "If you provide a website link, then it will be used on the events page."
+        ),
+    )
+
     template_names = [
         f"{template}_template"
         for template in ("accept", "ack", "reject", "update", "question")

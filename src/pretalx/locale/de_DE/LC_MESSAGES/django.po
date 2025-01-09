@@ -3329,12 +3329,20 @@ msgid "Provide the Venueless secret you got when creating the world"
 msgstr "Geben Sie hier das Venueless-World secret ein, das bei Erstellung der World erhalten wurde."
 
 #: pretalx/orga/forms/event.py:168
+msgid "If you provide a website link, then it will be used on the events page."
+msgstr "Wenn Sie einen Webseiten Link angeben, wird dieser auf der Events-Seite verlinkt."
+
+#: pretalx/orga/forms/event.py:168
 msgid "Embed Venueless World"
 msgstr "Venueless Welt einbetten"
 
 #: pretalx/orga/forms/event.py:168
 msgid "Embeds the venueless world into the schedule"
 msgstr "Bindet die angegebene Venueless Welt in Pretalx ein"
+
+#: pretalx/orga/forms/event.py:168
+msgid "Event website Link"
+msgstr "Link zur Veranstaltungs-Webseite"
 
 #: pretalx/orga/forms/event.py:145
 #, python-brace-format

@@ -77,6 +77,7 @@
                 <div {% if request.event.primary_color %}style="--color: {{ request.event.primary_color }}"{% endif %} class="colorpicker-update">
                     {% bootstrap_field form.header_pattern layout='event' %}
                 </div>
+                {% bootstrap_field form.event_website_link layout='event' %}
             </fieldset>
             <fieldset>
               <legend id="pretix">
