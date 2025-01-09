@@ -49,7 +49,7 @@
                   {% if event.pretix_ticket_shop_link %}
                     <i class="fa fa-ticket mr-2"></i>
                   {% endif %}
-                  <a href="{{ event.pretix_ticket_shop_link | default:event.urls.base }}">
+                  <a href="{{ event.pretix_ticket_shop_link | default:event.urls.base }}"{% if event.pretix_ticket_shop_link %} class="btn-pretix-purchase-ticket" skip-ssl-check{% endif %}>
                     {{ event.name }}
                     ({{ event.get_date_range_display }})
                   </a>
@@ -89,7 +89,7 @@
               {% if event.pretix_ticket_shop_link %}
               <i class="fa fa-ticket mr-2"></i>
               {% endif %}
-              <a href="{{ event.pretix_ticket_shop_link | default:event.urls.base }}">
+              <a href="{{ event.pretix_ticket_shop_link | default:event.urls.base }}"{% if event.pretix_ticket_shop_link %} class="btn-pretix-purchase-ticket" skip-ssl-check{% endif %}>
                   {{ event.name }}
                   ({{ event.get_date_range_display }})
               </a>

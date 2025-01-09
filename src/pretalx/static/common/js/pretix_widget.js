@@ -8,7 +8,12 @@ document.addEventListener("DOMContentLoaded", function() {
     }
     function pretixWidgetOpen(target_url) {
         window.PretixWidget.open(
-            target_url
+            target_url,
+            null,
+            null,
+            [],
+            {},
+            true //skips ssl check, to make it work on local machine
         )
     }
 
