@@ -97,6 +97,7 @@ class GeneralView(TemplateView):
         _now = now().date()
         qs = Event.objects.order_by("-date_to")
 
+        # To improve performance, we could exclude past events.
         result["registered_events"] = self.get_pretix_ordered_events(
             self.filter_events(qs)
         )
