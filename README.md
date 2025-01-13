@@ -99,5 +99,15 @@ Add to (root user's) crontab:
 #### Tips & Troubleshooting
 
 * Exception log: ``(.docker/volumes)/data/logs/pretalx.log``
+
+
 * Python-Dependencies are not installed locally or on a volume (i.e. like the vendor folder in composer). This means, if you change dependencies, then you should rebuild the docker image with ``docker compose build --no-cache [--progress=plain]``
+
+
 * Simple Debugging: ``import logging``, and then in code ``logging.info('hallo')``, then check the ``pretalx.log``
+
+
+* Missing CSS (404) Tips: This is only a Quickfix Approach - the regenerare_css function works weird. It was removed in a newer version of pretalx. If the css files are missing (agenda and cfp) then you can copy
+the files from another event, but the hashes must be the same. Location is usually ``.docker/volumes/public/media/[event-name]``.
+You can also rewrite regenerate_css to rebuild the files everytime, but it will delete all media files too,
+so approach with high caution. A deeper understanding of the generation and a better solution must be found.
