@@ -3126,6 +3126,10 @@ msgstr "Bindet die angegebene Venueless Welt in Pretalx ein"
 msgid "Event website Link"
 msgstr "Link zur Veranstaltungs-Webseite"
 
+#: pretalx/orga/forms/event.py:168
+msgid "Show Pretix shop button"
+msgstr "Zeige Pretix Anmeldungs-Button."
+
 #: pretalx/orga/forms/event.py:145
 #, python-brace-format
 msgid "You can find the page <a {href}>here</a>."

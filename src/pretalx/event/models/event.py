@@ -522,6 +522,11 @@ class Event(PretalxModel):
         ),
     )
 
+    pretix_show_shop_link = models.BooleanField(
+        default=False,
+        verbose_name=_("Show Pretix shop button"),
+    )
+
     template_names = [
         f"{template}_template"
         for template in ("accept", "ack", "reject", "update", "question")
@@ -1409,7 +1414,7 @@ class Event(PretalxModel):
 
     @cached_property
     def pretix_ticket_shop_link(self):
-        if not self.is_pretix_api_configured:
+        if not self.is_pretix_api_configured or not self.pretix_show_shop_link:
             return None
         return f"https://{self.pretix_api_domain}/{self.pretix_api_organisator_slug}/{self.pretix_api_event_slug}/"
 

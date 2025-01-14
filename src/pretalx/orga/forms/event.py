@@ -321,6 +321,11 @@ class EventForm(ReadOnlyFlag, I18nHelpText, JsonSubfieldMixin, I18nModelForm):
         ),
     )
 
+    pretix_show_shop_link = forms.BooleanField(
+        required=False,
+        label=_("Show Pretix shop button"),
+    )
+
     def __init__(self, *args, **kwargs):
         self.is_administrator = kwargs.pop("is_administrator", False)
         super().__init__(*args, **kwargs)
@@ -519,6 +524,7 @@ class EventForm(ReadOnlyFlag, I18nHelpText, JsonSubfieldMixin, I18nModelForm):
             "pretix_api_domain",
             "pretix_api_organisator_slug",
             "pretix_api_event_slug",
+            "pretix_show_shop_link",
             "pretix_qid_organisation",
             "pretix_qid_postcode",
             "pretix_qid_city",
