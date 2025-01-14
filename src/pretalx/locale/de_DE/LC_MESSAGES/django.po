@@ -878,6 +878,10 @@ msgid "Program"
 msgstr "Programm"
 
 #: pretalx/cfp/templates/cfp/index.html:11
+msgid "Overview"
+msgstr "Übersicht"
+
+#: pretalx/cfp/templates/cfp/index.html:11
 msgid "Purchase ticket"
 msgstr "Anmeldung"
 
@@ -1715,6 +1719,14 @@ msgstr "Dir fehlen Zugriffsrechte für diese Seite."
 #: pretalx/common/text/phrases.py:79
 msgid "Page not found."
 msgstr "Seite nicht gefunden."
+
+#: pretalx/common/text/phrases.py:79
+msgid "Whoopsies. We could not find the page."
+msgstr "Hoppla! Die Seite konnte nicht gefunden werden."
+
+#: pretalx/common/text/phrases.py:79
+msgid "Either the page does not exist, or it is currently under construction."
+msgstr "Entweder sie existiert nicht, oder wir arbeiten noch daran."
 
 #: pretalx/common/text/phrases.py:81
 msgid "This page does not exist."

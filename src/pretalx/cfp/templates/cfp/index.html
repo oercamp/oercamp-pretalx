@@ -21,11 +21,17 @@
     <ul class="pl-0">
       {% for event in registered_events %}
         <li class="d-flex flex-row align-items-center">
-          <a href="{{ event.event_website_link | default:event.urls.schedule }}">
+          <a href="{{ event.event_website_link | default:event.urls.base }}">
             {{ event.name }}
             ({{ event.get_date_range_display }})
           </a>
           <div class="ml-auto">
+            <a
+              class="btn btn-outline-info m-1"
+              href="{{ event.urls.base }}"
+            >
+              {% translate 'Overview' %}
+            </a>
             <a
               class="btn btn-outline-info m-1"
               href="{{ event.urls.schedule }}"
@@ -58,11 +64,17 @@
         <ul class="pl-0">
             {% for event in current_events %}
                 <li class="d-flex flex-row align-items-center">
-                  <a href="{{ event.event_website_link | default:event.urls.schedule }}">
+                  <a href="{{ event.event_website_link | default:event.urls.base }}">
                     {{ event.name }}
                     ({{ event.get_date_range_display }})
                   </a>
                   <div class="ml-auto">
+                    <a
+                      class="btn btn-outline-info m-1"
+                      href="{{ event.urls.base }}"
+                    >
+                      {% translate 'Overview' %}
+                    </a>
                     <a
                       class="btn btn-outline-info m-1"
                       href="{{ event.urls.schedule }}"
@@ -95,11 +107,17 @@
         <ul class="pl-0">
             {% for event in future_events %}
             <li class="d-flex flex-row align-items-center">
-                <a href="{{ event.event_website_link | default:event.urls.schedule }}">
+                <a href="{{ event.event_website_link | default:event.urls.base }}">
                     {{ event.name }}
                     ({{ event.get_date_range_display }})
                 </a>
                 <div class="ml-auto">
+                  <a
+                    class="btn btn-outline-info m-1"
+                    href="{{ event.urls.base }}"
+                  >
+                    {% translate 'Overview' %}
+                  </a>
                   <a
                     class="btn btn-outline-info m-1"
                     href="{{ event.urls.schedule }}"
@@ -132,11 +150,17 @@
         <ul class="pl-0">
             {% for event in past_events %}
             <li class="d-flex flex-row align-items-center">
-              <a href="{{ event.event_website_link | default:event.urls.schedule }}">
+              <a href="{{ event.event_website_link | default:event.urls.base }}">
                   {{ event.name }}
                   ({{ event.get_date_range_display }})
               </a>
               <div class="ml-auto">
+                <a
+                  class="btn btn-outline-info m-1"
+                  href="{{ event.urls.base }}"
+                >
+                  {% translate 'Overview' %}
+                </a>
                 <a
                   class="btn btn-outline-info m-1"
                   href="{{ event.urls.schedule }}"

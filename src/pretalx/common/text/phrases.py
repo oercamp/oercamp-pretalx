@@ -77,6 +77,7 @@ class BasePhrases(Phrases, app="base"):
         _("Sorry, you do not have the required permissions to access this page."),
     )
     not_found = _("Page not found.")
+    not_found_oercamp = _("Whoopsies. We could not find the page.")
     not_found_long = [
         _("This page does not exist."),
         _("Huh, I could have sworn there was something here."),
@@ -85,6 +86,7 @@ class BasePhrases(Phrases, app="base"):
         _("This page has ceased to be."),
         _("Huh."),
     ]
+    not_found_long_oercamp = _("Either the page does not exist, or it is currently under construction.")
 
     enter_email = _("Email address")
     new_password = _("New password")

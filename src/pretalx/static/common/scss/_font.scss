@@ -163,7 +163,7 @@ body {
     font-family: 'Unbounded';
     font-style: normal;
     font-weight: 400;
-    src: url(static('fonts/unbounded-v7-latin-regular.woff2')) format('woff2'); /* Chrome 36+, Opera 23+, Firefox 39+, Safari 12+, iOS 10+ */
+    src: url(static('fonts/unbounded-medium.woff2')) format('woff2'); /* Chrome 36+, Opera 23+, Firefox 39+, Safari 12+, iOS 10+ */
 }
 /* unbounded-600 - latin */
 @font-face {
@@ -171,7 +171,7 @@ body {
     font-family: 'Unbounded';
     font-style: normal;
     font-weight: 600;
-    src: url(static('fonts/unbounded-v7-latin-600.woff2')) format('woff2'); /* Chrome 36+, Opera 23+, Firefox 39+, Safari 12+, iOS 10+ */
+    src: url(static('fonts/unbounded-medium.woff2')) format('woff2'); /* Chrome 36+, Opera 23+, Firefox 39+, Safari 12+, iOS 10+ */
 }
 /* unbounded-700 - latin */
 @font-face {
@@ -179,5 +179,5 @@ body {
     font-family: 'Unbounded';
     font-style: normal;
     font-weight: 700;
-    src: url(static('fonts/unbounded-v7-latin-700.woff2')) format('woff2'); /* Chrome 36+, Opera 23+, Firefox 39+, Safari 12+, iOS 10+ */
+    src: url(static('fonts/unbounded-medium.woff2')) format('woff2'); /* Chrome 36+, Opera 23+, Firefox 39+, Safari 12+, iOS 10+ */
 }
