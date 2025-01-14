@@ -13,6 +13,8 @@ from pretalx.event.models import Event
 from django.utils.functional import cached_property
 import logging
 
+from django_scopes import scope
+
 class EventPageMixin(PermissionRequired):
     permission_required = "cfp.view_event"
 
@@ -98,21 +100,56 @@ class GeneralView(TemplateView):
         qs = Event.objects.order_by("-date_to")
 
         # To improve performance, we could exclude past events.
-        result["registered_events"] = self.get_pretix_ordered_events(
-            self.filter_events(qs)
-        )
+        result["registered_events"] = [
+            {
+              "event": event,
+              "current_schedule": None,
+            }
+            for event in self.get_pretix_ordered_events(self.filter_events(qs))
+        ]
+        for item in result["registered_events"]:
+            event = item["event"]
+            with scope(event=event):  # Use the appropriate scope context manager
+                item["current_schedule"] = event.current_schedule  # Access current_schedule within scope
+
 
         result["current_events"] = [
-            event for event in self.filter_events(qs.filter(date_from__lte=_now, date_to__gte=_now))
+            {
+                "event": event,
+                "current_schedule": None
+            }
+            for event in self.filter_events(qs.filter(date_from__lte=_now, date_to__gte=_now))
             if event not in result["registered_events"]
         ]
+        for item in result["current_events"]:
+            event = item["event"]
+            with scope(event=event):  # Use the appropriate scope context manager
+                item["current_schedule"] = event.current_schedule  # Access current_schedule within scope
 
-        result["past_events"] = self.filter_events(qs.filter(date_to__lt=_now))
+        result["past_events"] = [
+            {
+                "event": event,
+                "current_schedule": None
+            }
+            for event in self.filter_events(qs.filter(date_to__lt=_now))
+        ]
+        for item in result["past_events"]:
+            event = item["event"]
+            with scope(event=event):  # Use the appropriate scope context manager
+                item["current_schedule"] = event.current_schedule  # Access current_schedule within scope
 
         result["future_events"] = [
-            event for event in self.filter_events(qs.filter(date_from__gt=_now))
+            {
+                "event": event,
+                "current_schedule": None
+            }
+            for event in self.filter_events(qs.filter(date_from__gt=_now))
             if event not in result["registered_events"]
         ]
+        for item in result["future_events"]:
+            event = item["event"]
+            with scope(event=event):  # Use the appropriate scope context manager
+                item["current_schedule"] = event.current_schedule  # Access current_schedule within scope
 
         # We will use the first existing event to load the widget javascript and css from.
         result["widget_event"] = next(

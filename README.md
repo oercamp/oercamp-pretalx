@@ -111,3 +111,9 @@ Add to (root user's) crontab:
 the files from another event, but the hashes must be the same. Location is usually ``.docker/volumes/public/media/[event-name]``.
 You can also rewrite regenerate_css to rebuild the files everytime, but it will delete all media files too,
 so approach with high caution. A deeper understanding of the generation and a better solution must be found.
+
+
+#### Open issues
+
+* When disabling Debug mode (pretix.cfg debug = False), then media files are not found. This is probably due to different
+file & folder handling when not in debug mode. Probably also has to do with the docker setup and/or volumes.

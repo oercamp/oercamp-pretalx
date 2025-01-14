@@ -21,20 +21,21 @@
     <ul class="pl-0">
       {% for event in registered_events %}
         <li class="d-flex flex-row align-items-center">
-          <a href="{{ event.event_website_link | default:event.urls.base }}">
-            {{ event.name }}
-            ({{ event.get_date_range_display }})
+          <a href="{{ event.event.event_website_link | default:event.event.urls.base }}">
+            {{ event.event.name }}
+            ({{ event.event.get_date_range_display }})
           </a>
-          <div class="ml-auto">
+          <div class="ml-auto d-flex flex-column flex-md-row">
             <a
               class="btn btn-outline-info m-1"
-              href="{{ event.urls.base }}"
+              href="{{ event.event.urls.base }}"
             >
               {% translate 'Overview' %}
             </a>
+            {% if event.event.current_schedule and event.event.feature_flags.show_schedule %}
             <a
               class="btn btn-outline-info m-1"
-              href="{{ event.urls.schedule }}"
+              href="{{ event.event.urls.schedule }}"
               data-toggle="tooltip"
               data-placement="top"
               title="{% translate 'View conference schedule' %}"
@@ -42,6 +43,7 @@
               <i class="fa fa-calendar"></i>
               {% translate 'Program' %}
             </a>
+            {% endif %}
           </div>
         </li>
       {% endfor %}
@@ -64,20 +66,21 @@
         <ul class="pl-0">
             {% for event in current_events %}
                 <li class="d-flex flex-row align-items-center">
-                  <a href="{{ event.event_website_link | default:event.urls.base }}">
-                    {{ event.name }}
-                    ({{ event.get_date_range_display }})
+                  <a href="{{ event.event.event_website_link | default:event.event.urls.base }}">
+                    {{ event.event.name }}
+                    ({{ event.event.get_date_range_display }})
                   </a>
-                  <div class="ml-auto">
+                  <div class="ml-auto d-flex flex-column flex-md-row">
                     <a
                       class="btn btn-outline-info m-1"
-                      href="{{ event.urls.base }}"
+                      href="{{ event.event.urls.base }}"
                     >
                       {% translate 'Overview' %}
                     </a>
+                    {% if event.current_schedule and event.event.feature_flags.show_schedule %}
                     <a
                       class="btn btn-outline-info m-1"
-                      href="{{ event.urls.schedule }}"
+                      href="{{ event.event.urls.schedule }}"
                       data-toggle="tooltip"
                       data-placement="top"
                       title="{% translate 'View conference schedule' %}"
@@ -85,10 +88,11 @@
                       <i class="fa fa-calendar"></i>
                       {% translate 'Program' %}
                     </a>
-                    {% if event.pretix_ticket_shop_link %}
+                    {% endif %}
+                    {% if event.event.pretix_ticket_shop_link %}
                       <a
                         class="btn btn-outline-info m-1 btn-pretix-purchase-ticket"
-                        href="{{ event.pretix_ticket_shop_link }}"
+                        href="{{ event.event.pretix_ticket_shop_link }}"
                         data-toggle="tooltip"
                         data-placement="top"
                         title="{% translate 'Purchase ticket' %}"
@@ -107,20 +111,20 @@
         <ul class="pl-0">
             {% for event in future_events %}
             <li class="d-flex flex-row align-items-center">
-                <a href="{{ event.event_website_link | default:event.urls.base }}">
-                    {{ event.name }}
-                    ({{ event.get_date_range_display }})
+                <a href="{{ event.event.event_website_link | default:event.event.urls.base }}">
+                    {{ event.event.name }}
+                    ({{ event.event.get_date_range_display }})
                 </a>
                 <div class="ml-auto">
                   <a
                     class="btn btn-outline-info m-1"
-                    href="{{ event.urls.base }}"
+                    href="{{ event.event.urls.base }}"
                   >
                     {% translate 'Overview' %}
                   </a>
                   <a
                     class="btn btn-outline-info m-1"
-                    href="{{ event.urls.schedule }}"
+                    href="{{ event.event.urls.schedule }}"
                     data-toggle="tooltip"
                     data-placement="top"
                     title="{% translate 'View conference schedule' %}"
@@ -128,10 +132,10 @@
                     <i class="fa fa-calendar"></i>
                     {% translate 'Program' %}
                   </a>
-                  {% if event.pretix_ticket_shop_link %}
+                  {% if event.event.pretix_ticket_shop_link %}
                   <a
                     class="btn btn-outline-info m-1 btn-pretix-purchase-ticket"
-                    href="{{ event.pretix_ticket_shop_link }}"
+                    href="{{ event.event.pretix_ticket_shop_link }}"
                     data-toggle="tooltip"
                     data-placement="top"
                     title="{% translate 'Purchase ticket' %}"
@@ -150,20 +154,20 @@
         <ul class="pl-0">
             {% for event in past_events %}
             <li class="d-flex flex-row align-items-center">
-              <a href="{{ event.event_website_link | default:event.urls.base }}">
-                  {{ event.name }}
-                  ({{ event.get_date_range_display }})
+              <a href="{{ event.event.event_website_link | default:event.event.urls.base }}">
+                  {{ event.event.name }}
+                  ({{ event.event.get_date_range_display }})
               </a>
               <div class="ml-auto">
                 <a
                   class="btn btn-outline-info m-1"
-                  href="{{ event.urls.base }}"
+                  href="{{ event.event.urls.base }}"
                 >
                   {% translate 'Overview' %}
                 </a>
                 <a
                   class="btn btn-outline-info m-1"
-                  href="{{ event.urls.schedule }}"
+                  href="{{ event.event.urls.schedule }}"
                   data-toggle="tooltip"
                   data-placement="top"
                   title="{% translate 'View conference schedule' %}"
