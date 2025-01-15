@@ -4,11 +4,11 @@
 @import "../../common/scss/_font";
 
 body {
-  background: darken($brand-primary, 12%);
+  background: white;
   a,
   a:hover {
     font-weight: bold;
-    color: white;
+    color: $brand-primary;
     text-decoration: underline;
   }
 }

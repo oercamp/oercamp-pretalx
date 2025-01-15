@@ -113,7 +113,8 @@ You can also rewrite regenerate_css to rebuild the files everytime, but it will 
 so approach with high caution. A deeper understanding of the generation and a better solution must be found.
 
 
-#### Open issues
+#### Good to know
 
-* When disabling Debug mode (pretix.cfg debug = False), then media files are not found. This is probably due to different
-file & folder handling when not in debug mode. Probably also has to do with the docker setup and/or volumes.
+* When disabling Debug mode (pretix.cfg debug = False), then pretalx (django) will not serve media files.
+You will need to use nginx to server them. This is already configured on live. See more infos at
+``reverse-proxy-examples/nginx`` or https://github.com/pretalx/pretalx/issues/1720
