@@ -198,13 +198,14 @@ class PublicSubmissionListView(ListView):
     context_object_name = "submissions"
 
     def get_queryset(self):
+        # NOVA: Check if Plugin activated
+        if not hasattr(self.request.event, "public_vote_settings") or not self.request.event.public_vote_settings:
+            return [] #raise Http404()
+
         # Idea is from https://stackoverflow.com/questions/4916851/django-get-a-queryset-from-array-of-ids-in-specific-order/37648265#37648265
         base_qs = self.request.event.submissions.all().filter(
             state=SubmissionStates.SUBMITTED
         )
-
-        if not hasattr(self.request.event, "public_vote_settings") or not self.request.event.public_vote_settings:
-            raise Http404()
 
         tracks = self.request.event.public_vote_settings.limit_tracks.all()
         if tracks:
@@ -221,6 +222,14 @@ class PublicSubmissionListView(ListView):
         )
 
     def get_context_data(self, **kwargs):
+         # NOVA: Check if Plugin activated
+         # This is a temp solution. Better hide lnks to this page and raise a 404 if accessed (See line 202)
+        if not hasattr(self.request.event, "public_vote_settings") or not self.request.event.public_vote_settings:
+            result = {}
+            result["plugin_deactivated"] = True
+            return result
+
+
         result = super().get_context_data(**kwargs)
         for submission in result["submissions"]:
             submission.comments = (
@@ -331,9 +340,19 @@ class PublicSubmissionWishListView(ListView):
     context_object_name = "submission_wishes"
 
     def get_queryset(self):
+        # NOVA: Check if Plugin activated
+        if not hasattr(self.request.event, "public_vote_settings") or not self.request.event.public_vote_settings:
+            return [] #raise Http404()
         return self.request.event.submission_wishes.all()
 
     def get_context_data(self, **kwargs):
+        # NOVA: Check if Plugin activated
+        # This is a temp solution. Better hide links to this page and raise a 404 if accessed (See line 343)
+        if not hasattr(self.request.event, "public_vote_settings") or not self.request.event.public_vote_settings:
+            result = {}
+            result["plugin_deactivated"] = True
+            return result
+
         result = super().get_context_data(**kwargs)
         for submissionwish in result["submission_wishes"]:
             submissionwish.comments = (

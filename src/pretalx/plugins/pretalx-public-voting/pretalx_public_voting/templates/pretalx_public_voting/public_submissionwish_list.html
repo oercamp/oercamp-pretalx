@@ -5,56 +5,63 @@
 {% load static %}
 
 {% block content %}
-<script src="{% static "vendored/jquery-3.1.1.js" %}"></script>
-<script src="{% static "pretalx_public_voting/vote.js" %}"></script>
-<link rel="stylesheet" href="{% static "pretalx_public_voting/vote.css" %}" />
+  <script src="{% static "vendored/jquery-3.1.1.js" %}"></script>
+  <script src="{% static "pretalx_public_voting/vote.js" %}"></script>
+  <link rel="stylesheet" href="{% static "pretalx_public_voting/vote.css" %}" />
 
-{% include "agenda/header_row.html" with with_margin=True %}
-<h2>{% trans "Public voting" %} – Themenwünsche</h2>
-{{ request.event.public_vote_settings.text_wishes|rich_text }}
+  {% include "agenda/header_row.html" with with_margin=True %}
+  <h2>{% trans "Public voting" %} – Themenwünsche</h2>
+  {{ request.event.public_vote_settings.text_wishes|rich_text }}
 
-<p>
-  {% blocktrans trimmed %}
-  Here you can see all submission wishes and their comments.
-  {% endblocktrans %}
-  <a href="{% url "plugins:pretalx_public_voting:signup" event=request.event.slug %}">{% trans "Click here to sign up for voting." %}</a><br>
-  <a href="/">{% trans "Login here to give submission wishes." %}</a>
-</p>
-<div>
-  {% for submission in submission_wishes %}
-  <div class="card submission-card">
-    <div class="card-body">
-      <h3 class="card-title">{{ submission.name }}</h3>
-    </div>
-    <div class="card-header card-footer card-columns align-items-start">
-      <strong class="w-25 pr-2">{% trans "Public Comments" %}:</strong>
-      <div class="flex-grow-1">
-        {% for submission_comment in submission.comments %}
-        <div class="d-flex flex-row gap-2">
-          <p class="flex-grow-1 card p-2 bg-light">
-            {{ submission_comment.comment }}
-          </p>
-          {% if user.is_administrator %}
-            <form class="form-delete-comment" action="{% url "plugins:pretalx_public_voting:submissionwish_comment_delete" event=request.event.slug submission_key=submission_comment.id %}" method="post">
-              {% csrf_token %}
-              <button type="submit" class="btn btn-danger btn-sm ml-2">
-                <i class="fa fa-trash"></i>
-              </button>
-            </form>
-          {% endif %}
+  {% if plugin_deactivated is True %}
+  <p>
+    Das Programm wird zur Zeit vorbereitet und ist noch nicht bereit. Bitte besuche uns erneut zu einem späteren Zeitpunkt.
+  </p>
+  {% else %}
+
+    <p>
+      {% blocktrans trimmed %}
+      Here you can see all submission wishes and their comments.
+      {% endblocktrans %}
+      <a href="{% url "plugins:pretalx_public_voting:signup" event=request.event.slug %}">{% trans "Click here to sign up for voting." %}</a><br>
+      <a href="/">{% trans "Login here to give submission wishes." %}</a>
+    </p>
+    <div>
+      {% for submission in submission_wishes %}
+      <div class="card submission-card">
+        <div class="card-body">
+          <h3 class="card-title">{{ submission.name }}</h3>
         </div>
-        {% empty %}
-        <p>-</p>
-      {% endfor %}
-        <p>
-          <a class="float-right" href="{% url "plugins:pretalx_public_voting:signup" event=request.event.slug %}">{% trans "Click here to write a comment." %}</a>
-        </p>
+        <div class="card-header card-footer card-columns align-items-start">
+          <strong class="w-25 pr-2">{% trans "Public Comments" %}:</strong>
+          <div class="flex-grow-1">
+            {% for submission_comment in submission.comments %}
+            <div class="d-flex flex-row gap-2">
+              <p class="flex-grow-1 card p-2 bg-light">
+                {{ submission_comment.comment }}
+              </p>
+              {% if user.is_administrator %}
+                <form class="form-delete-comment" action="{% url "plugins:pretalx_public_voting:submissionwish_comment_delete" event=request.event.slug submission_key=submission_comment.id %}" method="post">
+                  {% csrf_token %}
+                  <button type="submit" class="btn btn-danger btn-sm ml-2">
+                    <i class="fa fa-trash"></i>
+                  </button>
+                </form>
+              {% endif %}
+            </div>
+            {% empty %}
+            <p>-</p>
+          {% endfor %}
+            <p>
+              <a class="float-right" href="{% url "plugins:pretalx_public_voting:signup" event=request.event.slug %}">{% trans "Click here to write a comment." %}</a>
+            </p>
+          </div>
+        </div>
       </div>
+      {% empty %}
+      <p>Noch keine Einreichungen.</p>
+      {% endfor %}
+      {% include "orga/includes/pagination.html" %}
     </div>
-  </div>
-  {% empty %}
-  <p>Noch keine Einreichungen.</p>
-  {% endfor %}
-  {% include "orga/includes/pagination.html" %}
-</div>
+  {% endif %}
 {% endblock %}

@@ -13,61 +13,68 @@
     <h2>{% trans "Public voting" %} – Einreichungen</h2>
     {{ request.event.public_vote_settings.text|rich_text }}
 
+    {% if plugin_deactivated is True %}
     <p>
-      {% blocktrans trimmed %}
-      Here you can see all submissions and their comments.
-      {% endblocktrans %}
-       <a href="{% url "plugins:pretalx_public_voting:signup" event=request.event.slug %}">{% trans "Click here to sign up for voting." %}</a>
+      Das Programm wird zur Zeit vorbereitet und ist noch nicht bereit. Bitte besuche uns erneut zu einem späteren Zeitpunkt.
     </p>
-    <div>
-      {% for submission in submissions %}
-      <div class="card submission-card">
-        {% if submission.image and request.event.public_vote_settings.show_session_image %}
-        <div class="card-img-top-wrapper">
-          <img loading="lazy" src="{{ submission.image.url }}" alt="{% trans "This talk's header image" %}" class="card-img-top">
-        </div>
-        {% endif %}
-        <div class="card-body">
-          <h3 class="card-title">{{ submission.title }}</h3>
-          {% if not request.event.public_vote_settings.anonymize_speakers %}
-          <p class="card-subtitle mb-2 text-muted">{{ submission.display_speaker_names }}</p>
-          {% endif %}
-          <div class="card-text">
-            {{ submission.abstract|rich_text|default:'-' }}
-            {% if request.event.public_vote_settings.show_session_description and submission.description %}
-            {{ submission.description|rich_text|default:'-' }}
-            {% endif %}
+    {% else %}
+
+      <p>
+        {% blocktrans trimmed %}
+        Here you can see all submissions and their comments.
+        {% endblocktrans %}
+         <a href="{% url "plugins:pretalx_public_voting:signup" event=request.event.slug %}">{% trans "Click here to sign up for voting." %}</a>
+      </p>
+      <div>
+        {% for submission in submissions %}
+        <div class="card submission-card">
+          {% if submission.image and request.event.public_vote_settings.show_session_image %}
+          <div class="card-img-top-wrapper">
+            <img loading="lazy" src="{{ submission.image.url }}" alt="{% trans "This talk's header image" %}" class="card-img-top">
           </div>
-        </div>
-        <div class="card-header card-footer card-columns align-items-start">
-          <strong class="w-25 pr-2">{% trans "Public Comments" %}:</strong>
-          <div class="flex-grow-1">
-            {% for submission_comment in submission.comments %}
-            <div class="d-flex flex-row gap-2">
-              <p class="flex-grow-1 card p-2 bg-light">
-                {{ submission_comment.comment }}
-              </p>
-              {% if user.is_administrator %}
-              <form class="form-delete-comment" action="{% url "plugins:pretalx_public_voting:submission_comment_delete" event=request.event.slug submission_key=submission_comment.id %}" method="post">
-              {% csrf_token %}
-              <button type="submit" class="btn btn-danger btn-sm ml-2">
-                <i class="fa fa-trash"></i>
-              </button>
-              </form>
+          {% endif %}
+          <div class="card-body">
+            <h3 class="card-title">{{ submission.title }}</h3>
+            {% if not request.event.public_vote_settings.anonymize_speakers %}
+            <p class="card-subtitle mb-2 text-muted">{{ submission.display_speaker_names }}</p>
+            {% endif %}
+            <div class="card-text">
+              {{ submission.abstract|rich_text|default:'-' }}
+              {% if request.event.public_vote_settings.show_session_description and submission.description %}
+              {{ submission.description|rich_text|default:'-' }}
               {% endif %}
             </div>
-            {% empty %}
-            <p>-</p>
-            {% endfor %}
-            <p>
-              <a class="float-right" href="{% url "plugins:pretalx_public_voting:signup" event=request.event.slug %}">{% trans "Click here to write a comment." %}</a>
-            </p>
+          </div>
+          <div class="card-header card-footer card-columns align-items-start">
+            <strong class="w-25 pr-2">{% trans "Public Comments" %}:</strong>
+            <div class="flex-grow-1">
+              {% for submission_comment in submission.comments %}
+              <div class="d-flex flex-row gap-2">
+                <p class="flex-grow-1 card p-2 bg-light">
+                  {{ submission_comment.comment }}
+                </p>
+                {% if user.is_administrator %}
+                <form class="form-delete-comment" action="{% url "plugins:pretalx_public_voting:submission_comment_delete" event=request.event.slug submission_key=submission_comment.id %}" method="post">
+                {% csrf_token %}
+                <button type="submit" class="btn btn-danger btn-sm ml-2">
+                  <i class="fa fa-trash"></i>
+                </button>
+                </form>
+                {% endif %}
+              </div>
+              {% empty %}
+              <p>-</p>
+              {% endfor %}
+              <p>
+                <a class="float-right" href="{% url "plugins:pretalx_public_voting:signup" event=request.event.slug %}">{% trans "Click here to write a comment." %}</a>
+              </p>
+            </div>
           </div>
         </div>
+        {% empty %}
+        <p>Noch keine Einreichungen.</p>
+        {% endfor %}
+        {% include "orga/includes/pagination.html" %}
       </div>
-      {% empty %}
-      <p>Noch keine Einreichungen.</p>
-      {% endfor %}
-      {% include "orga/includes/pagination.html" %}
-    </div>
+    {% endif %}
 {% endblock %}
