@@ -26,7 +26,7 @@
         <a href="{{ request.event.urls.page_public_voting_wishes }}" class="btn btn-outline-success {% if "/p/voting/public/wishes" in request.path %} active{% endif %}">
           <i class="fa fa-comment-o"></i> Themenwünsche
         </a>
-        <a href="{{ request.event.urls.page_sponsors }}" class="btn btn-outline-success {% if "/page/sponsors/" in request.path %} active{% endif %}">
+        <a href="{{ request.event.urls.page_sponsors }}" class="btn btn-outline-success {% if "/page/kooperation/" in request.path %} active{% endif %}">
           <i class="fa fa-group"></i> Kooperationspartner*innen
         </a>
         {% if request.event.is_venueless_world_enabled %}

@@ -232,11 +232,24 @@ class ShowPageView(TemplateView):
                 event=self.request.event, slug__iexact=self.kwargs["slug"]
             )
         except Page.DoesNotExist:
-            raise Http404(_("The requested page does not exist."))
+            # Nova: We will show a message in the template instead of Http404 (see get_context_data next)
+            return None #raise Http404(_("The requested page does not exist."))
 
     def get_context_data(self, **kwargs):
         ctx = super().get_context_data()
         page = self.get_page()
+
+        # Nova: see get_page for more info
+        if (page is None):
+            page = ErrorPage()
+            ctx["site_does_not_exist"] = True
+
         ctx["page_title"] = page.title
         ctx["content"] = str(page.text)
         return ctx
+
+# Nova:
+class ErrorPage:
+    def __init__(self, title="", text=""):
+        self.title = title
+        self.text = text

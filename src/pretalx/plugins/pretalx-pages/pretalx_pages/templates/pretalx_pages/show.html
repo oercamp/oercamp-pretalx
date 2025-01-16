@@ -14,9 +14,16 @@
 {% block extra_title %}{{ page_title }} :: {% endblock %}
 
 {% block content %}
-    <link rel="stylesheet" href="{% static "pretalx_pages/css/pages.css" %}" />
-    {% include "agenda/header_row.html" %}
-    <p></p>
-    <h2>{{ page_title }}</h2>
-    <article class="pretalx-page-content">{{ content|safe }}</article>
+
+      <link rel="stylesheet" href="{% static "pretalx_pages/css/pages.css" %}" />
+      {% include "agenda/header_row.html" with with_margin=True %}
+      <p></p>
+      {% if site_does_not_exist is True %}
+      <p class="text-center m-4">
+        Das Programm wird zur Zeit vorbereitet und ist noch nicht bereit. Bitte besuche uns erneut zu einem späteren Zeitpunkt.
+      </p>
+      {% else %}
+        <h2>{{ page_title }}</h2>
+        <article class="pretalx-page-content">{{ content|safe }}</article>
+      {% endif %}
 {% endblock %}

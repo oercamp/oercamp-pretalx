@@ -10,14 +10,15 @@
   <link rel="stylesheet" href="{% static "pretalx_public_voting/vote.css" %}" />
 
   {% include "agenda/header_row.html" with with_margin=True %}
-  <h2>{% trans "Public voting" %} – Themenwünsche</h2>
-  {{ request.event.public_vote_settings.text_wishes|rich_text }}
 
   {% if plugin_deactivated is True %}
-  <p>
-    Das Programm wird zur Zeit vorbereitet und ist noch nicht bereit. Bitte besuche uns erneut zu einem späteren Zeitpunkt.
-  </p>
+    <p class="text-center m-4">
+      Das Programm wird zur Zeit vorbereitet und ist noch nicht bereit. Bitte besuche uns erneut zu einem späteren Zeitpunkt.
+    </p>
   {% else %}
+
+    <h2>{% trans "Public voting" %} – Themenwünsche</h2>
+    {{ request.event.public_vote_settings.text_wishes|rich_text }}
 
     <p>
       {% blocktrans trimmed %}
