@@ -202,6 +202,10 @@ class PublicSubmissionListView(ListView):
         base_qs = self.request.event.submissions.all().filter(
             state=SubmissionStates.SUBMITTED
         )
+
+        if not hasattr(self.request.event, "public_vote_settings") or not self.request.event.public_vote_settings:
+            raise Http404()
+
         tracks = self.request.event.public_vote_settings.limit_tracks.all()
         if tracks:
             base_qs = base_qs.filter(track__in=tracks)
