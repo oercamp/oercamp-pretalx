@@ -152,17 +152,33 @@ class GeneralView(TemplateView):
                 item["current_schedule"] = event.current_schedule  # Access current_schedule within scope
 
         # We will use the first existing event to load the widget javascript and css from.
+        # This might not be the best solution, but it works for now
         result["widget_event"] = next(
-            (list(events)[0] for events in [
-                result["registered_events"],
-                result["current_events"],
-                result["future_events"],
-                result["past_events"]
-            ] if events),
-            None
+            (
+                event_dict["event"]  # Return the actual event object
+                for event_dict_list in [
+                    result["registered_events"],
+                    result["current_events"],
+                    result["future_events"],
+                    result["past_events"]
+                ]
+                if event_dict_list  # Ensure the list is not empty
+                for event_dict in event_dict_list
+                if event_dict.get("event")  # Ensure that 'event' key exists
+                and event_dict["event"].pretix_ticket_shop_link  # Skip if the link is None or empty
+            ),
+            None  # Return None if no matching event is found
         )
 
+        # Add logging to inspect the result
+        if result["widget_event"]:
+            logging.info(f"Widget event found: {result['widget_event'].slug}")
+            logging.info(f"pretix_ticket_shop_link for event '{result['widget_event'].slug}': {result['widget_event'].pretix_ticket_shop_link}")
+        else:
+            logging.info("No widget event found.")
+
         return result
+
 
     def get_pretix_ordered_events(self, events):
 

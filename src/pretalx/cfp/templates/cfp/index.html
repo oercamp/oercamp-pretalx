@@ -6,10 +6,12 @@
 
 {% block content %}
 
-    {% if widget_event and widget_event.pretix_ticket_shop_link and widget_event.pretix_ticket_shop_base_url %}
-      <script type="text/javascript" src="{{ widget_event.pretix_ticket_shop_base_url }}/widget/v1.en.js" async crossorigin></script>
-      <link rel="stylesheet" type="text/css" href="{{ widget_event.pretix_ticket_shop_link }}/widget/v1.css" crossorigin>
+    {% if widget_event and widget_event.event.pretix_ticket_shop_link and widget_event.event.pretix_ticket_shop_base_url %}
+      <script type="text/javascript" src="{{ widget_event.event.pretix_ticket_shop_base_url }}/widget/v1.en.js" async crossorigin></script>
+      <link rel="stylesheet" type="text/css" href="{{ widget_event.event.pretix_ticket_shop_link }}/widget/v1.css" crossorigin>
       <script src="{% static "common/js/pretix_widget.js" %}"></script>
+    {% else %}
+      <script type="text/javascript">console.log('nope');</script>
     {% endif %}
 
     {% if registered_events or current_events or future_events or past_events %}
