@@ -151,18 +151,14 @@ class GeneralView(TemplateView):
             with scope(event=event):  # Use the appropriate scope context manager
                 item["current_schedule"] = event.current_schedule  # Access current_schedule within scope
 
-        # We will use the first event with pretix data to load the widget javascript and css from.
+        # We will use the first existing event to load the widget javascript and css from.
         result["widget_event"] = next(
-            (
-                event for events in [
-                    result["registered_events"],
-                    result["current_events"],
-                    result["future_events"],
-                    result["past_events"]
-                ] if events
-                for event in events
-                if event.pretix_ticket_shop_link and event.pretix_ticket_shop_base_url
-            ),
+            (list(events)[0] for events in [
+                result["registered_events"],
+                result["current_events"],
+                result["future_events"],
+                result["past_events"]
+            ] if events),
             None
         )
 
