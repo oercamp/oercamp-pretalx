@@ -2,7 +2,7 @@ from django import forms
 from django.db.models import Count, Exists, OuterRef, Q
 from django.utils.timezone import now
 from django.utils.translation import gettext_lazy as _
-from django_scopes.forms import SafeModelChoiceField
+from django_scopes.forms import SafeModelChoiceField, SafeModelMultipleChoiceField
 
 from pretalx.cfp.forms.cfp import CfPFormMixin
 from pretalx.common.forms.fields import ImageField
@@ -65,6 +65,7 @@ class InfoForm(CfPFormMixin, RequestRequire, PublicContent, forms.ModelForm):
         self._set_submission_types(instance=instance)
         self._set_locales()
         self._set_slot_count(instance=instance)
+        self._set_tags(instance=instance)
 
         if self.readonly:
             for field in self.fields.values():
@@ -100,6 +101,24 @@ class InfoForm(CfPFormMixin, RequestRequire, PublicContent, forms.ModelForm):
             ):
                 self.default_values["track"] = self.fields["track"].queryset.first()
                 self.fields.pop("track")
+
+    # NOVA: adding tags
+    def _set_tags(self, instance=None):
+        if not self.event.tags.all().exists():
+            self.fields.pop("tags", None)
+        elif "tags" in self.fields:
+            allowed_tags = [
+                "The red Tag", #remove this, its for testing/debugging
+                "Input",
+                "Austausch",
+                "Ask me Anything (Sprechstunde)",
+                "Workshop (Ausprobieren, gemeinsam Arbeiten)",
+                "Joker (sonstiges)"
+            ]
+            self.fields["tags"].queryset = self.event.tags.filter(tag__in=allowed_tags)
+            #self.fields["tags"].queryset = self.event.tags.all()
+
+            self.fields["tags"].required = False
 
     def _set_submission_types(self, instance=None):
         _now = now()
@@ -180,6 +199,7 @@ class InfoForm(CfPFormMixin, RequestRequire, PublicContent, forms.ModelForm):
             "title",
             "submission_type",
             "track",
+            "tags",
             "content_locale",
             "abstract",
             "description",
@@ -198,10 +218,11 @@ class InfoForm(CfPFormMixin, RequestRequire, PublicContent, forms.ModelForm):
             "image",
             "do_not_record",
             "track",
+            "tags",
             "duration",
             "content_locale",
             "additional_speaker",
-            "custom_speaker_title"
+            "custom_speaker_title",
         ]
         public_fields = ["title", "abstract", "description", "image"]
         widgets = {
@@ -209,10 +230,12 @@ class InfoForm(CfPFormMixin, RequestRequire, PublicContent, forms.ModelForm):
             "description": MarkdownWidget,
             "notes": MarkdownWidget,
             "track": TrackSelectWidget,
+            "tags": forms.SelectMultiple(attrs={"class": "select2"}),
         }
         field_classes = {
             "submission_type": SafeModelChoiceField,
             "track": SafeModelChoiceField,
+            "tags": SafeModelMultipleChoiceField,
         }
 
 

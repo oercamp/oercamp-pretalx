@@ -48,6 +48,7 @@ def default_fields():
         "do_not_record": {"visibility": "optional"},
         "image": {"visibility": "optional"},
         "track": {"visibility": "do_not_ask"},
+        "tags": {"visibility": "required"},
         "duration": {"visibility": "do_not_ask"},
         "content_locale": {"visibility": "required"},
         "additional_speaker": {"visibility": "optional"},

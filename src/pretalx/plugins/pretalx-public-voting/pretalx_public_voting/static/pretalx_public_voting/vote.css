@@ -36,3 +36,7 @@
 #save-bar button {
   margin: 16px;
 }
+
+.pretalx-public-voting-error-message {
+    font-size: 18px;
+}
