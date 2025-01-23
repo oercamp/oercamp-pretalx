@@ -4055,7 +4055,7 @@ msgstr "Zugangscodes"
 #: pretalx/orga/templates/orga/review/dashboard.html:220 pretalx/orga/templates/orga/submission/tag_list.html:6
 #: pretalx/submission/forms/submission.py:281 pretalx/submission/models/submission.py:149
 msgid "Tags"
-msgstr "Tags"
+msgstr "Session-Format"
 
 #: pretalx/orga/templates/orga/base.html:269
 msgid "Statistics"

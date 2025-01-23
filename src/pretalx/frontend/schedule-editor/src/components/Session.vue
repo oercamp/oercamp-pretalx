@@ -6,7 +6,7 @@
 			.ampm(v-if="startTime.ampm") {{ startTime.ampm }}
 		.duration {{ durationPretty }}
 	.info
-		.title {{ session.tags.map(s => s.emoji_label).join(' ') }} {{ getLocalizedString(session.emoji_label) }} {{ getLocalizedString(session.title) }}
+		.title {{ session.tags.filter(s => s.public === true).map(s => s.emoji_label).join(' ') }} {{ getLocalizedString(session.emoji_label) }} {{ getLocalizedString(session.title) }}
 		.custom_speaker_title(v-if="session.custom_speaker_title")
 			.name {{ session.custom_speaker_title }}
 		.speakers(v-else-if="session.speakers") {{ session.speakers.map(s => s.name).join(', ') }}

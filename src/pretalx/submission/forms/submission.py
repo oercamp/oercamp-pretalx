@@ -108,17 +108,19 @@ class InfoForm(CfPFormMixin, RequestRequire, PublicContent, forms.ModelForm):
             self.fields.pop("tags", None)
         elif "tags" in self.fields:
             allowed_tags = [
-                "The red Tag", #remove this, its for testing/debugging
                 "Input",
                 "Austausch",
                 "Ask me Anything (Sprechstunde)",
                 "Workshop (Ausprobieren, gemeinsam Arbeiten)",
                 "Joker (sonstiges)"
             ]
-            self.fields["tags"].queryset = self.event.tags.filter(tag__in=allowed_tags)
+            self.fields["tags"].queryset = self.event.tags.filter(tag__in=allowed_tags,public=True)
             #self.fields["tags"].queryset = self.event.tags.all()
+            self.fields["tags"].required = True
 
-            self.fields["tags"].required = False
+            if (len(self.fields["tags"].queryset) <= 0):
+                self.fields.pop("tags", None)
+
 
     def _set_submission_types(self, instance=None):
         _now = now()

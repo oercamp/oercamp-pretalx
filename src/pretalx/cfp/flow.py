@@ -460,7 +460,7 @@ class QuestionsStep(GenericFlowStep, FormFlowStep):
     def oercamp_check_and_add_angel_tag(submission, event):
 
         ANGEL_TAG_TAG = "Boten-Engel"
-        OERCAMP_QUESTION_ANGEL = "Die Session soll vom Boten-Engel vorgestellt werden."
+        OERCAMP_QUESTION_ANGEL = "Die Session soll vom Boten-Engel vorgestellt werden." #Punkt nicht vergessen :)
 
         submission_answers = submission.answers.all().select_related("question")
 
