@@ -117,6 +117,8 @@ class InfoForm(CfPFormMixin, RequestRequire, PublicContent, forms.ModelForm):
             self.fields["tags"].queryset = self.event.tags.filter(tag__in=allowed_tags,public=True)
             #self.fields["tags"].queryset = self.event.tags.all()
             self.fields["tags"].required = True
+            self.fields["tags"].label = _("Tags format")
+            self.fields["tags"].help_text = _("Please choose only one.")
 
             if (len(self.fields["tags"].queryset) <= 0):
                 self.fields.pop("tags", None)

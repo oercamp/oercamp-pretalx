@@ -4054,8 +4054,12 @@ msgstr "Zugangscodes"
 #: pretalx/orga/templates/orga/base.html:266 pretalx/orga/templates/orga/review/dashboard.html:114
 #: pretalx/orga/templates/orga/review/dashboard.html:220 pretalx/orga/templates/orga/submission/tag_list.html:6
 #: pretalx/submission/forms/submission.py:281 pretalx/submission/models/submission.py:149
-msgid "Tags"
-msgstr "Session-Format"
+msgid "Tags format"
+msgstr "Format"
+
+msgid "Please choose only one."
+msgstr "Bitte nur eine Option wählen"
+
 
 #: pretalx/orga/templates/orga/base.html:269
 msgid "Statistics"
