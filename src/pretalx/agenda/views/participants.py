@@ -130,7 +130,7 @@ class ParticipantsList(EventPermissionRequired, ListView):
             url = data.get('next')
 
         # make alphabetical
-        sorted_attendee_data_list = sorted(attendee_data_list, key=lambda x: (x['given_name'], x['last_name']))
+        sorted_attendee_data_list = sorted(attendee_data_list, key=lambda x: (x['last_name'], x['given_name']))
 
         # Cache the data for a specified duration
         cache.set(cache_key, sorted_attendee_data_list, timeout=600)  # cached for 10 minutes - 3600 - Cache for 1 hour
