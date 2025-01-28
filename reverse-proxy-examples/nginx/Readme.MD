@@ -31,5 +31,6 @@ NOVA Info:
 For DEBUG = False (only on live), you will need to serve static and media files
 through nginx, they won't be served through pretalx (django).
 
-DEBUG = False wont probably work locally, because there is no nginx :)
-Maybe like this: https://stackoverflow.com/questions/72536548/nginx-how-to-specify-a-static-to-point-to-a-docker-volume
+DEBUG = False won't work locally, because there is no nginx :)
+Additional info check this:
+https://stackoverflow.com/questions/72536548/nginx-how-to-specify-a-static-to-point-to-a-docker-volume
