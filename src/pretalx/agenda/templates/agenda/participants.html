@@ -27,7 +27,7 @@
     {% if attendees|length > 0 %}
       {% for attendee in attendees %}
         <div
-          class="participant-v-card d-flex flex-column flex-md-row mb-2"
+          class="participant-v-card d-flex flex-column mb-2"
           data-first_name="{{ attendee.given_name|default_if_none:''|escapejs }}"
           data-last_name="{{attendee.last_name|default_if_none:''|escapejs}}"
           data-organisation="{{attendee.organisation|default_if_none:''|escapejs}}"
@@ -40,7 +40,7 @@
             <i class="fa fa-vcard pr-2"></i>
             <span class="flex-grow-1"><strong>{{attendee.given_name}}&nbsp{{attendee.last_name}}</strong></span>
           </p>
-          <div class="d-flex flex-row justify-content-end flex-grow-1 pb-2">
+          <div class="d-flex flex-row flex-grow-1 pb-2">
             <div class="vcard card mx-2 p-2">
               {% if attendee.organisation %}
               <div class="org">{{attendee.organisation}}</div>
