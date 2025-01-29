@@ -103,7 +103,7 @@ re-generate static files, translations, migrations etc.
 
 ## Installation for production
 
-* Installations is similar to local development instructions, but with following notable changes:
+* Installation is similar to local development instructions, but with following notable changes:
 
 
 * Edit ``src/pretalx.cfg`` and ``.env`` for production (see above).
@@ -141,7 +141,7 @@ Please see [Pretalx Installation - step-7-reverse-proxy](https://docs.pretalx.or
 
 * We run the cronjobs from the host machine.
 It's not the most optimal solution, but ok for now.
-Add these instructions to pretalxuser crontab:
+Add these instructions to (currently root) crontab:
 
 ```
 Install cron if needed:
@@ -154,7 +154,7 @@ Add to (currently root user's) crontab:
 */5 * * * * cd /sites/oercamp/oercamp-pretalx && docker compose exec -u pretalxuser -T pretalx python3 /pretalx/src/manage.py pretix_import_session_wishes 2>&1
 ```
 
-## Current Live deployment procedure
+## Live deployment procedure
 
 * SSH to the live server, change to workdir ``cd /sites/oercamp/oercamp-pretalx/`` and run ``./bin/deploy-prod``
 
@@ -202,3 +202,11 @@ You will need to use nginx to serve them. This is already configured on live. Se
 * Pretalx has a Plugin system, but it's a relatively simple one. You can define hooks,
 but afaik not overwrite files. Because of that, time issues, and the nature of changes,
 most changes were made directly inside the code.
+
+## Live server infos (state 01.2025)
+
+* you should be able to ssh to `root@venueless.oercamp.de` with a configured key.
+(or also use `go.oercamp.de` or `anmeldung.oercamp.de`).
+All project are on the same server right now.
+* Project folder is `/sites/oercamp/`, where pretalx, pretix and venuelss are located.
+* nginx conf is at `/etc/nginx/sites-enabled/default`
