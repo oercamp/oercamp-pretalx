@@ -203,10 +203,3 @@ You will need to use nginx to serve them. This is already configured on live. Se
 but afaik not overwrite files. Because of that, time issues, and the nature of changes,
 most changes were made directly inside the code.
 
-## Live server infos (state 01.2025)
-
-* you should be able to ssh to `root@venueless.oercamp.de` with a configured key.
-(or also use `go.oercamp.de` or `anmeldung.oercamp.de`).
-All project are on the same server right now.
-* Project folder is `/sites/oercamp/`, where pretalx, pretix and venuelss are located.
-* nginx conf is at `/etc/nginx/sites-enabled/default`
