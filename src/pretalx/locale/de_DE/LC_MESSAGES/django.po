@@ -1571,7 +1571,7 @@ msgstr "Ein Mitglied des Orga-Teams"
 #: pretalx/common/templates/common/powered_by.html:33
 #, python-format
 msgid "powered by <a %(a_attr)s>pretalx</a>"
-msgstr "powered by <a %(a_attr)s>pretalx</a> & <a href='https://nova.digital'>nova GmbH</a>"
+msgstr "Software: <a %(a_attr)s>pretalx</a>, angepasst durch <a href='https://nova.digital/'>nova GmbH</a> für das <a href='https://oercamp.de/'>OERcamp</a> <a href='https://github.com/oercamp/oercamp-pretalx'>(Quellcode)</a>"
 
 #: pretalx/common/templates/common/question_answer.html:8
 msgid "No file provided"
