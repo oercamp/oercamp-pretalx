@@ -107,9 +107,13 @@ class SurveyMergerView(EventPermissionRequired, FormView):
         qid_whitelist = self.request.event.survey_merger_pretix_qid_whitelist
         qid_whitelist_array = [qid.strip() for qid in qid_whitelist.split(",")] if qid_whitelist else []
 
-        logging.info(qid_whitelist_array)
+        #logging.info(qid_whitelist_array)
 
         api_answer_data = self.request_answer_data() if qid_whitelist_array else []
+        api_question_data = self.request_question_data()
+
+        # Create a dictionary to map question identifiers to question text
+        question_map = {q['question_identifier']: q['question'] for q in api_question_data}
 
         # Create a dictionary to map tokens to their answers and question identifiers
         token_data_map = {}
@@ -138,7 +142,7 @@ class SurveyMergerView(EventPermissionRequired, FormView):
             if question_identifier in qid_whitelist_set and question_identifier not in headers:
                 new_col_index = len(headers) + 1
                 headers[question_identifier] = new_col_index
-                sheet.cell(row=1, column=new_col_index, value=question_identifier)
+                sheet.cell(row=1, column=new_col_index, value=question_map.get(question_identifier, question_identifier))
 
         # Iterate over each row, starting from the second row
         for row_index, row in enumerate(sheet.iter_rows(min_row=2, max_row=sheet.max_row), start=2):
@@ -202,6 +206,41 @@ class SurveyMergerView(EventPermissionRequired, FormView):
                             )
 
                         result_data_list.extend(answer_data)
+
+            # Get the URL for the next page, if any
+            url = data.get('next')
+
+        return result_data_list
+
+
+    def request_question_data(self):
+
+        url = f"https://{self.request.event.pretix_api_domain}/api/v1/organizers/{self.request.event.pretix_api_organisator_slug}/events/{self.request.event.pretix_api_event_slug}/questions/"
+        headers = {
+            'Authorization': f"Token {self.request.event.pretix_api_key}"
+        }
+
+        result_data_list = []
+
+        while url:  # Continue looping as long as there's a next URL
+            response = requests.get(url, headers=headers)
+
+            if response.status_code != 200:
+                return {'error': 'Failed to fetch data'}
+
+            data = response.json()  # Parse the JSON response
+
+            # Iterate through each result in the results list
+            for result in data['results']:
+                question_dict = result.get('question', {})
+                # Get "de" if available, otherwise take the first available language
+                question_text = question_dict.get('de') or next(iter(question_dict.values()), '')
+                question_identifier = result.get('identifier', '')
+
+                result_data_list.append({
+                    'question': question_text,
+                    'question_identifier': question_identifier
+                })
 
             # Get the URL for the next page, if any
             url = data.get('next')
