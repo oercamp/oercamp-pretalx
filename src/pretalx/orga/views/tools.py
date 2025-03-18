@@ -101,6 +101,16 @@ class SurveyMergerView(EventPermissionRequired, FormView):
     # 5. removes the token column (TODO)
     ###
     def process_excel_file(self, uploaded_file):
+
+        # Question types returned by pretix api call to questions
+        # See full list in pretix-code at pretix/base/models/items.py:1590
+        PRETIX_TYPE_CHOICE = "C"
+        PRETIX_TYPE_CHOICE_MULTIPLE = "M"
+        PRETIX_TYPE_DATE = "D"
+        PRETIX_TYPE_TIME = "H"
+        PRETIX_TYPE_DATETIME = "W"
+        PRETIX_UNLOCALIZED_TYPES = [PRETIX_TYPE_DATE, PRETIX_TYPE_TIME, PRETIX_TYPE_DATETIME]
+
         workbook = openpyxl.load_workbook(uploaded_file)
         sheet = workbook.active  # or specify sheet by name: workbook['Sheet1']
 
@@ -110,24 +120,57 @@ class SurveyMergerView(EventPermissionRequired, FormView):
         #logging.info(qid_whitelist_array)
 
         api_answer_data = self.request_answer_data() if qid_whitelist_array else []
-        api_question_data = self.request_question_data()
+        api_question_data = self.request_question_data() if qid_whitelist_array else []
 
-        # Create a dictionary to map question identifiers to question text
-        question_map = {q['question_identifier']: q['question'] for q in api_question_data}
+        logging.info(api_answer_data)
+        logging.info(api_question_data)
 
-        # Create a dictionary to map tokens to their answers and question identifiers
+        # Create a dictionary to map question identifiers to questions and answers
+        answer_map = {q['question_identifier']: q for q in api_answer_data} # token, answer, option_identifiers
+        question_map = {q['identifier']: q for q in api_question_data} # text, identifier, type, options->identifier
+
         token_data_map = {}
         for entry in api_answer_data:
-            token = entry['token']
-            question_identifier = entry['question_identifier']
-            answer = entry['answer']
 
+            token = entry['token']
             if token not in token_data_map:
                 token_data_map[token] = {}
-            token_data_map[token][question_identifier] = answer
+
+            question_identifier = entry['question_identifier']
+            if question_identifier not in token_data_map[token]:
+                token_data_map[token][question_identifier] = {}
+
+            answer = entry['answer']
+            options_identifiers = entry['option_identifiers']
+
+            if len(options_identifiers) == 0:
+                token_data_map[token][question_identifier] = answer
+            else:
+                # Find the question in question_map
+                if question_identifier in question_map:
+                    question_data = question_map[question_identifier]
+                    # Get all option identifiers from question_map
+                    all_option_identifiers = {opt["identifier"] for opt in question_data.get("options", [])}
+
+                    # Initialize all options to "No"
+                    for opt_id in all_option_identifiers:
+                        token_data_map[token][question_identifier][opt_id] = "No"
+
+                    # Convert answer options to a set for easy comparison
+                    selected_option_identifiers = set(options_identifiers)
+
+                    # Update selected options to "Yes"
+                    for opt_id in selected_option_identifiers:
+                        token_data_map[token][question_identifier][opt_id] = "Yes"
+
+
+        logging.info(token_data_map)
 
         # Identify the 'token' column dynamically from the header row (assuming headers are in the first row)
         headers = {cell.value: idx for idx, cell in enumerate(sheet[1], start=1)}
+
+        logging.info(headers)
+
         token_column_index = headers.get("token")
         if not token_column_index:
             logging.error("Column with header 'token' not found.")
@@ -136,13 +179,31 @@ class SurveyMergerView(EventPermissionRequired, FormView):
         # Filter question identifiers based on the whitelist
         qid_whitelist_set = set(qid_whitelist_array)  # Convert whitelist to a set for faster lookups
 
+
+        # new approach
+        #for question_identifier, token_data in token_data_map.items():
+        #    if question_identifier in qid_whitelist_set:
+        #        #TODO... options durchegehen
+
+
+
+
+
+        # loop questions not answers
+        for question_identifier, question_data in question_map.items():
+            if question_identifier in qid_whitelist_set and question_identifier not in headers:
+                new_col_index = len(headers) + 1
+                headers[question_identifier] = new_col_index
+                sheet.cell(row=1, column=new_col_index, value=question_data.get("question_text", question_identifier))
+
+
         # Add headers for new columns dynamically if not already present and in the whitelist
         for entry in api_answer_data:
             question_identifier = entry['question_identifier']
             if question_identifier in qid_whitelist_set and question_identifier not in headers:
                 new_col_index = len(headers) + 1
                 headers[question_identifier] = new_col_index
-                sheet.cell(row=1, column=new_col_index, value=question_map.get(question_identifier, question_identifier))
+                sheet.cell(row=1, column=new_col_index, value=question_map.get(question_identifier, {}).get("question_text", question_identifier))
 
         # Iterate over each row, starting from the second row
         for row_index, row in enumerate(sheet.iter_rows(min_row=2, max_row=sheet.max_row), start=2):
@@ -152,12 +213,26 @@ class SurveyMergerView(EventPermissionRequired, FormView):
 
             # Check if the token exists in the data map
             if token_value in token_data_map:
-                for question_identifier, answer in token_data_map[token_value].items():
+                #for question_identifier, answer in token_data_map[token_value].items():
+                #    # Only process question identifiers in the whitelist
+                #    if question_identifier in qid_whitelist_set:
+                #        # Find the correct column for the question identifier
+                #        col_index = headers[question_identifier]
+                #        # Insert the answer into the appropriate cell
+                #        sheet.cell(row=row_index, column=col_index, value=answer)
+                for question_identifier in headers:  # Ensure all questions are processed
                     # Only process question identifiers in the whitelist
                     if question_identifier in qid_whitelist_set:
+                        # Determine default value based on question type
+                        question_type = question_map.get(question_identifier, {}).get("question_type")
+                        default_value = _("Nein") if question_type in (PRETIX_TYPE_CHOICE_MULTIPLE, PRETIX_TYPE_CHOICE) else ""
+
+                        # Get the answer if it exists, otherwise use the default value
+                        answer = token_data_map[token_value].get(question_identifier, default_value)
+
                         # Find the correct column for the question identifier
                         col_index = headers[question_identifier]
-                        # Insert the answer into the appropriate cell
+                        # Insert the answer (or empty string) into the appropriate cell
                         sheet.cell(row=row_index, column=col_index, value=answer)
 
 
@@ -201,7 +276,8 @@ class SurveyMergerView(EventPermissionRequired, FormView):
                                 {
                                     'token': result.get('secret_token'),
                                     'question_identifier': answer.get('question_identifier'),
-                                    'answer': answer.get('answer')
+                                    'answer': answer.get('answer'),
+                                    'option_identifiers': answer.get('option_identifiers', []),
                                 }
                             )
 
@@ -236,10 +312,14 @@ class SurveyMergerView(EventPermissionRequired, FormView):
                 # Get "de" if available, otherwise take the first available language
                 question_text = question_dict.get('de') or next(iter(question_dict.values()), '')
                 question_identifier = result.get('identifier', '')
+                question_type = result.get('type', '')
+                question_options = result.get('options', [])
 
                 result_data_list.append({
-                    'question': question_text,
-                    'question_identifier': question_identifier
+                    'text': question_text,
+                    'identifier': question_identifier,
+                    'type': question_type,
+                    'options': question_options
                 })
 
             # Get the URL for the next page, if any
