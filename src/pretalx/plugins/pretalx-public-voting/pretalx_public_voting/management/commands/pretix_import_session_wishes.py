@@ -46,6 +46,7 @@ class Command(BaseCommand):
                 self.style.WARNING(f"{len(existing_submission_wishes)} already imported submission wishes found.")
             )
 
+            MAX_NAME_LENGTH = 255
             # Create a set of existing names for quick lookup
             # Existing DB entries for this event, normalized for comparison
             existing_names_lookup = {wish.name.strip().lower() for wish in existing_submission_wishes}
@@ -53,11 +54,12 @@ class Command(BaseCommand):
             # Loop through the submission_wishes and add new ones if they don't exist
             new_wishes = []
             for name in loaded_unique_submission_wishes:
-                normalized = name.strip().lower()
+                clean_name = name.strip()[:MAX_NAME_LENGTH]  # Cut off to max length
+                normalized = clean_name.lower()
                 if normalized not in existing_names_lookup:
-                    new_wish = SubmissionWish(name=name.strip(), event=event)
+                    new_wish = SubmissionWish(name=clean_name, event=event)
                     new_wish.save()
-                    new_wishes.append(name.strip())
+                    new_wishes.append(clean_name)
                     existing_names_lookup.add(normalized)  # <-- Add to lookup to prevent future duplicates
 
             # Output the results
