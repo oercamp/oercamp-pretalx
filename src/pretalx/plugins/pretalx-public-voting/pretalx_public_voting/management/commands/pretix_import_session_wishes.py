@@ -55,7 +55,8 @@ class Command(BaseCommand):
                 if name not in existing_names_lookup:
                     new_wish = SubmissionWish(name=name, event=event)
                     new_wish.save()
-                    new_wishes.append(name)  # Keep track of the newly added names
+                    new_wishes.append(name)
+                    existing_names_lookup.add(name)  # <-- Add to lookup to prevent future duplicates
 
             # Output the results
             if new_wishes:
