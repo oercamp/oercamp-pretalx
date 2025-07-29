@@ -47,16 +47,18 @@ class Command(BaseCommand):
             )
 
             # Create a set of existing names for quick lookup
-            existing_names_lookup = {wish.name for wish in existing_submission_wishes}
+            # Existing DB entries for this event, normalized for comparison
+            existing_names_lookup = {wish.name.strip().lower() for wish in existing_submission_wishes}
 
             # Loop through the submission_wishes and add new ones if they don't exist
             new_wishes = []
             for name in loaded_unique_submission_wishes:
-                if name not in existing_names_lookup:
-                    new_wish = SubmissionWish(name=name, event=event)
+                normalized = name.strip().lower()
+                if normalized not in existing_names_lookup:
+                    new_wish = SubmissionWish(name=name.strip(), event=event)
                     new_wish.save()
-                    new_wishes.append(name)
-                    existing_names_lookup.add(name)  # <-- Add to lookup to prevent future duplicates
+                    new_wishes.append(name.strip())
+                    existing_names_lookup.add(normalized)  # <-- Add to lookup to prevent future duplicates
 
             # Output the results
             if new_wishes:

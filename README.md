@@ -183,7 +183,7 @@ This logging solution will not work there.
 
 * Missing CSS (404) or even media files: This is only a Quickfix Approach - the regenerare_css function works weird. It seems that it was removed in a newer version of pretalx, but we still have it.
 If the CSS files are missing (agenda and cfp) then you can copy the files from another event,
-but the hashes must be the same.
+but the hashes must be the same (You can check them on Browser by the missing files).
 Location is usually ``.docker/volumes/public/media/[event-name]``.
 You can also rewrite regenerate_css to rebuild the files everytime,
 but it will delete all media files too, so approach with high caution.
