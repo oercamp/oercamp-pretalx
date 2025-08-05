@@ -166,6 +166,10 @@ msgstr "Zu Favoriten hinzufügen"
 msgid "Remove this session from your favourites"
 msgstr "Aus Favoriten entfernen"
 
+#: pretalx/agenda/templates/agenda/talk.html:39
+msgid "o'clock"
+msgstr "Uhr"
+
 #: pretalx/agenda/templates/agenda/talk.html:88
 msgid "This session’s header image"
 msgstr "Das Titelbild des Programmpunkts"
