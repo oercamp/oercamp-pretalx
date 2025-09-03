@@ -310,7 +310,7 @@ class InfoStep(GenericFlowStep, FormFlowStep):
     identifier = "info"
     icon = "paper-plane"
     form_class = InfoForm
-    priority = 25 #original: 0
+    priority = 49 #25 #original: 0
 
     def get_form_kwargs(self):
         result = super().get_form_kwargs()
@@ -400,6 +400,32 @@ class QuestionsStep(GenericFlowStep, FormFlowStep):
         self.request = request
         info_data = self.cfp_session.get("data", {}).get("info", {})
         track = info_data.get("track")
+        submission_type = info_data.get("submission_type")
+
+        questions_qs = self.event.questions.all()
+        filters = []
+
+        if track:
+            filters.append(~Q(tracks__in=[track]) & Q(tracks__isnull=False))
+        if submission_type:
+            filters.append(~Q(submission_types__in=[submission_type]) & Q(submission_types__isnull=False))
+
+        if filters:
+            combined_filter = filters.pop(0)
+            for f in filters:
+                combined_filter |= f
+            questions_qs = questions_qs.exclude(Q(target=QuestionTarget.SUBMISSION) & combined_filter)
+
+        return questions_qs.exists()
+
+
+        # Old code. We needed to change it because we changed order of flow. Now info step is infront of question step.
+        # Therefor track/submission_type are not set and is is_applicable may return false,
+        # even if there are questions defined for track/submission_type.
+        """
+        self.request = request
+        info_data = self.cfp_session.get("data", {}).get("info", {})
+        track = info_data.get("track")
         if track:
             questions = self.event.questions.exclude(
                 Q(target=QuestionTarget.SUBMISSION)
@@ -420,6 +446,7 @@ class QuestionsStep(GenericFlowStep, FormFlowStep):
                 )
             )
         return questions.exists()
+        """
 
     def get_form_kwargs(self):
         result = super().get_form_kwargs()
@@ -508,7 +535,7 @@ class UserStep(GenericFlowStep, FormFlowStep):
     icon = "user-circle-o"
     form_class = UserForm
     template_name = "cfp/event/submission_user.html"
-    priority = 49
+    priority = 25 #49
 
     def is_applicable(self, request):
         return not request.user.is_authenticated
