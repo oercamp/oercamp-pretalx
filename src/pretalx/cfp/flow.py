@@ -36,6 +36,9 @@ from pretalx.submission.models import (
     Track,
 )
 
+import logging
+logger = logging.getLogger("")
+
 
 def i18n_string(data, locales):
     if isinstance(data, LazyI18nString):
@@ -398,6 +401,7 @@ class QuestionsStep(GenericFlowStep, FormFlowStep):
 
     def is_applicable(self, request):
         self.request = request
+        return True
         info_data = self.cfp_session.get("data", {}).get("info", {})
         track = info_data.get("track")
         submission_type = info_data.get("submission_type")
@@ -451,21 +455,13 @@ class QuestionsStep(GenericFlowStep, FormFlowStep):
     def get_form_kwargs(self):
         result = super().get_form_kwargs()
         info_data = self.cfp_session.get("data", {}).get("info", {})
-        result["target"] = ""
         result["track"] = info_data.get("track")
-        result["submission_type"] = info_data.get("submission_type")
-
-        # NOVA FIX: adding access_code check, because for forms initiated with access_code
-        # the submission_type is not set, and then all questions are shown, including the ones
-        # that are limited to another submission_type.
         access_code = getattr(self.request, "access_code", None)
-        if(
-            result["submission_type"] is None and
-            access_code is not None and
-            isinstance(access_code.submission_type_id, int)
-        ):
-            result["submission_type"] = access_code.submission_type_id
 
+        if access_code and access_code.submission_type:
+            result["submission_type"] = access_code.submission_type
+        else:
+            result["submission_type"] = info_data.get("submission_type")
         if not self.request.user.is_anonymous:
             result["speaker"] = self.request.user
         return result

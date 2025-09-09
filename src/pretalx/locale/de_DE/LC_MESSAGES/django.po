@@ -502,6 +502,10 @@ msgstr "… über deine Einreichung:"
 msgid "… about yourself:"
 msgstr "… über dich:"
 
+#: pretalx/cfp/templates/cfp/event/submission_questions.html:43
+msgid "There are no additional questions for your submission."
+msgstr "Es gibt keine aktuellen Fragen für diese Einreichung."
+
 #: pretalx/cfp/templates/cfp/event/submission_user.html:8
 msgid "Sign in or register to save your draft"
 msgstr "Zum Speichern des Entwurfs einloggen oder registrieren"

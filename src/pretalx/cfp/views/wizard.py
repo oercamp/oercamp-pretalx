@@ -15,6 +15,9 @@ from pretalx.cfp.views.event import EventPageMixin
 from pretalx.common.exceptions import SendMailException
 from pretalx.common.text.phrases import phrases
 
+import logging
+logger = logging.getLogger("")
+
 
 class SubmitStartView(EventPageMixin, View):
     @staticmethod
