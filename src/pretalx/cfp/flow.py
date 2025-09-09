@@ -36,6 +36,9 @@ from pretalx.submission.models import (
     Track,
 )
 
+import logging
+logger = logging.getLogger("")
+
 
 def i18n_string(data, locales):
     if isinstance(data, LazyI18nString):
@@ -398,32 +401,7 @@ class QuestionsStep(GenericFlowStep, FormFlowStep):
 
     def is_applicable(self, request):
         self.request = request
-        info_data = self.cfp_session.get("data", {}).get("info", {})
-        track = info_data.get("track")
-        submission_type = info_data.get("submission_type")
-
-        questions_qs = self.event.questions.all()
-        filters = []
-
-        if track:
-            filters.append(~Q(tracks__in=[track]) & Q(tracks__isnull=False))
-        if submission_type:
-            filters.append(~Q(submission_types__in=[submission_type]) & Q(submission_types__isnull=False))
-
-        if filters:
-            combined_filter = filters.pop(0)
-            for f in filters:
-                combined_filter |= f
-            questions_qs = questions_qs.exclude(Q(target=QuestionTarget.SUBMISSION) & combined_filter)
-
-        return questions_qs.exists()
-
-
-        # Old code. We needed to change it because we changed order of flow. Now info step is infront of question step.
-        # Therefor track/submission_type are not set and is is_applicable may return false,
-        # even if there are questions defined for track/submission_type.
-        """
-        self.request = request
+        return True
         info_data = self.cfp_session.get("data", {}).get("info", {})
         track = info_data.get("track")
         if track:
@@ -446,26 +424,17 @@ class QuestionsStep(GenericFlowStep, FormFlowStep):
                 )
             )
         return questions.exists()
-        """
 
     def get_form_kwargs(self):
         result = super().get_form_kwargs()
         info_data = self.cfp_session.get("data", {}).get("info", {})
-        result["target"] = ""
         result["track"] = info_data.get("track")
-        result["submission_type"] = info_data.get("submission_type")
-
-        # NOVA FIX: adding access_code check, because for forms initiated with access_code
-        # the submission_type is not set, and then all questions are shown, including the ones
-        # that are limited to another submission_type.
         access_code = getattr(self.request, "access_code", None)
-        if(
-            result["submission_type"] is None and
-            access_code is not None and
-            isinstance(access_code.submission_type_id, int)
-        ):
-            result["submission_type"] = access_code.submission_type_id
 
+        if access_code and access_code.submission_type:
+            result["submission_type"] = access_code.submission_type
+        else:
+            result["submission_type"] = info_data.get("submission_type")
         if not self.request.user.is_anonymous:
             result["speaker"] = self.request.user
         return result
