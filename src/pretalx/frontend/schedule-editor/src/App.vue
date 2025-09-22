@@ -296,7 +296,8 @@ export default {
 				if (this.editorSession.start === undefined) {
 					this.editorSessionStartInput = this.editorSessionStartInputMin;
 				} else {
-					this.editorSessionStartInput = this.editorSession.start.format('YYYY-MM-DDTHH:mm')
+					const startMoment = moment(this.editorSession.start);
+					this.editorSessionStartInput = startMoment.format('YYYY-MM-DDTHH:mm');
 				}
 
 				if (this.editorSession.room === undefined) {
