@@ -7003,6 +7003,18 @@ msgstr "Alle Zeiten in %(tz)s"
 msgid "There has been no feedback for this session yet."
 msgstr "Es gab bislang keine Rückmeldungen zu dieser Veranstaltung."
 
+#: pretalx/schedule/phrases.py:34
+msgid "Submission wishes"
+msgstr "Themenwünsche"
+
+#: pretalx/schedule/phrases.py:35
+msgid "Submissions"
+msgstr "Einreichungen"
+
+#: pretalx/schedule/phrases.py:36
+msgid "Cooperation partners"
+msgstr "Kooperationspartner*innen"
+
 #: pretalx/schedule/templates/schedule/speaker_notification.txt:2
 #, python-format
 msgid "- Your session “%(title)s” will take place at %(start)s in %(location)s"

@@ -30,3 +30,7 @@ class SchedulePhrases(Phrases, app="schedule"):
     timezone_hint = _("All times in %(tz)s")
 
     no_feedback = _("There has been no feedback for this session yet.")
+
+    submission_wishes = _("Submission wishes")
+    submissions = _("Submissions")
+    cooperation_partners = _("Cooperation partners")
