@@ -7007,10 +7007,6 @@ msgstr "Es gab bislang keine Rückmeldungen zu dieser Veranstaltung."
 msgid "Submission wishes"
 msgstr "Themenwünsche"
 
-#: pretalx/schedule/phrases.py:35
-msgid "Submissions"
-msgstr "Einreichungen"
-
 #: pretalx/schedule/phrases.py:36
 msgid "Cooperation partners"
 msgstr "Kooperationspartner*innen"
