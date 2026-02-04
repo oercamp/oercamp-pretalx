@@ -189,10 +189,10 @@ class AdminUserDelete(ActionConfirmMixin, AdminUserDetail):
             messages.error(
                 request,
                 _(
-                    "This user cannot be deleted because they still have "
-                    "submissions, answers, or team memberships. "
-                    "Please deactivate the user instead."
-                ),
+                    "Dieser Benutzer kann nicht gelöscht werden, da er noch "
+                    "Einreichungen, Antworten oder Teamzugehörigkeiten hat. "
+                    "Bitte deaktiviere den Benutzer stattdessen."
+                )
             )
             return redirect(self.action_back_url)
 
