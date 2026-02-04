@@ -21,6 +21,7 @@
     left: 0;
     box-sizing: border-box;
     max-width: calc(100vw - 16px);
+    z-index: 10000; //fixing dropdown under schedule editor.
   }
   header > * {
     padding: 0 16px;
