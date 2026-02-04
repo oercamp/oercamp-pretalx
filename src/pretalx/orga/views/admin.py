@@ -182,7 +182,20 @@ class AdminUserDelete(ActionConfirmMixin, AdminUserDetail):
             return super().dispatch(*args, **kwargs)
 
     def post(self, request, *args, **kwargs):
-        self.get_object().shred()
+        user = self.get_object()
+        try:
+            user.shred()
+        except Exception:
+            messages.error(
+                request,
+                _(
+                    "This user cannot be deleted because they still have "
+                    "submissions, answers, or team memberships. "
+                    "Please deactivate the user instead."
+                ),
+            )
+            return redirect(self.action_back_url)
+
         messages.success(request, _("The user has been deleted."))
         return redirect(self.get_success_url())
 
