@@ -323,9 +323,11 @@ article .pretalx-session .pretalx-session-info .abstract {
       .header-right {
         flex-wrap: wrap;
         justify-content: flex-end;
+        /* is hiding the export/view dropdown, why i dont know, so we put it back.
         .btn-outline-info {
           display: none;
         }
+        */
       }
     }
   }
