@@ -743,6 +743,7 @@ class Schedule(PretalxModel):
                         "start": talk.start,
                         "end": talk.local_end,
                         "room": talk.room_id,
+                        "tags": [],
                     }
                 )
         tracks.discard(None)
