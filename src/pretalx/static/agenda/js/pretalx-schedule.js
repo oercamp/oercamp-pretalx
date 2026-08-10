@@ -16729,7 +16729,7 @@ const ianaToFriendly = Object.fromEntries(Object.entries(friendlyToIANA).map(([l
         const isTagsFilterOn = this.filteredTags && this.filteredTags.length;
 
         if (isTrackFilterOn || isTagsFilterOn) {
-          if ((!isTrackFilterOn || !this.filteredTracks.find(t => t.id === session.track)) && (!isTagsFilterOn || !session.tags.some(sessionTag => this.filteredTags.find(t => t.tag === sessionTag)))) continue;
+          if ((!isTrackFilterOn || !this.filteredTracks.find(t => t.id === session.track)) && (!isTagsFilterOn || !(session.tags || []).some(sessionTag => this.filteredTags.find(t => t.tag === sessionTag)))) continue;
         }
 
         sessions.push({
